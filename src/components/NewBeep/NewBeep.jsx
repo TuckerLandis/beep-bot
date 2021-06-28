@@ -276,6 +276,26 @@ function NewBeep() {
         // main return to DOM of our sequencer component
         return (
             <div>
+                <div className="synth-params">
+                <input type="range" id="env_attack" name="attack"
+                        min="0.001" max="1" value={synthParams.env_attack} onChange={handleSynthParams} />
+                    <label htmlFor="attack">Attack: {synthParams.env_attack}</label>
+
+                    <input type="range" id="env_decay" name="decay"
+                        min="0.001" max="1" value={synthParams.env_decay} onChange={handleSynthParams} />
+                    <label htmlFor="decay">Decay: {synthParams.env_decay}</label>
+
+                    <input type="range" id="env_sustain" name="sustain"
+                        min="0.001" max="1" value={synthParams.env_sustain} onChange={handleSynthParams} />
+                    <label htmlFor="sustain">Sustain: {synthParams.env_sustain}</label>
+
+                    <input type="range" id="env_release" name="release"
+                        min="0.001" max="1" value={synthParams.release} onChange={handleSynthParams} />
+                    <label htmlFor="release">Release: {synthParams.env_release}</label>
+
+
+                </div>
+
                 <button onClick={playButton}>{playButtonText}</button>
                 <div className="step-select-container">
 
