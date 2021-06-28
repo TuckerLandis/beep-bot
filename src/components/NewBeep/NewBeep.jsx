@@ -211,7 +211,8 @@ function NewBeep() {
 
         const playButton = () => { //// <--------<------<-----<------The play Button -------------------------- ////>
 
-            console.log(steps, seqParams); // gives notes and seq params
+            console.log(steps, seqParams, synthParams); // gives notes and seq params
+        
 
             if (!isPlaying) {  // starts Tone if stopped
                 setIsPlaying(true)  // flips playing boolean
@@ -277,21 +278,32 @@ function NewBeep() {
         return (
             <div>
                 <div className="synth-params">
+
+                <label htmlFor="osc-type">Osc Type: </label>
+                <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
+                       
+                                <option  value="triangle8">Triangle</option>
+                                <option  value="square8">Square</option>
+                                <option  value="sine8">Sine</option>
+                                <option  value="saw8">Saw</option>  
+                    </select>
+
+                    <label htmlFor="attack">Attack: {synthParams.env_attack} </label>
                 <input type="range" id="env_attack" name="attack"
-                        min="0.001" max="1" value={synthParams.env_attack} onChange={handleSynthParams} />
-                    <label htmlFor="attack">Attack: {synthParams.env_attack}</label>
-
+                        min="0.001" max="1" value={synthParams.env_attack} onChange={handleSynthParams} step="0.025"/>
+                    
+                    <label htmlFor="decay">Decay: {synthParams.env_decay} </label>
                     <input type="range" id="env_decay" name="decay"
-                        min="0.001" max="1" value={synthParams.env_decay} onChange={handleSynthParams} />
-                    <label htmlFor="decay">Decay: {synthParams.env_decay}</label>
-
+                        min="0.001" max="1" value={synthParams.env_decay} onChange={handleSynthParams} step="0.025"/>
+                    
+                    <label htmlFor="sustain">Sustain: {synthParams.env_sustain} </label>
                     <input type="range" id="env_sustain" name="sustain"
-                        min="0.001" max="1" value={synthParams.env_sustain} onChange={handleSynthParams} />
-                    <label htmlFor="sustain">Sustain: {synthParams.env_sustain}</label>
-
+                        min="0.001" max="1" value={synthParams.env_sustain} onChange={handleSynthParams} step="0.025"/>
+                    
+                    <label htmlFor="release">Release: {synthParams.env_release} </label>
                     <input type="range" id="env_release" name="release"
-                        min="0.001" max="1" value={synthParams.release} onChange={handleSynthParams} />
-                    <label htmlFor="release">Release: {synthParams.env_release}</label>
+                        min="0.001" max="1" value={synthParams.release} onChange={handleSynthParams} step="0.025" />
+                    
 
 
                 </div>
