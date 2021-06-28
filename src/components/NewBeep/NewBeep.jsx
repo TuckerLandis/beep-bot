@@ -244,6 +244,7 @@ function NewBeep() {
             filter_type: synthParams.filter_type,
             filter_cutoff: synthParams.filter_cutoff,
             scale: seqParams.scaleName,
+            octave: seqParams.octave,
             root: seqParams.rootNote,
             bpm: seqParams.bpm,
             steps: steps
