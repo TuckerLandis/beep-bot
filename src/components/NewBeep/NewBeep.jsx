@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import * as Tone from 'tone'
 import { Note, Scale } from "@tonaljs/tonal";
+import { useDispatch } from 'react-redux';
 
 function NewBeep() {
+    const dispatch = useDispatch()
     // states for playing boolean and for playbutton text. these get flipped when pressing play or stop
     const [isPlaying, setIsPlaying] = useState(false)
     const [playButtonText, setPlayButtonText] = useState('play')
@@ -237,6 +239,34 @@ function NewBeep() {
         }
     }
 
+
+    // Post Dispatch
+    const handleSave = () => {
+        
+      
+            let beep = {
+                osc_type: synthParams.oscillatorType,
+                filter_type: synthParams.filter_type,
+                filter_cutoff: synthParams.filter_cutoff,
+                scale: seqParams.scaleName,
+                root: seqParams.rootNote,
+                bpm: seqParams.bpm,
+                steps: steps
+            }
+
+        console.log('saving a beep :)', beep);
+        dispatchBeep(beep)
+        
+        }
+        
+        function dispatchBeep (beep) {
+            dispatch({
+                type: 'SAVE_NEW_BEEP',
+                payload: beep
+            })
+        }
+    
+
     // main return to DOM of our sequencer component
     return (
         <div>
@@ -400,6 +430,7 @@ function NewBeep() {
       <p></p>
        
             <button onClick={playButton}>{playButtonText}</button>
+            <button onClick={handleSave}>save</button>
         </div>
     )
 
