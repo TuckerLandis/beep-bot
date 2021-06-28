@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as Tone from 'tone'
-import { Note, Scale } from "tonal";
+import { Note, Scale } from "@tonaljs/tonal";
 
 function NewBeep() {
     // states for playing boolean and for playbutton text. these get flipped when pressing play or stop
@@ -23,18 +23,6 @@ function NewBeep() {
             step7: null,
             step8: null,
 
-            // other data drafts
-            // steps: {
-            //     1: null,
-            //     2: null,
-            //     3: null,
-            //     4: null,
-            //     5: null,
-            //     6: null,
-            //     7: null,
-            //     8: null
-            // }
-            // steps: [null x8]
         }
     )
 
@@ -179,47 +167,24 @@ function NewBeep() {
                     ...synthParams, oscillatorType: event.target.value
                 })
                 break;
-            case "env_attack":
-                console.log("env_attack");
-                setSynthParams({
-                    ...synthParams, env_attack: Number(event.target.value)
-                })
-                break;
-            case "env_decay":
-                console.log('changing env_decay');
-                setSynthParams({
-                    ...synthParams, env_decay: Number(event.target.value)
-                })
-                break;
-            case "env_sustain":
-                console.log('changing env_sustain');
-                setSynthParams({
-                    ...synthParams, env_sustain: Number(event.target.value)
-                })
-                break;
-            case "env_release":
-                console.log('changing env_release');
-                setSynthParams({
-                    ...synthParams, env_release: Number(event.target.value)
-                })
-                break;
-                case "filter_type":
+
+            case "filter_type":
                 console.log('changing filter-type');
                 setSynthParams({
                     ...synthParams, filter_type: event.target.value
                 })
                 break;
-                case "filter_cutoff":
-                    console.log('changing filter-cutoff');
-                    setSynthParams({
-                        ...synthParams, filter_cutoff: Number(event.target.value)
-                    })
-                    break;
+            case "filter_cutoff":
+                console.log('changing filter-cutoff');
+                setSynthParams({
+                    ...synthParams, filter_cutoff: Number(event.target.value)
+                })
+                break;
 
 
         }
     }
-    // ----------------------------------------------------------------------------------------------------------------
+    
 
 
 
@@ -243,40 +208,16 @@ function NewBeep() {
 
             const volumeNode = new Tone.Volume(-18).toDestination();
 
-            // const filter = new Tone.Filter(synthParams.filter_cutoff, synthParams.filter_type) // base tonejs filter node, unsure difference of this verse mono synth property // need to change to input-cutoff and input type
-
-            // const filter2 = new Tone.LowpassCombFilter(0.1, 0.2, 300) // slightly more complex, better sounding filter. delay time seems variable, but i may use this as my delay param for the synth
-
-            // args to the LowPassCombFilter
-            //     delayTime: Time,
-            //     // The delay time of the comb filter
-
-            //      resonance: NormalRange,
-            //    //  The resonance (feedback) of the comb filter
-
-            //      dampening: Frequency
-            //     // The cutoff of the lowpass filter dampens the signal as it is fedback.
-            // }
-
-
             // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
             const synth = new Tone.MonoSynth({
                 oscillator: {
                     type: synthParams.oscillatorType
-                },
-                envelope: {
-                    attack: synthParams.env_attack,
-                    decay: synthParams.env_decay,
-                    sustain: synthParams.env_sustain,
-                    release: synthParams.env_release
                 },
                 filter: {
                     frequency: synthParams.filter_cutoff,
                     type: synthParams.filter_type
                 }
             }).chain(volumeNode, Tone.Destination);
-
-
 
             const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
                 synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
@@ -302,56 +243,86 @@ function NewBeep() {
             <div className="synth-params">
                 <div className="osc-type-container">
 
-                <label htmlFor="osc-type">Osc Type: </label>
-                <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
+                    <label htmlFor="osc-type">Osc Type: </label>
+                    <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
 
-                    <option value="triangle8">Triangle</option>
-                    <option value="square8">Square</option>
-                    <option value="sine8">Sine</option>
-                    <option value="saw8">Saw</option>
-                </select>
+                        <option value="triangle8">Triangle</option>
+                        <option value="square8">Square</option>
+                        <option value="sine8">Sine</option>
+                        <option value="saw8">Saw</option>
+                    </select>
 
                 </div>
-
+                <p></p>
                 <div className="filter-container">
 
-                <label htmlFor="filter-type">Filter Type: </label>
-                <select name="filter-type" id="filter-type" onChange={handleSynthParams} >
+                    <label htmlFor="filter-type">Filter Type: </label>
+                    <select name="filter-type" id="filter-type" onChange={handleSynthParams} >
 
-                    <option value="lowpass">Low Pass</option>
-                    <option value="highpass">High Pass</option>
-                    <option value="bandpass">Band Pass</option>
-                    
-                </select>
+                        <option value="lowpass">Low Pass</option>
+                        <option value="highpass">High Pass</option>
+                        <option value="bandpass">Band Pass</option>
 
-                <label htmlFor="filter-cutoff">Filter Cutoff: {synthParams.filter_cutoff} </label>
-                <input type="range" id="filter_cutoff" name="filter_cutoff"
-                    min="0" max="20000" value={synthParams.filter_cutoff} onChange={handleSynthParams} />
+                    </select>
+
+                    <label htmlFor="filter-cutoff">Filter Cutoff: {synthParams.filter_cutoff} </label>
+                    <input type="range" id="filter_cutoff" name="filter_cutoff"
+                        min="0" max="20000" value={synthParams.filter_cutoff} onChange={handleSynthParams} />
 
                 </div>
-               
-
-                <label htmlFor="attack">Attack: {synthParams.env_attack} </label>
-                <input type="range" id="env_attack" name="attack"
-                    min="0.001" max="1" value={synthParams.env_attack} onChange={handleSynthParams} step="0.025" />
-
-                <label htmlFor="decay">Decay: {synthParams.env_decay} </label>
-                <input type="range" id="env_decay" name="decay"
-                    min="0.001" max="1" value={synthParams.env_decay} onChange={handleSynthParams} step="0.025" />
-
-                <label htmlFor="sustain">Sustain: {synthParams.env_sustain} </label>
-                <input type="range" id="env_sustain" name="sustain"
-                    min="0.001" max="1" value={synthParams.env_sustain} onChange={handleSynthParams} step="0.025" />
-
-                <label htmlFor="release">Release: {synthParams.env_release} </label>
-                <input type="range" id="env_release" name="release"
-                    min="0.001" max="1" value={synthParams.release} onChange={handleSynthParams} step="0.025" />
-
-
 
             </div>
 
-            <button onClick={playButton}>{playButtonText}</button>
+            <p></p>
+
+            <div className="seq-params-container">
+            <label htmlFor="scale-select">Scale: </label>
+                <select name="scale-select" id="scale-select" onChange={handleScaleName} >
+                    {scaleList.map((scale, i) => {
+                        return (
+                            <option key={i} value={scale}>{scale}</option>
+                        )
+                    })}
+                </select>
+
+                {/* select for octave choice, triggers handle octave on change */}
+                <label htmlFor="octave-select">Octave: </label>
+                <select name="octave-select" id="octave-select" onChange={handleOctave} value={seqParams.octave} >
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                    <option value="5"> 5 </option>
+                    <option value="6"> 6 </option>
+                    <option value="7"> 7 </option>
+                    <option value="8"> 8 </option>
+
+
+                </select>
+
+                {/* select for root note change, triggers handle root on change */}
+                <label htmlFor="root-select">Root Note: </label>
+                <select name="root-select" id="root-select" onChange={handleRoot} value={seqParams.rootNote}>
+
+                    {
+                        rootNotes.map((rootNote, i) => {
+                            return (
+                                <option key={i} value={rootNote}>{rootNote}</option>
+                            )
+                        })
+                    }
+
+                </select>
+
+                {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
+                <label htmlFor="BPM">BPM{seqParams.bpm}</label>
+                <input type="range" id="BPM" name="BPM"
+                    min="40" max="200" value={seqParams.bpm} onChange={handleBPM} />
+                
+
+            </div>
+<p></p>
+            
             <div className="step-select-container">
 
                 <select name="selectOne" id="step1" onChange={handleStep}>
@@ -426,50 +397,9 @@ function NewBeep() {
                     })}
                 </select>
             </div>
-
-            <div className="scale-select-container">
-                <select name="scale-select" id="scale-select" onChange={handleScaleName} >
-                    {scaleList.map((scale, i) => {
-                        return (
-                            <option key={i} value={scale}>{scale}</option>
-                        )
-                    })}
-                </select>
-
-                {/* select for octave choice, triggers handle octave on change */}
-                <select name="octave-select" id="octave-select" onChange={handleOctave} >
-                    <option value="1"> 1 </option>
-                    <option value="2"> 2 </option>
-                    <option value="3"> 3 </option>
-                    <option value="4"> 4 </option>
-                    <option value="5"> 5 </option>
-                    <option value="6"> 6 </option>
-                    <option value="7"> 7 </option>
-                    <option value="8"> 8 </option>
-
-
-                </select>
-
-                {/* select for root note change, triggers handle root on change */}
-                <select name="root-select" id="root-select" onChange={handleRoot}>
-
-                    {
-                        rootNotes.map((rootNote, i) => {
-                            return (
-                                <option key={i} value={rootNote}>{rootNote}</option>
-                            )
-                        })
-                    }
-
-                </select>
-
-                {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
-                <input type="range" id="BPM" name="BPM"
-                    min="40" max="200" value={seqParams.bpm} onChange={handleBPM} />
-                <label htmlFor="BPM">BPM{seqParams.bpm}</label>
-
-            </div>
-
+      <p></p>
+       
+            <button onClick={playButton}>{playButtonText}</button>
         </div>
     )
 
