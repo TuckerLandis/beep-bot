@@ -23,7 +23,7 @@ function NewBeep() {
             step7: null,
             step8: null,
 
-
+// other data drafts
             // steps: {
             //     1: null,
             //     2: null,
@@ -38,7 +38,7 @@ function NewBeep() {
         }
     )
 
-    // reference object for synth params. changed via inputs for synth params. read by tone.synth
+    // reference object for synth params. changed via inputs for synth params. read by tone.synth, defaults as follows
     const [synthParams, setSynthParams] = useState({
         oscillatorType: 'triangle8',
         env_attack: 0.01,
@@ -242,13 +242,16 @@ function NewBeep() {
                 // }
 
 
-
+                // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
                 const synth = new Tone.MonoSynth({
                     oscillator: {
-                        type: "triangle8"
+                        type: synthParams.oscillatorType
                     },
                     envelope: {
-                        attack: 0.1
+                        attack: synthParams.env_attack,
+                        decay: synthParams.env_decay,
+                        sustain: synthParams.env_sustain,
+                        release: synthParams.env_release
                     }
                 }).chain(volumeNode, filter2, Tone.Destination);
 
@@ -257,7 +260,7 @@ function NewBeep() {
                 const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
                     synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
                     // subdivisions are given as subarrays
-                }, steps).start(0); // which notes? notes array. start takes arg of "now" time
+                }, steps).start(0); // which notes? steps array. start takes arg of "now" time
 
                 // starts the transport. what actually STARTs our sequence
                 Tone.Transport.start();
