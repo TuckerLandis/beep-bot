@@ -22,6 +22,9 @@ function Nav() {
       <Link to="/home">
         <h2 className="nav-title">Prime Solo Project</h2>
       </Link>
+      <Link className="navLink" to="/newbeep">
+          New Beep
+        </Link>
       <div>
         <Link className="navLink" to={loginLinkData.path}>
           {loginLinkData.text}
