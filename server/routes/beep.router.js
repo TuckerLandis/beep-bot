@@ -6,14 +6,15 @@ const router = express.Router();
  * GET route template
  */
 router.get('/', (req, res) => {
-  // GET route code here
+  console.log('got to beep router (GET)');
+  
 });
 
 /**
  * POST route template
  */
 router.post('/', (req, res) => {
-  // POST route code here
+  console.log('got to beep router (POST)');
 });
 
 module.exports = router;
