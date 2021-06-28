@@ -23,7 +23,7 @@ function NewBeep() {
             step7: null,
             step8: null,
 
-// other data drafts
+            // other data drafts
             // steps: {
             //     1: null,
             //     2: null,
@@ -45,6 +45,8 @@ function NewBeep() {
         env_decay: 0.1,
         env_sustain: 0.9,
         env_release: 1,
+        filter_type: 'lowpass',
+        filter_cutoff: 1200
 
     })
 
@@ -180,256 +182,297 @@ function NewBeep() {
             case "env_attack":
                 console.log("env_attack");
                 setSynthParams({
-                    ...synthParams, env_attack: event.target.value
+                    ...synthParams, env_attack: Number(event.target.value)
                 })
                 break;
             case "env_decay":
                 console.log('changing env_decay');
                 setSynthParams({
-                    ...synthParams, env_decay: event.target.value
+                    ...synthParams, env_decay: Number(event.target.value)
                 })
                 break;
             case "env_sustain":
                 console.log('changing env_sustain');
                 setSynthParams({
-                    ...synthParams, env_sustain: event.target.value
+                    ...synthParams, env_sustain: Number(event.target.value)
                 })
                 break;
             case "env_release":
                 console.log('changing env_release');
                 setSynthParams({
-                    ...synthParams, env_release: event.target.value
+                    ...synthParams, env_release: Number(event.target.value)
                 })
                 break;
+                case "filter_type":
+                console.log('changing filter-type');
+                setSynthParams({
+                    ...synthParams, filter_type: event.target.value
+                })
+                break;
+                case "filter_cutoff":
+                    console.log('changing filter-cutoff');
+                    setSynthParams({
+                        ...synthParams, filter_cutoff: Number(event.target.value)
+                    })
+                    break;
 
 
         }
     }
-        // ----------------------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------------------
 
 
 
-        const playButton = () => { //// <--------<------<-----<------The play Button -------------------------- ////>
+    const playButton = () => { //// <--------<------<-----<------The play Button -------------------------- ////>
 
-            console.log(steps, seqParams, synthParams); // gives notes and seq params
-        
-
-            if (!isPlaying) {  // starts Tone if stopped
-                setIsPlaying(true)  // flips playing boolean
-                setPlayButtonText('stop') // flips button text
-
-                Tone.start() // start tone audio context on user interaction per spec of web audio api
-
-
-                // leaving space mentally for a section for configuring (stretch) probability of the sequence
-
-                Tone.Transport.bpm.value = seqParams.bpm; // sets BPM to input from BPM range select, sets state of BPM 
-
-                const volumeNode = new Tone.Volume(-18).toDestination();
-
-                // const filter = new Tone.Filter(600, "lowpass") base tonejs filter
-
-                const filter2 = new Tone.LowpassCombFilter(0.1, 0.2, 300) // slightly more complex, better sounding filter. delay time seems variable, but i may use this as my delay param for the synth
-
-                // args to the LowPassCombFilter
-                //     delayTime: Time,
-                //     // The delay time of the comb filter
-
-                //      resonance: NormalRange,
-                //    //  The resonance (feedback) of the comb filter
-
-                //      dampening: Frequency
-                //     // The cutoff of the lowpass filter dampens the signal as it is fedback.
-                // }
-
-
-                // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
-                const synth = new Tone.MonoSynth({
-                    oscillator: {
-                        type: synthParams.oscillatorType
-                    },
-                    envelope: {
-                        attack: synthParams.env_attack,
-                        decay: synthParams.env_decay,
-                        sustain: synthParams.env_sustain,
-                        release: synthParams.env_release
-                    }
-                }).chain(volumeNode, filter2, Tone.Destination);
+        console.log(steps, seqParams, synthParams); // gives notes and seq params
 
 
 
-                const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
-                    synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
-                    // subdivisions are given as subarrays
-                }, steps).start(0); // which notes? steps array. start takes arg of "now" time
 
-                // starts the transport. what actually STARTs our sequence
-                Tone.Transport.start();
+        if (!isPlaying) {  // starts Tone if stopped
+            setIsPlaying(true)  // flips playing boolean
+            setPlayButtonText('stop') // flips button text
+
+            Tone.start() // start tone audio context on user interaction per spec of web audio api
 
 
-            } else { // if transport is playing, 
-                setIsPlaying(false) // set play bool to off
-                setPlayButtonText('play') // flip play button text
-                Tone.Transport.stop(); // STOP the transport , music
-            }
+            // leaving space mentally for a section for configuring (stretch) probability of the sequence
+
+            Tone.Transport.bpm.value = seqParams.bpm; // sets BPM to input from BPM range select, sets state of BPM 
+
+            const volumeNode = new Tone.Volume(-18).toDestination();
+
+            // const filter = new Tone.Filter(synthParams.filter_cutoff, synthParams.filter_type) // base tonejs filter node, unsure difference of this verse mono synth property // need to change to input-cutoff and input type
+
+            // const filter2 = new Tone.LowpassCombFilter(0.1, 0.2, 300) // slightly more complex, better sounding filter. delay time seems variable, but i may use this as my delay param for the synth
+
+            // args to the LowPassCombFilter
+            //     delayTime: Time,
+            //     // The delay time of the comb filter
+
+            //      resonance: NormalRange,
+            //    //  The resonance (feedback) of the comb filter
+
+            //      dampening: Frequency
+            //     // The cutoff of the lowpass filter dampens the signal as it is fedback.
+            // }
+
+
+            // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
+            const synth = new Tone.MonoSynth({
+                oscillator: {
+                    type: synthParams.oscillatorType
+                },
+                envelope: {
+                    attack: synthParams.env_attack,
+                    decay: synthParams.env_decay,
+                    sustain: synthParams.env_sustain,
+                    release: synthParams.env_release
+                },
+                filter: {
+                    frequency: synthParams.filter_cutoff,
+                    type: synthParams.filter_type
+                }
+            }).chain(volumeNode, Tone.Destination);
+
+
+
+            const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
+                synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
+                // subdivisions are given as subarrays
+            }, steps).start(0); // which notes? steps array. start takes arg of "now" time
+
+            console.log(synth.get()); // logs synth params to ensure change is read
+
+            // starts the transport. what actually STARTs our sequence
+            Tone.Transport.start();
+
+
+        } else { // if transport is playing, 
+            setIsPlaying(false) // set play bool to off
+            setPlayButtonText('play') // flip play button text
+            Tone.Transport.stop(); // STOP the transport , music
         }
+    }
 
-        // main return to DOM of our sequencer component
-        return (
-            <div>
-                <div className="synth-params">
+    // main return to DOM of our sequencer component
+    return (
+        <div>
+            <div className="synth-params">
+                <div className="osc-type-container">
 
                 <label htmlFor="osc-type">Osc Type: </label>
                 <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
-                       
-                                <option  value="triangle8">Triangle</option>
-                                <option  value="square8">Square</option>
-                                <option  value="sine8">Sine</option>
-                                <option  value="saw8">Saw</option>  
-                    </select>
 
-                    <label htmlFor="attack">Attack: {synthParams.env_attack} </label>
+                    <option value="triangle8">Triangle</option>
+                    <option value="square8">Square</option>
+                    <option value="sine8">Sine</option>
+                    <option value="saw8">Saw</option>
+                </select>
+
+                </div>
+
+                <div className="filter-container">
+
+                <label htmlFor="filter-type">Filter Type: </label>
+                <select name="filter-type" id="filter-type" onChange={handleSynthParams} >
+
+                    <option value="lowpass">Low Pass</option>
+                    <option value="highpass">High Pass</option>
+                    <option value="bandpass">Band Pass</option>
+                    
+                </select>
+
+                <label htmlFor="filter-cutoff">Filter Cutoff: {synthParams.filter_cutoff} </label>
+                <input type="range" id="filter_cutoff" name="filter_cutoff"
+                    min="0" max="20000" value={synthParams.filter_cutoff} onChange={handleSynthParams} />
+
+                </div>
+               
+
+                <label htmlFor="attack">Attack: {synthParams.env_attack} </label>
                 <input type="range" id="env_attack" name="attack"
-                        min="0.001" max="1" value={synthParams.env_attack} onChange={handleSynthParams} step="0.025"/>
-                    
-                    <label htmlFor="decay">Decay: {synthParams.env_decay} </label>
-                    <input type="range" id="env_decay" name="decay"
-                        min="0.001" max="1" value={synthParams.env_decay} onChange={handleSynthParams} step="0.025"/>
-                    
-                    <label htmlFor="sustain">Sustain: {synthParams.env_sustain} </label>
-                    <input type="range" id="env_sustain" name="sustain"
-                        min="0.001" max="1" value={synthParams.env_sustain} onChange={handleSynthParams} step="0.025"/>
-                    
-                    <label htmlFor="release">Release: {synthParams.env_release} </label>
-                    <input type="range" id="env_release" name="release"
-                        min="0.001" max="1" value={synthParams.release} onChange={handleSynthParams} step="0.025" />
-                    
+                    min="0.001" max="1" value={synthParams.env_attack} onChange={handleSynthParams} step="0.025" />
+
+                <label htmlFor="decay">Decay: {synthParams.env_decay} </label>
+                <input type="range" id="env_decay" name="decay"
+                    min="0.001" max="1" value={synthParams.env_decay} onChange={handleSynthParams} step="0.025" />
+
+                <label htmlFor="sustain">Sustain: {synthParams.env_sustain} </label>
+                <input type="range" id="env_sustain" name="sustain"
+                    min="0.001" max="1" value={synthParams.env_sustain} onChange={handleSynthParams} step="0.025" />
+
+                <label htmlFor="release">Release: {synthParams.env_release} </label>
+                <input type="range" id="env_release" name="release"
+                    min="0.001" max="1" value={synthParams.release} onChange={handleSynthParams} step="0.025" />
 
 
-                </div>
-
-                <button onClick={playButton}>{playButtonText}</button>
-                <div className="step-select-container">
-
-                    <select name="selectOne" id="step1" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectTwo" id="step2" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectThree" id="step3" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectFour" id="step4" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectFive" id="step5" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectSix" id="step6" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectSeven" id="step7" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-
-                    <select name="selectEight" id="step8" onChange={handleStep}>
-                        {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                        {selectedScale.map((note, i) => {
-                            return (
-                                <option key={i} value={note}>{note}</option>
-                            )
-                        })}
-                    </select>
-                </div>
-
-                <div className="scale-select-container">
-                    <select name="scale-select" id="scale-select" onChange={handleScaleName} >
-                        {scaleList.map((scale, i) => {
-                            return (
-                                <option key={i} value={scale}>{scale}</option>
-                            )
-                        })}
-                    </select>
-
-                    {/* select for octave choice, triggers handle octave on change */}
-                    <select name="octave-select" id="octave-select" onChange={handleOctave} >
-                        <option value="1"> 1 </option>
-                        <option value="2"> 2 </option>
-                        <option value="3"> 3 </option>
-                        <option value="4"> 4 </option>
-                        <option value="5"> 5 </option>
-                        <option value="6"> 6 </option>
-                        <option value="7"> 7 </option>
-                        <option value="8"> 8 </option>
-
-
-                    </select>
-
-                    {/* select for root note change, triggers handle root on change */}
-                    <select name="root-select" id="root-select" onChange={handleRoot}>
-
-                        {
-                            rootNotes.map((rootNote, i) => {
-                                return (
-                                    <option key={i} value={rootNote}>{rootNote}</option>
-                                )
-                            })
-                        }
-
-                    </select>
-
-                    {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
-                    <input type="range" id="BPM" name="BPM"
-                        min="40" max="200" value={seqParams.bpm} onChange={handleBPM} />
-                    <label htmlFor="BPM">BPM{seqParams.bpm}</label>
-
-                </div>
 
             </div>
-        )
 
-    }
+            <button onClick={playButton}>{playButtonText}</button>
+            <div className="step-select-container">
 
-    export default NewBeep
+                <select name="selectOne" id="step1" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectTwo" id="step2" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectThree" id="step3" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectFour" id="step4" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectFive" id="step5" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectSix" id="step6" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectSeven" id="step7" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+
+                <select name="selectEight" id="step8" onChange={handleStep}>
+                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                    {selectedScale.map((note, i) => {
+                        return (
+                            <option key={i} value={note}>{note}</option>
+                        )
+                    })}
+                </select>
+            </div>
+
+            <div className="scale-select-container">
+                <select name="scale-select" id="scale-select" onChange={handleScaleName} >
+                    {scaleList.map((scale, i) => {
+                        return (
+                            <option key={i} value={scale}>{scale}</option>
+                        )
+                    })}
+                </select>
+
+                {/* select for octave choice, triggers handle octave on change */}
+                <select name="octave-select" id="octave-select" onChange={handleOctave} >
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                    <option value="5"> 5 </option>
+                    <option value="6"> 6 </option>
+                    <option value="7"> 7 </option>
+                    <option value="8"> 8 </option>
+
+
+                </select>
+
+                {/* select for root note change, triggers handle root on change */}
+                <select name="root-select" id="root-select" onChange={handleRoot}>
+
+                    {
+                        rootNotes.map((rootNote, i) => {
+                            return (
+                                <option key={i} value={rootNote}>{rootNote}</option>
+                            )
+                        })
+                    }
+
+                </select>
+
+                {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
+                <input type="range" id="BPM" name="BPM"
+                    min="40" max="200" value={seqParams.bpm} onChange={handleBPM} />
+                <label htmlFor="BPM">BPM{seqParams.bpm}</label>
+
+            </div>
+
+        </div>
+    )
+
+}
+
+export default NewBeep
