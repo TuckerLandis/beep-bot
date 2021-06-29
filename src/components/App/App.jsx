@@ -14,7 +14,7 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import CommunityPage from '../CommunityPage/CommunityPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -75,7 +75,7 @@ function App() {
             exact
             path="/user"
           >
-            <UserPage />
+            <CommunityPage />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -95,7 +95,7 @@ function App() {
             // - else shows LoginPage at /login
             exact
             path="/login"
-            authRedirect="/user"
+            authRedirect="/community"
           >
             <LoginPage />
           </ProtectedRoute>
@@ -106,7 +106,7 @@ function App() {
             // - else shows RegisterPage at "/registration"
             exact
             path="/registration"
-            authRedirect="/user"
+            authRedirect="/community"
           >
             <RegisterPage />
           </ProtectedRoute>
@@ -117,7 +117,7 @@ function App() {
             // - else shows LandingPage at "/home"
             exact
             path="/home"
-            authRedirect="/user"
+            authRedirect="/community"
           >
             <LandingPage />
           </ProtectedRoute>
