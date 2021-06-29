@@ -4,8 +4,18 @@ body,
   height: 100%;
 }
 
+/* uncomment for robot font  */
+/* @font-face {
+  font-family: 'vt323regular';
+  src: url('../../assets/VT323/webfontkit-20210628-231156/vt323-regular-webfont.woff2') format('woff2'),
+       url('../../assets/VT323/webfontkit-20210628-231156/vt323-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+} */
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
 }
 

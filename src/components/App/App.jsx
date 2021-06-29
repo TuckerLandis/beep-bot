@@ -14,7 +14,7 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import CommunityPage from '../CommunityPage/CommunityPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 //added
 import NewBeep from '../NewBeep/NewBeep';
+import UserBeeps from '../UserBeeps/UserBeeps'
 
 import './App.css';
 
@@ -57,6 +58,14 @@ function App() {
             <NewBeep />
           </Route>
 
+
+          <Route 
+          exact 
+          path="/userbeeps"
+          >
+            <UserBeeps />
+          </Route>
+
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -64,9 +73,9 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user"
+            path="/community"
           >
-            <UserPage />
+            <CommunityPage />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -86,7 +95,7 @@ function App() {
             // - else shows LoginPage at /login
             exact
             path="/login"
-            authRedirect="/user"
+            authRedirect="/community"
           >
             <LoginPage />
           </ProtectedRoute>
@@ -97,7 +106,7 @@ function App() {
             // - else shows RegisterPage at "/registration"
             exact
             path="/registration"
-            authRedirect="/user"
+            authRedirect="/community"
           >
             <RegisterPage />
           </ProtectedRoute>
@@ -108,7 +117,7 @@ function App() {
             // - else shows LandingPage at "/home"
             exact
             path="/home"
-            authRedirect="/user"
+            authRedirect="/community"
           >
             <LandingPage />
           </ProtectedRoute>

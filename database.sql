@@ -29,7 +29,9 @@ CREATE TABLE "beep" (
 	"octave" varchar(20) NOT NULL,
 	"root" varchar(20) NOT NULL,
 	"bpm" integer(3) NOT NULL,
-	"notes" varchar(1000) NOT NULL,
+	"steps" varchar(1000) NOT NULL,
 );
 
 
+--CHANGES--
+--beeps need a date

@@ -13,8 +13,8 @@ function Nav() {
   };
 
   if (user.id != null) {
-    loginLinkData.path = '/user';
-    loginLinkData.text = 'Home';
+    loginLinkData.path = '/community';
+    loginLinkData.text = 'Community';
   }
 
   return (
@@ -24,6 +24,9 @@ function Nav() {
       </Link>
       <Link className="navLink" to="/newbeep">
           New Beep
+        </Link>
+        <Link className="navLink" to="/userbeeps">
+          Your Beeps
         </Link>
       <div>
         <Link className="navLink" to={loginLinkData.path}>
