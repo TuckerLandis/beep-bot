@@ -14,7 +14,7 @@ function* saveBeep (action) {
 
 export function* beepSaga() {
     yield takeEvery('SAVE_NEW_BEEP', saveBeep);
-    
+    yield takeEvery('FETCH_USER_BEEPS', fetchUserBeeps)
   }
   
   
