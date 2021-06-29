@@ -2,11 +2,12 @@ import { useState } from 'react';
 import * as Tone from 'tone'
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch } from 'react-redux';
+import PlayButton from '../PlayButton/PlayButton';
 
 
 // ! todo
 /* 
-add modal for saving, name. upon name, render name. nice. also need DB column for name at next table drop
+!!!!!! add modal for saving, name. upon name, render name. nice. also need DB column for name at next table drop
 refactor handleStep
 refactor render functions
 refactor entire file while you're at it
@@ -63,7 +64,7 @@ function NewBeep() {
     let scaleList = ["major", "minor", "pentatonic"]
 
     // our "sequence", to be manipulated on change of the values below / above.
-    let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
+    let newSteps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
 
@@ -152,51 +153,7 @@ function NewBeep() {
 
 
 
-    const playButton = () => { //// <--------<------<-----<------The play Button -------------------------- ////>
 
-        console.log(steps, seqParams, synthParams); // gives notes and seq params
-
-        if (!isPlaying) {  // starts Tone if stopped
-            setIsPlaying(true)  // flips playing boolean
-            setPlayButtonText('stop') // flips button text
-
-            Tone.start() // start tone audio context on user interaction per spec of web audio api
-
-
-            // leaving space mentally for a section for configuring (stretch) probability of the sequence
-
-            Tone.Transport.bpm.value = seqParams.bpm; // sets BPM to input from BPM range select, sets state of BPM 
-
-            const volumeNode = new Tone.Volume(-18).toDestination();
-
-            // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
-            const synth = new Tone.MonoSynth({
-                oscillator: {
-                    type: synthParams.oscillatorType
-                },
-                filter: {
-                    frequency: synthParams.filter_cutoff,
-                    type: synthParams.filter_type
-                }
-            }).chain(volumeNode, Tone.Destination);
-
-            const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
-                synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
-                // subdivisions are given as subarrays
-            }, steps).start(0); // which notes? steps array. start takes arg of "now" time
-
-            console.log(synth.get()); // logs synth params to ensure change is read
-
-            // starts the transport. what actually STARTs our sequence
-            Tone.Transport.start();
-
-
-        } else { // if transport is playing, 
-            setIsPlaying(false) // set play bool to off
-            setPlayButtonText('play') // flip play button text
-            Tone.Transport.stop(); // STOP the transport , music
-        }
-    }
 
 
     // Post Dispatch
@@ -211,7 +168,7 @@ function NewBeep() {
             octave: seqParams.octave,
             root: seqParams.rootNote,
             bpm: seqParams.bpm,
-            steps: steps
+            steps: newSteps
         }
 
         console.log('saving a beep :)', beep);
@@ -389,8 +346,9 @@ function NewBeep() {
             </div>
             <p></p>
 
-            <button onClick={playButton}>{playButtonText}</button>
+            <PlayButton steps={newSteps} seqParams={seqParams} synthParams={synthParams} />
             <button onClick={handleSave}>save</button>
+
         </div>
     )
 
