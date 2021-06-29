@@ -66,60 +66,13 @@ function NewBeep() {
     let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
-    // ! todo: rewrite handlestep in like 1/8 the lines
-    function handleStep(event) {
-        switch (event.target.id) {
-            case "step1":
-                console.log('changing step1');
-                setSeqParams({
-                    ...seqParams, step1: event.target.value
-                })
-                break;
-            case "step2":
-                console.log('changing step2');
-                setSeqParams({
-                    ...seqParams, step2: event.target.value
-                })
-                break;
-            case "step3":
-                console.log('changing step3');
-                setSeqParams({
-                    ...seqParams, step3: event.target.value
-                })
-                break;
-            case "step4":
-                console.log('changing step4');
-                setSeqParams({
-                    ...seqParams, step4: event.target.value
-                })
-                break;
-            case "step5":
-                console.log('changing step5');
-                setSeqParams({
-                    ...seqParams, step5: event.target.value
-                })
-                break;
-            case "step6":
-                console.log('changing step6');
-                setSeqParams({
-                    ...seqParams, step6: event.target.value
-                })
-                break;
-            case "step7":
-                console.log('changing step7');
-                setSeqParams({
-                    ...seqParams, step7: event.target.value
-                })
-                break;
-            case "step8":
-                console.log('changing step8');
-                setSeqParams({
-                    ...seqParams, step8: event.target.value
-                })
-                break;
-            default: console.log('nothing happened in step switch');
 
-        }
+
+    function handleStep (event) {
+        console.log('changing: ', event.target.id);
+        setSeqParams({
+            ...seqParams, [event.target.id] : event.target.value
+        })
     }
 
 
