@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 //added
 import NewBeep from '../NewBeep/NewBeep';
+import UserBeeps from '../UserBeeps/UserBeeps'
 
 import './App.css';
 
@@ -55,6 +56,14 @@ function App() {
           path="/newbeep"
           >
             <NewBeep />
+          </Route>
+
+
+          <Route 
+          exact 
+          path="/userbeeps"
+          >
+            <UserBeeps />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.

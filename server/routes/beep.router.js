@@ -6,8 +6,19 @@ const router = express.Router();
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
+router.get('/user', (req, res) => {
   console.log('got to beep router (GET)');
+
+  let queryText = `SELECT * FROM "beep" WHERE user_id= $1;`;
+
+  pool.query(queryText, [req.user.id])
+  .then(result => {
+    res.send(result.rows)
+  })
+  .catch(error => {
+    console.log('error', error);
+    res.sendStatus(500);
+  })
   
 });
 

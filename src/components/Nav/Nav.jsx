@@ -25,6 +25,9 @@ function Nav() {
       <Link className="navLink" to="/newbeep">
           New Beep
         </Link>
+        <Link className="navLink" to="/userbeeps">
+          Your Beeps
+        </Link>
       <div>
         <Link className="navLink" to={loginLinkData.path}>
           {loginLinkData.text}
