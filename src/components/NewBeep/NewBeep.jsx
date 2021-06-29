@@ -3,6 +3,17 @@ import * as Tone from 'tone'
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch } from 'react-redux';
 
+
+// ! todo
+/* 
+add modal for saving, name. upon name, render name. nice. also need DB column for name at next table drop
+refactor handleStep
+refactor render functions
+refactor entire file while you're at it
+
+
+*/
+
 function NewBeep() {
     const dispatch = useDispatch()
     // states for playing boolean and for playbutton text. these get flipped when pressing play or stop
