@@ -13,8 +13,8 @@ function Nav() {
   };
 
   if (user.id != null) {
-    loginLinkData.path = '/user';
-    loginLinkData.text = 'Home';
+    loginLinkData.path = '/community';
+    loginLinkData.text = 'Community';
   }
 
   return (

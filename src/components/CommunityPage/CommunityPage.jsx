@@ -8,11 +8,11 @@ function CommunityPage() {
     dispatch({ type: 'FETCH_COMMUNITY_BEEPS' });
   }, []);
   
-  const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store.community);
 
   return (
     <div className="container">
-      <h2>Welcome, {user.username}!</h2>
+      <h2>Welcome!</h2>
       <p>Here are some beeps from your friends</p>
       
     </div>

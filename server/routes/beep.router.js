@@ -6,10 +6,10 @@ const router = express.Router();
 /**
  * GET For User Beeps. Gets the user's beeps upon <UserBeeps /> useEffect
  */
-router.get('/user', (req, res) => {
-  console.log('got to beep router (GET)');
+router.get('/community', (req, res) => {
+  console.log('got to beep router (GET) (COMMUNITY)');
 
-  let queryText = `SELECT * FROM "beep" WHERE user_id= $1;`;
+  let queryText = `SELECT * FROM "beep" WHERE user_id != $1;`;
 
   pool.query(queryText, [req.user.id])
   .then(result => {
@@ -27,9 +27,9 @@ router.get('/user', (req, res) => {
  * GET For Community Beeps. Gets the user's beeps upon <UserBeeps /> useEffect
  */
  router.get('/user', (req, res) => {
-  console.log('got to beep router (GET)');
+  console.log('got to beep router (GET) (USER)');
 
-  let queryText = `SELECT * FROM "beep" WHERE user_id= $1;`;
+  let queryText = `SELECT * FROM "beep" WHERE user_id = $1;`;
 
   pool.query(queryText, [req.user.id])
   .then(result => {
