@@ -22,6 +22,26 @@ router.get('/user', (req, res) => {
   
 });
 
+
+/**
+ * GET For Community Beeps. Gets the user's beeps upon <UserBeeps /> useEffect
+ */
+ router.get('/user', (req, res) => {
+  console.log('got to beep router (GET)');
+
+  let queryText = `SELECT * FROM "beep" WHERE user_id= $1;`;
+
+  pool.query(queryText, [req.user.id])
+  .then(result => {
+    res.send(result.rows)
+  })
+  .catch(error => {
+    console.log('error', error);
+    res.sendStatus(500);
+  })
+  
+});
+
 /**
  * POST For saving a beep. Posts a beep object to the DB upon pressing save on edit/create page
  */
