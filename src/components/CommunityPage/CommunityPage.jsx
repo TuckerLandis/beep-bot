@@ -1,5 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import * as Tone from 'tone'
+import { Note, Scale } from "@tonaljs/tonal";
 
 function CommunityPage() {
   const dispatch = useDispatch()
@@ -8,11 +10,37 @@ function CommunityPage() {
     dispatch({ type: 'FETCH_COMMUNITY_BEEPS' });
   }, []);
   
-  const communityBeeps = useSelector((store) => store.community);
+  const communityBeeps = useSelector((store) => store.communityBeeps);
 
-  const playButton = () => { //// <--------<------<-----<------The play Button -------------------------- ////>
+  const [isPlaying, setIsPlaying] = useState(false)
+    const [playButtonText, setPlayButtonText] = useState('play')
 
-    console.log(steps, seqParams, synthParams); // gives notes and seq params
+  function playButton (beep) { //// <--------<------<-----<------The play Button -------------------------- ////>
+
+
+    console.log('ln 31', beep.steps)
+    // beep.steps.filter()
+
+    const synthParams = {
+      oscillatorType: beep.osc_type,
+      filter_type: beep.filter_type,
+      filter_cutoff: beep.filter_cutoff
+    }
+
+    const seqParams = {
+      scale: beep.scale,
+      octave: beep.ocatave,
+      root: beep.root,
+      bpm: beep.bpm,
+      steps: beep.steps
+    }
+
+    const steps = seqParams.steps
+
+    console.log(steps);
+
+
+    // console.log(steps, seqParams, synthParams); // gives notes and seq params
 
     if (!isPlaying) {  // starts Tone if stopped
         setIsPlaying(true)  // flips playing boolean
@@ -65,9 +93,9 @@ function CommunityPage() {
 
       {communityBeeps.map((beep, i) => {
         return (
-          <div>
+          <div key={i}>
           <p>Beepname</p> 
-          <button onClick={playButton}>{playButtonText}</button>
+          <button onClick={() => playButton(beep)}>{playButtonText}</button>
           </div>
         
         
