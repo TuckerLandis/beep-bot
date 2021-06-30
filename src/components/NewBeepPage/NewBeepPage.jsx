@@ -114,7 +114,7 @@ function NewBeepPage() {
     // handles scale option select, calls handleScaleChoice
     const handleScaleName = (event) => {
         setBeep({
-            ...beep, scaleName: event.target.value
+            ...beep, scale: event.target.value
         })
         handleScaleChoice()
     }
@@ -182,20 +182,36 @@ function NewBeepPage() {
     const handleSave = () => {
         console.log('saving a beep :)', beep);
 
-        
+        (async () => {
 
+            const { value: name } = await Swal.fire({
+              title: 'What should we call this beep?',
+              input: 'text',
+              inputPlaceholder: 'Enter a name for your beep',
+              showCancelButton: true,
+              inputValidator: (value) => {
+                if (!value) {
+                  return 'You need to write something!'
+                }
+              }
+            })
+            
+            if (name) {
+              setBeep({
+                  ...beep, name : name
+              })
 
+              dispatch({
+                type: 'SAVE_NEW_BEEP',
+                payload: beep
+            })
+            }
+          
 
-       
-
+            })()
     }
 
-    function dispatchBeep(beep) {
-        dispatch({
-            type: 'SAVE_NEW_BEEP',
-            payload: beep
-        })
-    }
+
 
 
     // main return to DOM of our sequencer component
