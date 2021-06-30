@@ -6,7 +6,6 @@ import PlayButton from '../PlayButton/PlayButton';
 /* 
 ! ToDo
 
-!display = date created, name
 !load button => selected beep reducer
 
 */ 

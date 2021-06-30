@@ -19,16 +19,16 @@ function NewBeepPage() {
     const dispatch = useDispatch()
 
     // for catching input changes
-    const [steps, setSteps] = useState({
-        step1: null,
-        step2: null,
-        step3: null,
-        step4: null,
-        step5: null,
-        step6: null,
-        step7: null,
-        step8: null,
-    })
+    // const [steps, setSteps] = useState({
+    //     step1: null,
+    //     step2: null,
+    //     step3: null,
+    //     step4: null,
+    //     step5: null,
+    //     step6: null,
+    //     step7: null,
+    //     step8: null,
+    // })
 
     // our "sequence", to be manipulated on change of the values below / above.
     // const stepsArray = [steps.step1, steps.step2, steps.step3, steps.step4, steps.step5, steps.step6, steps.step7, steps.step8]
@@ -42,7 +42,7 @@ function NewBeepPage() {
         octave: 4,
         root: 'C',
         bpm: 120,
-        steps: [steps.step1, steps.step2, steps.step3, steps.step4, steps.step5, steps.step6, steps.step7, steps.step8]
+        steps: [null, null, null, null, null, null, null, null]
     })
 
     // sets an array of all notes to be the options in the root note select map
@@ -63,10 +63,18 @@ function NewBeepPage() {
 
     function handleStep(event) {
         console.log('changing: ', event.target.id);
-        setSteps({
-            ...steps, [event.target.id]: event.target.value
-        })
+        console.log([...beep.steps]);
+        switch (event.target.id) {
+            case "step1":
+                    setBeep({
+                        ...beep.steps, steps //splice( 0, 1, event.target.value)
+                    })
+        }
     }
+
+    
+
+   
 
     // ! todo: rewrite handle SeqParams as one
     // BPM handler, gets saved
