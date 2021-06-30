@@ -1,34 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Tone from 'tone'
 import { useLocation } from "react-router";
+import { useDispatch } from "react-redux";
+
 
 function PlayButton (props) { //// <--------<------<-----<------The play Button -------------------------- ////> nned to abstract, pass in steps?
     // 
     const location = useLocation()
+    const dispatch = useDispatch()
     const [isPlaying, setIsPlaying] = useState(false)
     const [playButtonText, setPlayButtonText] = useState('play')
-    let steps = []
-    let synthParams
+    let steps 
     let seqParams
+    let synthParams
+
+    // const [steps, setSteps] = useState([])
+    // const [synthParams, setSynthParams] = useState({})
+    // let [seqParams, setSeqParams] = useState({})
     
+
+    useEffect(() => {
+        setBeep();
+      }, []);
+
     
+function setBeep () {
+    if (location.pathname = '/newbeep') {
+        steps = props.newSteps
+         seqParams = props.newSeqParams
+         synthParams = props.newSynthParams
+     } 
+
+     else if (location.pathname = '/userbeeps') {
+        console.log(props.userBeep);
+        steps = props.userBeep.userSteps
+        seqParams = props.userBeep
+        synthParams = props.userBeep
+    }
+    
+     console.log(seqParams, steps, synthParams);
+     
+}
+
+
 
     function startStop () {
 
         console.log('clicked?');
+        console.log(steps);
         
+        
+        setBeep()
+      
 
-        if (location.pathname = '/newbeep') {
-            steps = props.newSteps
-            seqParams = props.newSeqParams
-            synthParams = props.newSynthParams
-        } 
-        if (location.pathname = '/userbeeps') {
-            console.log(props.userBeep);
-            steps = props.userBeep.userSteps
-            seqParams = props.userBeep
-            synthParams = props.userBeep
-        }
+        
+    
 
         
 
@@ -75,8 +101,11 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
 
 
 
-
+        console.log('83', steps); 
+        // is empty. shouldn't be
     }
+    
+    
     
     return (
         <button onClick={()=> startStop()}>{playButtonText}</button>
