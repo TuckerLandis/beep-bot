@@ -25,13 +25,16 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
 
     
 function setBeep () {
-    if (location.pathname = '/newbeep') {
+
+    console.log(location);
+    
+    if (location.pathname === '/newbeep') {
         steps = props.newSteps
-         seqParams = props.newSeqParams
-         synthParams = props.newSynthParams
+        seqParams = props.newSeqParams
+        synthParams =props.newSynthParams
      } 
 
-     else if (location.pathname = '/userbeeps') {
+     if (location.pathname === '/userbeeps') {
         console.log(props.userBeep);
         steps = props.userBeep.userSteps
         seqParams = props.userBeep
@@ -47,7 +50,6 @@ function setBeep () {
     function startStop () {
 
         console.log('clicked?');
-        console.log(steps);
         
         
         setBeep()
@@ -74,7 +76,7 @@ function setBeep () {
             // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
             const synth = new Tone.MonoSynth({
                 oscillator: {
-                    type: synthParams.oscillatorType
+                    type: synthParams.osc_type
                 },
                 filter: {
                     frequency: synthParams.filter_cutoff,
@@ -101,7 +103,7 @@ function setBeep () {
 
 
 
-        console.log('83', steps); 
+        console.log('106', steps); 
         // is empty. shouldn't be
     }
     

@@ -18,8 +18,8 @@ refactor entire file while you're at it
 function NewBeep() {
     const dispatch = useDispatch()
     // states for playing boolean and for playbutton text. these get flipped when pressing play or stop
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [playButtonText, setPlayButtonText] = useState('play')
+    // const [isPlaying, setIsPlaying] = useState(false)
+    // const [playButtonText, setPlayButtonText] = useState('play')
 
     // default beep sequence
     const [seqParams, setSeqParams] = useState(
@@ -42,18 +42,18 @@ function NewBeep() {
 
     // reference object for synth params. changed via inputs for synth params. read by tone.synth, defaults as follows
     const [synthParams, setSynthParams] = useState({
-        oscillatorType: 'triangle8',
-        env_attack: 0.01,
-        env_decay: 0.1,
-        env_sustain: 0.9,
-        env_release: 1,
+        osc_type: 'triangle8',
+        // env_attack: 0.01,
+        // env_decay: 0.1,
+        // env_sustain: 0.9,
+        // env_release: 1,
         filter_type: 'lowpass',
         filter_cutoff: 1200
 
     })
 
     // sets an array of all notes to be the options in the root note select map
-    const rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+    let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
     // default notes array
     const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
@@ -61,7 +61,7 @@ function NewBeep() {
     const [selectedScale, setSelectedScale] = useState(c_major) // set this to scaleChoice function ? --useeffect scaleschoice function
 
     // select populator for scale choice
-    let scaleList = ["major", "minor", "pentatonic"]
+    let scaleList = ["major", "minor", "pentatonic", "mixolydian"]
 
     // our "sequence", to be manipulated on change of the values below / above.
     let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
@@ -132,7 +132,7 @@ function NewBeep() {
             case "osc-type":
                 console.log('changing osc-type');
                 setSynthParams({
-                    ...synthParams, oscillatorType: event.target.value
+                    ...synthParams, osc_type: event.target.value
                 })
                 break;
             case "filter_type":
@@ -157,14 +157,14 @@ function NewBeep() {
 
 
         let beep = {
-            osc_type: synthParams.oscillatorType,
+            osc_type: synthParams.osc_type,
             filter_type: synthParams.filter_type,
             filter_cutoff: synthParams.filter_cutoff,
             scale: seqParams.scaleName,
             octave: seqParams.octave,
             root: seqParams.rootNote,
             bpm: seqParams.bpm,
-            steps: newSteps
+            steps: steps
         }
 
         console.log('saving a beep :)', beep);

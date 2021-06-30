@@ -19,38 +19,21 @@ const userBeeps = useSelector(store => store.userBeeps)
         dispatch({ type: 'FETCH_USER_BEEPS' });
       }, []);
 
+
     console.log('user beeps :)', userBeeps);
-
-    let userBeepList = [];
-
-    // sets a local list to the return of store selector/userbeeps
-    userBeeps.forEach(beep => 
-      
-        userBeepList.push( // this can change when i rewrite newbeep
-            {
-                oscillatorType: beep.osc_type,
-                filter_type: beep.filter_type,
-                filter_cutoff: beep.filter_cutoff,
-                scale: beep.scale,
-                octave: beep.ocatave,
-                root: beep.root,
-                bpm: beep.bpm,
-                userSteps: beep.steps
-                    }
-        ))
 
     return (
           <div className="container">
       <h2>Your Beeps</h2>
 
 
-      {userBeepList.map((beep, i) => {
+      {userBeeps.map((beep, i) => {
           console.log(beep);
         return (
           <div key={i}>
               {/* TODO contain info about beep when DB represents it */}
           <p>Beepname</p>
-          <PlayButton userBeep={beep} />
+          <PlayButton userBeep={beep} key={i}/>
           </div>
         
         
