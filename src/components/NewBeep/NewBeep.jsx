@@ -2,11 +2,12 @@ import { useState } from 'react';
 import * as Tone from 'tone'
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch } from 'react-redux';
+import PlayButton from '../PlayButton/PlayButton';
 
 
 // ! todo
 /* 
-add modal for saving, name. upon name, render name. nice. also need DB column for name at next table drop
+!!!!!! add modal for saving, name. upon name, render name. nice. also need DB column for name at next table drop
 refactor handleStep
 refactor render functions
 refactor entire file while you're at it
@@ -14,45 +15,23 @@ refactor entire file while you're at it
 
 */
 
-function NewBeep() {
+function NewBeepPage() {
     const dispatch = useDispatch()
-    // states for playing boolean and for playbutton text. these get flipped when pressing play or stop
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [playButtonText, setPlayButtonText] = useState('play')
 
-    // default beep sequence
-    const [seqParams, setSeqParams] = useState(
-        {
-            scaleName: 'major',
-            octave: 4,
-            rootNote: 'C',
-            bpm: 120,
-            step1: null,
-            step2: null,
-            step3: null,
-            step4: null,
-            step5: null,
-            step6: null,
-            step7: null,
-            step8: null,
-
-        }
-    )
-
-    // reference object for synth params. changed via inputs for synth params. read by tone.synth, defaults as follows
-    const [synthParams, setSynthParams] = useState({
-        oscillatorType: 'triangle8',
-        env_attack: 0.01,
-        env_decay: 0.1,
-        env_sustain: 0.9,
-        env_release: 1,
+    // default beep
+    const [beep, setBeep] = useState({
+        osc_type: 'triangle8',
         filter_type: 'lowpass',
-        filter_cutoff: 1200
-
+        filter_cutoff: 1200,
+        scale: "major",
+        octave: 4,
+        root: 'C',
+        bpm: 120,
+        steps: [null, null, null, null, null, null, null, null]
     })
 
     // sets an array of all notes to be the options in the root note select map
-    const rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+    let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
     // default notes array
     const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
@@ -60,50 +39,98 @@ function NewBeep() {
     const [selectedScale, setSelectedScale] = useState(c_major) // set this to scaleChoice function ? --useeffect scaleschoice function
 
     // select populator for scale choice
-    let scaleList = ["major", "minor", "pentatonic"]
+    let scaleList = ["major", "minor", "pentatonic", "chromatic", "mixolydian", "aeolian"]
 
-    // our "sequence", to be manipulated on change of the values below / above.
-    let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
+
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
 
 
-    function handleStep (event) {
+    function handleStep(event) {
         console.log('changing: ', event.target.id);
-        setSeqParams({
-            ...seqParams, [event.target.id] : event.target.value
-        })
+        let newSteps = beep.steps
+
+        switch (event.target.id) {
+            case "step1":
+                newSteps.splice(0, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step2":
+                newSteps.splice(1, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step3":
+                newSteps.splice(2, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step4":
+                newSteps.splice(3, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step5":
+                newSteps.splice(4, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step6":
+                newSteps.splice(5, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step7":
+                newSteps.splice(6, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step8":
+                newSteps.splice(7, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+        }
     }
 
 
     // ! todo: rewrite handle SeqParams as one
     // BPM handler, gets saved
     const handleBPM = (event) => {
-        setSeqParams({
-            ...seqParams, bpm: event.target.value
+        setBeep({
+            ...beep, bpm: event.target.value
         })
     }
 
     // handles scale option select, calls handleScaleChoice
     const handleScaleName = (event) => {
-        setSeqParams({
-            ...seqParams, scaleName: event.target.value
+        setBeep({
+            ...beep, scaleName: event.target.value
         })
         handleScaleChoice()
     }
 
     // handles octave change, calls handle scale choice
     const handleOctave = (event) => {
-        setSeqParams({
-            ...seqParams, octave: event.target.value
+        setBeep({
+            ...beep, octave: event.target.value
         })
         handleScaleChoice()
     }
 
     // handles change of rootnote, calls handle scale choice
     const handleRoot = (event) => {
-        setSeqParams({
-            ...seqParams, rootNote: event.target.value
+        setBeep({
+            ...beep, rootNote: event.target.value
         })
         handleScaleChoice()
     }
@@ -111,11 +138,11 @@ function NewBeep() {
     // overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
     // and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
     function handleScaleChoice() {
-        let scaleO = (Scale.get(`${seqParams.rootNote} ${seqParams.scaleName}`).notes) // sets temp var to scale.get using root note and scalename
+        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes) // sets temp var to scale.get using root note and scalename
 
         // loops over scale array, and adds the respective octave to the array for rendering by Tone
         for (let i = 0; i < scaleO.length; i++) {
-            scaleO[i] += seqParams.octave
+            scaleO[i] += beep.octave
         }
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors
         scaleO.unshift('off')
@@ -130,20 +157,20 @@ function NewBeep() {
         switch (event.target.id) {
             case "osc-type":
                 console.log('changing osc-type');
-                setSynthParams({
-                    ...synthParams, oscillatorType: event.target.value
+                setBeep({
+                    ...beep, osc_type: event.target.value
                 })
                 break;
             case "filter_type":
                 console.log('changing filter-type');
-                setSynthParams({
-                    ...synthParams, filter_type: event.target.value
+                setBeep({
+                    ...beep, filter_type: event.target.value
                 })
                 break;
             case "filter_cutoff":
                 console.log('changing filter-cutoff');
-                setSynthParams({
-                    ...synthParams, filter_cutoff: Number(event.target.value)
+                setBeep({
+                    ...beep, filter_cutoff: Number(event.target.value)
                 })
                 break;
         }
@@ -151,69 +178,8 @@ function NewBeep() {
 
 
 
-
-    const playButton = () => { //// <--------<------<-----<------The play Button -------------------------- ////>
-
-        console.log(steps, seqParams, synthParams); // gives notes and seq params
-
-        if (!isPlaying) {  // starts Tone if stopped
-            setIsPlaying(true)  // flips playing boolean
-            setPlayButtonText('stop') // flips button text
-
-            Tone.start() // start tone audio context on user interaction per spec of web audio api
-
-
-            // leaving space mentally for a section for configuring (stretch) probability of the sequence
-
-            Tone.Transport.bpm.value = seqParams.bpm; // sets BPM to input from BPM range select, sets state of BPM 
-
-            const volumeNode = new Tone.Volume(-18).toDestination();
-
-            // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
-            const synth = new Tone.MonoSynth({
-                oscillator: {
-                    type: synthParams.oscillatorType
-                },
-                filter: {
-                    frequency: synthParams.filter_cutoff,
-                    type: synthParams.filter_type
-                }
-            }).chain(volumeNode, Tone.Destination);
-
-            const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
-                synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
-                // subdivisions are given as subarrays
-            }, steps).start(0); // which notes? steps array. start takes arg of "now" time
-
-            console.log(synth.get()); // logs synth params to ensure change is read
-
-            // starts the transport. what actually STARTs our sequence
-            Tone.Transport.start();
-
-
-        } else { // if transport is playing, 
-            setIsPlaying(false) // set play bool to off
-            setPlayButtonText('play') // flip play button text
-            Tone.Transport.stop(); // STOP the transport , music
-        }
-    }
-
-
     // Post Dispatch
     const handleSave = () => {
-
-
-        let beep = {
-            osc_type: synthParams.oscillatorType,
-            filter_type: synthParams.filter_type,
-            filter_cutoff: synthParams.filter_cutoff,
-            scale: seqParams.scaleName,
-            octave: seqParams.octave,
-            root: seqParams.rootNote,
-            bpm: seqParams.bpm,
-            steps: steps
-        }
-
         console.log('saving a beep :)', beep);
         dispatchBeep(beep)
 
@@ -235,11 +201,10 @@ function NewBeep() {
 
                     <label htmlFor="osc-type">Osc Type: </label>
                     <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
-
                         <option value="triangle8">Triangle</option>
                         <option value="square8">Square</option>
                         <option value="sine8">Sine</option>
-                        <option value="saw8">Saw</option>
+                        <option value="sawtooth">Saw</option>
                     </select>
 
                 </div>
@@ -255,9 +220,9 @@ function NewBeep() {
 
                     </select>
 
-                    <label htmlFor="filter-cutoff">Filter Cutoff: {synthParams.filter_cutoff} </label>
+                    <label htmlFor="filter-cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
                     <input type="range" id="filter_cutoff" name="filter_cutoff"
-                        min="0" max="20000" value={synthParams.filter_cutoff} onChange={handleSynthParams} />
+                        min="0" max="20000" value={beep.filter_cutoff} onChange={handleSynthParams} />
 
                 </div>
 
@@ -277,7 +242,7 @@ function NewBeep() {
 
                 {/* select for octave choice, triggers handle octave on change */}
                 <label htmlFor="octave-select">Octave: </label>
-                <select name="octave-select" id="octave-select" onChange={handleOctave} value={seqParams.octave} >
+                <select name="octave-select" id="octave-select" onChange={handleOctave} value={beep.octave} >
                     <option value="1"> 1 </option>
                     <option value="2"> 2 </option>
                     <option value="3"> 3 </option>
@@ -290,7 +255,7 @@ function NewBeep() {
 
                 {/* select for root note change, triggers handle root on change */}
                 <label htmlFor="root-select">Root Note: </label>
-                <select name="root-select" id="root-select" onChange={handleRoot} value={seqParams.rootNote}>
+                <select name="root-select" id="root-select" onChange={handleRoot} value={beep.rootNote}>
 
                     {
                         rootNotes.map((rootNote, i) => {
@@ -303,9 +268,9 @@ function NewBeep() {
                 </select>
 
                 {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
-                <label htmlFor="BPM">BPM{seqParams.bpm}</label>
+                <label htmlFor="BPM">BPM{beep.bpm}</label>
                 <input type="range" id="BPM" name="BPM"
-                    min="40" max="200" value={seqParams.bpm} onChange={handleBPM} />
+                    min="40" max="200" value={beep.bpm} onChange={handleBPM} />
 
 
             </div>
@@ -389,11 +354,12 @@ function NewBeep() {
             </div>
             <p></p>
 
-            <button onClick={playButton}>{playButtonText}</button>
+            <PlayButton beep={beep} />
             <button onClick={handleSave}>save</button>
+
         </div>
     )
 
 }
 
-export default NewBeep
+export default NewBeepPage

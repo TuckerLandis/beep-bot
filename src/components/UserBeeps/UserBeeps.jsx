@@ -1,25 +1,45 @@
 const { useDispatch, useSelector } = require("react-redux");
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import * as Tone from 'tone'
+import PlayButton from '../PlayButton/PlayButton';
 
 /* 
 ! ToDo
-display, play button dummy. look into abstracting synth before proceding with play
-!display = date created, name
+
 !load button => selected beep reducer
 
 */ 
+
 function UserBeeps () {
 const dispatch = useDispatch() // declare dispatch for use below
-const userBeepsList = useSelector(store => store.userBeeps)
+const userBeeps = useSelector(store => store.userBeeps)
 
     useEffect(() => {
         dispatch({ type: 'FETCH_USER_BEEPS' });
       }, []);
 
-    console.log('user beeps :)', userBeepsList);
+
+    console.log('user beeps :)', userBeeps);
 
     return (
-        <div><p>User Beeps check console</p></div>
+          <div className="container">
+      <h2>Your Beeps</h2>
+
+
+      {userBeeps.map((beep, i) => {
+          console.log(beep);
+        return (
+          <div key={i}>
+              {/* TODO contain info about beep when DB represents it */}
+          <p>Beepname</p>
+          <PlayButton beep={beep} key={i}/>
+          </div>
+        
+        
+        )
+      })}
+      
+    </div>
     )
 }
 
