@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 
+// posts a beep to the DB on save
 function* saveBeep(action) {
     console.log('Saving a new beep (saga) ...', action.payload);
     try {
@@ -10,6 +11,22 @@ function* saveBeep(action) {
         console.log(error);
 
     }
+}
+
+// deletes a beep from user page
+function* deleteUserBeep(action) {
+    console.log('deleting...', action.payload);
+    
+    try {
+        yield axios.delete(`/api/beep/${action.payload}`)
+        yield put ({
+            type: 'FETCH_USER_BEEPS'
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
 }
 
 function* fetchUserBeeps(action) {
@@ -46,6 +63,7 @@ export function* beepSaga() {
     yield takeEvery('SAVE_NEW_BEEP', saveBeep);
     yield takeEvery('FETCH_USER_BEEPS', fetchUserBeeps)
     yield takeEvery('FETCH_COMMUNITY_BEEPS', fetchCommunityBeeps)
+    yield takeEvery('DELETE_BEEP', deleteUserBeep)
 }
 
 

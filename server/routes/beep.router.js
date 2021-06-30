@@ -77,9 +77,26 @@ router.post('/', (req, res) => {
       res.sendStatus(201)
     })
     .catch(error => {
-      console.log('error', error);
+      console.log('error - insert', error);
       res.sendStatus(500);
     })
 });
+
+router.delete('/:id', (req, res) => {
+  console.log('got to beep router (DELETE)');
+
+  let queryText = `DELETE FROM "beep" WHERE beep_id = $1;`;
+
+  pool.query(queryText, [req.params.id])
+.then(result => {
+  console.log('deleted');
+  
+  res.sendStatus(200)
+})
+.catch(error => {
+  console.log('error-delete', error);
+  
+})
+})
 
 module.exports = router;
