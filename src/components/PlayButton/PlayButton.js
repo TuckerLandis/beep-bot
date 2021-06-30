@@ -10,10 +10,20 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     const dispatch = useDispatch()
     const [isPlaying, setIsPlaying] = useState(false)
     const [playButtonText, setPlayButtonText] = useState('play')
-    let steps 
-    let seqParams
-    let synthParams
-
+    // let steps 
+    // let seqParams
+    // let synthParams
+    const [beepToPlay, setBeepToPlay] = useState({
+             
+        osc_type: 'triangle8',
+        filter_type: 'lowpass',
+        filter_cutoff: 1200,
+        scale: "major",
+        octave: 4,
+        root: 'C',
+        bpm: 120,
+        steps: []
+    })
     // const [steps, setSteps] = useState([])
     // const [synthParams, setSynthParams] = useState({})
     // let [seqParams, setSeqParams] = useState({})
@@ -29,19 +39,27 @@ function setBeep () {
     console.log(location);
     
     if (location.pathname === '/newbeep') {
-        steps = props.newSteps
-        seqParams = props.newSeqParams
-        synthParams =props.newSynthParams
+        setBeepToPlay({
+            ...beepToPlay, 
+            osc_type: props.newBeep.osc_type,
+            filter_type: props.newBeep.filter_type,
+            filter_cutoff: props.newBeep.filter_cutoff,
+            bpm: props.newBeep.bpm,
+            stepsArray: props.newBeep.stepsArray
+        })
      } 
 
-     if (location.pathname === '/userbeeps') {
-        console.log(props.userBeep);
-        steps = props.userBeep.userSteps
-        seqParams = props.userBeep
-        synthParams = props.userBeep
-    }
-    
-     console.log(seqParams, steps, synthParams);
+    //  if (location.pathname === '/userbeeps') {
+    //     setBeepToPlay({
+    //         ...beepToPlay, 
+    //         osc_type: props.userBeep.osc_type,
+    //         filter_type: props.userBeep.filter_type,
+    //         filter_cutoff: props.userBeep.filter_cutoff,
+    //         bpm: props.userBeep.bpm,
+    //         steps: props.userBeep.steps
+    //     })
+    // }
+
      
 }
 
@@ -51,14 +69,7 @@ function setBeep () {
 
         console.log('clicked?');
         
-        
         setBeep()
-      
-
-        
-    
-
-        
 
         if (!isPlaying) {  // starts Tone if stopped
             setIsPlaying(true)  // flips playing boolean
@@ -69,25 +80,25 @@ function setBeep () {
     
             // leaving space mentally for a section for configuring (stretch) probability of the sequence
     
-            Tone.Transport.bpm.value = seqParams.bpm; // sets BPM to input from BPM range select, sets state of BPM 
+            Tone.Transport.bpm.value = beepToPlay.bpm; // sets BPM to input from BPM range select, sets state of BPM 
     
             const volumeNode = new Tone.Volume(-18).toDestination();
     
             // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
             const synth = new Tone.MonoSynth({
                 oscillator: {
-                    type: synthParams.osc_type
+                    type: beepToPlay.osc_type
                 },
                 filter: {
-                    frequency: synthParams.filter_cutoff,
-                    type: synthParams.filter_type
+                    frequency: beepToPlay.filter_cutoff,
+                    type: beepToPlay.filter_type
                 }
             }).chain(volumeNode, Tone.Destination);
     
             const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
                 synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
                 // subdivisions are given as subarrays
-            }, steps).start(0); // which notes? newSteps array. start takes arg of "now" time
+            }, beepToPlay.stepsArray).start(0); // which notes? newSteps array. start takes arg of "now" time
     
             console.log(synth.get()); // logs synth params to ensure change is read
     
@@ -103,8 +114,8 @@ function setBeep () {
 
 
 
-        console.log('106', steps); 
-        // is empty. shouldn't be
+        console.log('106', beepToPlay.stepsArray); 
+        
     }
     
     

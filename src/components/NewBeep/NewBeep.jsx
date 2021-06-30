@@ -15,41 +15,30 @@ refactor entire file while you're at it
 
 */
 
-function NewBeep() {
+function NewBeepPage() {
     const dispatch = useDispatch()
-    // states for playing boolean and for playbutton text. these get flipped when pressing play or stop
-    // const [isPlaying, setIsPlaying] = useState(false)
-    // const [playButtonText, setPlayButtonText] = useState('play')
 
-    // default beep sequence
-    const [seqParams, setSeqParams] = useState(
-        {
-            scaleName: 'major',
-            octave: 4,
-            rootNote: 'C',
-            bpm: 120,
-            step1: null,
-            step2: null,
-            step3: null,
-            step4: null,
-            step5: null,
-            step6: null,
-            step7: null,
-            step8: null,
-
-        }
-    )
-
-    // reference object for synth params. changed via inputs for synth params. read by tone.synth, defaults as follows
-    const [synthParams, setSynthParams] = useState({
+    // for catching input changes
+    const [steps, setSteps] = useState({
+        step1: null,
+        step2: null,
+        step3: null,
+        step4: null,
+        step5: null,
+        step6: null,
+        step7: null,
+        step8: null,
+    })
+    // default newBeep
+    const [newBeep, setNewBeep] = useState({
         osc_type: 'triangle8',
-        // env_attack: 0.01,
-        // env_decay: 0.1,
-        // env_sustain: 0.9,
-        // env_release: 1,
         filter_type: 'lowpass',
-        filter_cutoff: 1200
-
+        filter_cutoff: 1200,
+        scale: "major",
+        octave: 4,
+        root: 'C',
+        bpm: 120,
+        stepsArray: []
     })
 
     // sets an array of all notes to be the options in the root note select map
@@ -64,47 +53,53 @@ function NewBeep() {
     let scaleList = ["major", "minor", "pentatonic", "mixolydian"]
 
     // our "sequence", to be manipulated on change of the values below / above.
-    let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
+    // let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
 
 
-    function handleStep (event) {
+    function handleStep(event) {
         console.log('changing: ', event.target.id);
-        setSeqParams({
-            ...seqParams, [event.target.id] : event.target.value
+        setSteps({
+            ...steps, [event.target.id]: event.target.value
         })
-    }
+            setNewBeep({
+                ...newBeep, stepsArray: [steps.step1, steps.step2, steps.step3, steps.step4,
+                     steps.step5, steps.step6, steps.step7, steps.step8]
+            })
+        
+        
 
+    }
 
     // ! todo: rewrite handle SeqParams as one
     // BPM handler, gets saved
     const handleBPM = (event) => {
-        setSeqParams({
-            ...seqParams, bpm: event.target.value
+        setNewBeep({
+            ...newBeep, bpm: event.target.value
         })
     }
 
     // handles scale option select, calls handleScaleChoice
     const handleScaleName = (event) => {
-        setSeqParams({
-            ...seqParams, scaleName: event.target.value
+        setNewBeep({
+            ...newBeep, scaleName: event.target.value
         })
         handleScaleChoice()
     }
 
     // handles octave change, calls handle scale choice
     const handleOctave = (event) => {
-        setSeqParams({
-            ...seqParams, octave: event.target.value
+        setNewBeep({
+            ...newBeep, octave: event.target.value
         })
         handleScaleChoice()
     }
 
     // handles change of rootnote, calls handle scale choice
     const handleRoot = (event) => {
-        setSeqParams({
-            ...seqParams, rootNote: event.target.value
+        setNewBeep({
+            ...newBeep, rootNote: event.target.value
         })
         handleScaleChoice()
     }
@@ -112,11 +107,11 @@ function NewBeep() {
     // overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
     // and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
     function handleScaleChoice() {
-        let scaleO = (Scale.get(`${seqParams.rootNote} ${seqParams.scaleName}`).notes) // sets temp var to scale.get using root note and scalename
+        let scaleO = (Scale.get(`${newBeep.rootNote} ${newBeep.scaleName}`).notes) // sets temp var to scale.get using root note and scalename
 
         // loops over scale array, and adds the respective octave to the array for rendering by Tone
         for (let i = 0; i < scaleO.length; i++) {
-            scaleO[i] += seqParams.octave
+            scaleO[i] += newBeep.octave
         }
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors
         scaleO.unshift('off')
@@ -131,20 +126,20 @@ function NewBeep() {
         switch (event.target.id) {
             case "osc-type":
                 console.log('changing osc-type');
-                setSynthParams({
-                    ...synthParams, osc_type: event.target.value
+                setNewBeep({
+                    ...newBeep, osc_type: event.target.value
                 })
                 break;
             case "filter_type":
                 console.log('changing filter-type');
-                setSynthParams({
-                    ...synthParams, filter_type: event.target.value
+                setNewBeep({
+                    ...newBeep, filter_type: event.target.value
                 })
                 break;
             case "filter_cutoff":
                 console.log('changing filter-cutoff');
-                setSynthParams({
-                    ...synthParams, filter_cutoff: Number(event.target.value)
+                setNewBeep({
+                    ...newBeep, filter_cutoff: Number(event.target.value)
                 })
                 break;
         }
@@ -154,28 +149,15 @@ function NewBeep() {
 
     // Post Dispatch
     const handleSave = () => {
-
-
-        let beep = {
-            osc_type: synthParams.osc_type,
-            filter_type: synthParams.filter_type,
-            filter_cutoff: synthParams.filter_cutoff,
-            scale: seqParams.scaleName,
-            octave: seqParams.octave,
-            root: seqParams.rootNote,
-            bpm: seqParams.bpm,
-            steps: steps
-        }
-
-        console.log('saving a beep :)', beep);
-        dispatchBeep(beep)
+        console.log('saving a beep :)', newBeep);
+        dispatchBeep(newBeep)
 
     }
 
-    function dispatchBeep(beep) {
+    function dispatchBeep(newBeep) {
         dispatch({
             type: 'SAVE_NEW_BEEP',
-            payload: beep
+            payload: newBeep
         })
     }
 
@@ -188,7 +170,6 @@ function NewBeep() {
 
                     <label htmlFor="osc-type">Osc Type: </label>
                     <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
-
                         <option value="triangle8">Triangle</option>
                         <option value="square8">Square</option>
                         <option value="sine8">Sine</option>
@@ -208,9 +189,9 @@ function NewBeep() {
 
                     </select>
 
-                    <label htmlFor="filter-cutoff">Filter Cutoff: {synthParams.filter_cutoff} </label>
+                    <label htmlFor="filter-cutoff">Filter Cutoff: {newBeep.filter_cutoff} </label>
                     <input type="range" id="filter_cutoff" name="filter_cutoff"
-                        min="0" max="20000" value={synthParams.filter_cutoff} onChange={handleSynthParams} />
+                        min="0" max="20000" value={newBeep.filter_cutoff} onChange={handleSynthParams} />
 
                 </div>
 
@@ -230,7 +211,7 @@ function NewBeep() {
 
                 {/* select for octave choice, triggers handle octave on change */}
                 <label htmlFor="octave-select">Octave: </label>
-                <select name="octave-select" id="octave-select" onChange={handleOctave} value={seqParams.octave} >
+                <select name="octave-select" id="octave-select" onChange={handleOctave} value={newBeep.octave} >
                     <option value="1"> 1 </option>
                     <option value="2"> 2 </option>
                     <option value="3"> 3 </option>
@@ -243,7 +224,7 @@ function NewBeep() {
 
                 {/* select for root note change, triggers handle root on change */}
                 <label htmlFor="root-select">Root Note: </label>
-                <select name="root-select" id="root-select" onChange={handleRoot} value={seqParams.rootNote}>
+                <select name="root-select" id="root-select" onChange={handleRoot} value={newBeep.rootNote}>
 
                     {
                         rootNotes.map((rootNote, i) => {
@@ -256,9 +237,9 @@ function NewBeep() {
                 </select>
 
                 {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
-                <label htmlFor="BPM">BPM{seqParams.bpm}</label>
+                <label htmlFor="BPM">BPM{newBeep.bpm}</label>
                 <input type="range" id="BPM" name="BPM"
-                    min="40" max="200" value={seqParams.bpm} onChange={handleBPM} />
+                    min="40" max="200" value={newBeep.bpm} onChange={handleBPM} />
 
 
             </div>
@@ -342,7 +323,7 @@ function NewBeep() {
             </div>
             <p></p>
 
-            <PlayButton newSteps={steps} newSeqParams={seqParams} newSynthParams={synthParams} />
+            <PlayButton newBeep={newBeep} />
             <button onClick={handleSave}>save</button>
 
         </div>
@@ -350,4 +331,4 @@ function NewBeep() {
 
 }
 
-export default NewBeep
+export default NewBeepPage

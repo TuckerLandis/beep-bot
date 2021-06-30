@@ -21,7 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 //added
-import NewBeep from '../NewBeep/NewBeep';
+import NewBeepPage from '../NewBeep/NewBeep';
 import UserBeeps from '../UserBeeps/UserBeeps'
 
 import './App.css';
@@ -55,7 +55,7 @@ function App() {
           exact 
           path="/newbeep"
           >
-            <NewBeep />
+            <NewBeepPage />
           </Route>
 
 
