@@ -21,7 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 //added
-import NewBeepPage from '../NewBeep/NewBeep';
+import NewBeepPage from '../NewBeepPage/NewBeepPage';
 import UserBeeps from '../UserBeeps/UserBeeps'
 
 import './App.css';

@@ -3,6 +3,7 @@ import * as Tone from 'tone'
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
+import swal from 'sweetalert2'
 
 
 // ! todo
@@ -45,7 +46,7 @@ function NewBeepPage() {
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
 
-
+// rewrite using .last of event.target.id
     function handleStep(event) {
         console.log('changing: ', event.target.id);
         let newSteps = beep.steps
@@ -181,7 +182,33 @@ function NewBeepPage() {
     // Post Dispatch
     const handleSave = () => {
         console.log('saving a beep :)', beep);
-        dispatchBeep(beep)
+
+        swal.fire({
+            title: "An input!",
+            text: "Write something interesting:",
+            input: 'text',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Write something"
+          },
+          function(inputValue){
+            if (inputValue === null) return false;
+            
+            if (inputValue === "") {
+              swal.showInputError("You need to write something!");
+              return false
+            }
+            
+            if (inputValue) {
+                dispatchBeep(beep)
+            }
+            swal.fire("Nice!", "You wrote: " + inputValue, "success");
+          });
+
+
+
+       
 
     }
 
