@@ -33,7 +33,7 @@ const userBeeps = useSelector(store => store.userBeeps)
           <div key={i}>
               {/* TODO contain info about beep when DB represents it */}
           <p>Beepname</p>
-          <PlayButton userBeep={beep} key={i}/>
+          <PlayButton beep={beep} steps={beep.steps} key={i}/>
           </div>
         
         
