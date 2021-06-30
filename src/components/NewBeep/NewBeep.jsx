@@ -18,21 +18,6 @@ refactor entire file while you're at it
 function NewBeepPage() {
     const dispatch = useDispatch()
 
-    // for catching input changes
-    // const [steps, setSteps] = useState({
-    //     step1: null,
-    //     step2: null,
-    //     step3: null,
-    //     step4: null,
-    //     step5: null,
-    //     step6: null,
-    //     step7: null,
-    //     step8: null,
-    // })
-
-    // our "sequence", to be manipulated on change of the values below / above.
-    // const stepsArray = [steps.step1, steps.step2, steps.step3, steps.step4, steps.step5, steps.step6, steps.step7, steps.step8]
-
     // default beep
     const [beep, setBeep] = useState({
         osc_type: 'triangle8',
@@ -63,18 +48,60 @@ function NewBeepPage() {
 
     function handleStep(event) {
         console.log('changing: ', event.target.id);
-        console.log([...beep.steps]);
+        let newSteps = beep.steps
+
         switch (event.target.id) {
             case "step1":
-                    setBeep({
-                        ...beep.steps, steps //splice( 0, 1, event.target.value)
-                    })
+                newSteps.splice(0, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step2":
+                newSteps.splice(1, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step3":
+                newSteps.splice(2, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step4":
+                newSteps.splice(3, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step5":
+                newSteps.splice(4, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step6":
+                newSteps.splice(5, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step7":
+                newSteps.splice(6, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
+            case "step8":
+                newSteps.splice(7, 1, event.target.value)
+                setBeep({
+                    ...beep, steps: newSteps
+                })
+                break;
         }
     }
 
-    
-
-   
 
     // ! todo: rewrite handle SeqParams as one
     // BPM handler, gets saved
@@ -111,7 +138,7 @@ function NewBeepPage() {
     // overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
     // and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
     function handleScaleChoice() {
-        let scaleO = (Scale.get(`${beep.rootNote} ${beep.scaleName}`).notes) // sets temp var to scale.get using root note and scalename
+        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes) // sets temp var to scale.get using root note and scalename
 
         // loops over scale array, and adds the respective octave to the array for rendering by Tone
         for (let i = 0; i < scaleO.length; i++) {
@@ -177,7 +204,7 @@ function NewBeepPage() {
                         <option value="triangle8">Triangle</option>
                         <option value="square8">Square</option>
                         <option value="sine8">Sine</option>
-                        <option value="saw8">Saw</option>
+                        <option value="sawtooth">Saw</option>
                     </select>
 
                 </div>
