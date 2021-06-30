@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import * as Tone from 'tone'
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
+import Swal from 'sweetalert2'
 
 
 // ! todo
@@ -45,7 +45,7 @@ function NewBeepPage() {
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
 
-
+// rewrite using .last of event.target.id
     function handleStep(event) {
         console.log('changing: ', event.target.id);
         let newSteps = beep.steps
@@ -114,7 +114,7 @@ function NewBeepPage() {
     // handles scale option select, calls handleScaleChoice
     const handleScaleName = (event) => {
         setBeep({
-            ...beep, scaleName: event.target.value
+            ...beep, scale: event.target.value
         })
         handleScaleChoice()
     }
@@ -181,16 +181,37 @@ function NewBeepPage() {
     // Post Dispatch
     const handleSave = () => {
         console.log('saving a beep :)', beep);
-        dispatchBeep(beep)
 
+        (async () => {
+
+            const { value: name } = await Swal.fire({
+              title: 'What should we call this beep?',
+              input: 'text',
+              inputPlaceholder: 'Enter a name for your beep',
+              showCancelButton: true,
+              inputValidator: (value) => {
+                if (!value) {
+                  return 'You need to write something!'
+                }
+              }
+            })
+            
+            if (name) {
+              setBeep({
+                  ...beep, name : name
+              })
+
+              dispatch({
+                type: 'SAVE_NEW_BEEP',
+                payload: beep
+            })
+            }
+          
+
+            })()
     }
 
-    function dispatchBeep(beep) {
-        dispatch({
-            type: 'SAVE_NEW_BEEP',
-            payload: beep
-        })
-    }
+
 
 
     // main return to DOM of our sequencer component
