@@ -1,14 +1,36 @@
 import { useState } from "react";
 import * as Tone from 'tone'
+import { useLocation } from "react-router";
 
 function PlayButton (props) { //// <--------<------<-----<------The play Button -------------------------- ////> nned to abstract, pass in steps?
     // 
+    const location = useLocation()
     const [isPlaying, setIsPlaying] = useState(false)
     const [playButtonText, setPlayButtonText] = useState('play')
+    let steps = []
+    let synthParams
+    let seqParams
+    
+    
 
-    function startStop (steps, seqParams, synthParams) {
+    function startStop () {
 
-        console.log(steps, seqParams, synthParams); // gives notes and seq params
+        console.log('clicked?');
+        
+
+        if (location.pathname = '/newbeep') {
+            steps = props.newSteps
+            seqParams = props.newSeqParams
+            synthParams = props.newSynthParams
+        } 
+        if (location.pathname = '/userbeeps') {
+            console.log(props.userBeep);
+            steps = props.userBeep.userSteps
+            seqParams = props.userBeep
+            synthParams = props.userBeep
+        }
+
+        
 
         if (!isPlaying) {  // starts Tone if stopped
             setIsPlaying(true)  // flips playing boolean
@@ -57,7 +79,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     }
     
     return (
-        <button onClick={()=> startStop(props.steps, props.seqParams, props.synthParams)}>{playButtonText}</button>
+        <button onClick={()=> startStop()}>{playButtonText}</button>
     )
 }
 

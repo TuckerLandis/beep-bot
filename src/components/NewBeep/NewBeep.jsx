@@ -64,7 +64,7 @@ function NewBeep() {
     let scaleList = ["major", "minor", "pentatonic"]
 
     // our "sequence", to be manipulated on change of the values below / above.
-    let newSteps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
+    let steps = [seqParams.step1, seqParams.step2, seqParams.step3, seqParams.step4, seqParams.step5, seqParams.step6, seqParams.step7, seqParams.step8,]
 
     // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
 
@@ -149,10 +149,6 @@ function NewBeep() {
                 break;
         }
     }
-
-
-
-
 
 
 
@@ -346,7 +342,7 @@ function NewBeep() {
             </div>
             <p></p>
 
-            <PlayButton steps={newSteps} seqParams={seqParams} synthParams={synthParams} />
+            <PlayButton newSteps={steps} newSeqParams={seqParams} newSynthParams={synthParams} />
             <button onClick={handleSave}>save</button>
 
         </div>
