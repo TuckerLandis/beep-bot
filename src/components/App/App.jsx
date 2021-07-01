@@ -71,10 +71,10 @@ function App() {
             // with authRedirect:
             // - if logged in, redirects to "/edit"
             // - else shows login at "/login"
-            path="/edit"
+            path="/edit/:id" children={<EditBeepPage />}
            
           >
-            <EditBeepPage />
+            
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.

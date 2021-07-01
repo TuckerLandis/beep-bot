@@ -13,16 +13,17 @@ import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
-import Swal from 'sweetalert2'
+
 
 function EditBeepPage() {
     const dispatch = useDispatch()
-    const params = useParams()
+    let { id } = useParams()
 
     useEffect(() => {
+        console.log(id);
         dispatch({ 
             type: 'SELECT_BEEP',
-            payload: params.id
+            payload: id
     
     });
       }, []);
@@ -43,9 +44,6 @@ function EditBeepPage() {
     let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
 
 
-
-    // ------------------------------------------ Handle Change Zone -------------------------------------------- //
-
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
      * @param {*} event 
@@ -61,7 +59,7 @@ function EditBeepPage() {
 
 
     /**
-     * Takes in all events for beep paramaters except steps
+     * Takes in all events for beep paramaters except steps, changes beep object properties accordingly
      * @param {*} event 
      */
     function handleBeep(event) {
@@ -103,31 +101,17 @@ function EditBeepPage() {
     const handleSave = () => {
         console.log('saving a beep :)', beep);
 
-        (async () => {
-            const { value: name } = await Swal.fire({
-                title: 'What should we call this beep?',
-                input: 'text',
-                inputPlaceholder: 'Enter a name for your beep',
-                showCancelButton: true,
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'You need to write something!'
-                    }
-                }
-            })
-            if (name) {
-                setBeep({
-                    ...beep, name: name
-                })
+        
                 dispatch({
                     type: 'UPDATE_BEEP',
                     payload: beep
                 })
             }
-        })()
-    }
+        
+    
 
     console.log(beep);
+    
     // ------------------------------- DOM Return -------------------------------------- //
     return (
         <div>

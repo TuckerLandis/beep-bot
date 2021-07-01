@@ -7,7 +7,7 @@ import './NewBeepPage.css'
 
 function NewBeepPage() {
     const dispatch = useDispatch()
-// default beep
+    // default beep
     const [beep, setBeep] = useState({
         osc_type: 'triangle8',
         filter_type: 'lowpass',
@@ -29,7 +29,7 @@ function NewBeepPage() {
     const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
 
     // changes when a scale is selected, controlled by handle scale choice function
-    const [selectedScale, setSelectedScale] = useState(c_major) 
+    const [selectedScale, setSelectedScale] = useState(c_major)
 
     // select populator for scale choice drop dowm
     let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
@@ -68,7 +68,7 @@ function NewBeepPage() {
     function handleScaleChoice(beep) {
 
         // sets temp variable to scale.get using root note and scalename
-        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes) 
+        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes)
 
         // loops over scale array, and adds the respective octave to the array for rendering by Tone
         for (let i = 0; i < scaleO.length; i++) {
@@ -88,28 +88,34 @@ function NewBeepPage() {
      * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
      * button -> dispatch -> beep saga -> beep router
      */
-    const handleSave = () => {
+    const handleSave = async () => {
         console.log('saving a beep :)', beep);
 
-        (async () => {
-            const { value: name } = await Swal.fire({
-                title: 'What should we call this beep?',
-                input: 'text',
-                inputPlaceholder: 'Enter a name for your beep',
-                showCancelButton: true,
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'You need to write something!'
-                    }
+
+        Swal.fire({
+            title: 'What should we call this beep?',
+            input: 'text',
+            inputValue: '',
+            inputPlaceholder: 'Enter a name for your beep',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to write something!'
                 }
-            })
-            if (name) {
-                setBeep({
-                    ...beep, name: name // doesn't set? 
-                })
-              dispatchBeep(beep)
             }
-        })()
+        }).then(result => {
+            console.log(result);
+            if (result.isConfirmed) {
+                setBeep({
+                    ...beep, name: result.value// doesn't set? 
+                })
+                dispatchBeep(beep)
+            }
+        }
+        )
+
+
+
     }
 
     function dispatchBeep(beep) {
@@ -134,22 +140,22 @@ function NewBeepPage() {
 
                 </div>
                 <p></p>
-    {/* filter_type select */}
-                <div className="filter-container">
+                {/* filter_type select */}
+                
                     <label htmlFor="filter-type">Filter Type: </label>
                     <select name="filter-type" id="filter_type" onChange={handleBeep} >
                         <option value="lowpass">Low Pass</option>
                         <option value="highpass">High Pass</option>
                         <option value="bandpass">Band Pass</option>
                     </select>
-    {/* filter_cutoff select */}
+                    {/* filter_cutoff select */}
                     <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
                     <input type="range" id="filter_cutoff" name="filter_cutoff"
                         min="0" max="20000" value={beep.filter_cutoff} onChange={handleBeep} />
-                </div>
+                
             </div>
             <p></p>
-    {/* scale nam select */}
+            {/* scale nam select */}
             <div className="seq-params-container">
                 <label htmlFor="scale-select">Scale: </label>
                 <select name="scale-select" id="scale" onChange={handleBeep} >
@@ -160,7 +166,7 @@ function NewBeepPage() {
                     })}
                 </select>
 
-    {/* select for octave choice, triggers handle octave on change */}
+                {/* select for octave choice, triggers handle octave on change */}
                 <label htmlFor="octave-select">Octave: </label>
                 <select name="octave-select" id="octave" onChange={handleBeep} value={beep.octave} >
                     <option value="1"> 1 </option>
@@ -173,7 +179,7 @@ function NewBeepPage() {
                     <option value="8"> 8 </option>
                 </select>
 
-    {/* select for root note change, triggers handle root on change */}
+                {/* select for root note change, triggers handle root on change */}
                 <label htmlFor="root-select">Root Note: </label>
                 <select name="root-select" id="root" onChange={handleBeep} value={beep.rootNote}>
 
@@ -187,7 +193,7 @@ function NewBeepPage() {
 
                 </select>
 
-    {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
+                {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
                 <label htmlFor="BPM">BPM{beep.bpm}</label>
                 <input type="range" id="bpm" name="BPM"
                     min="40" max="200" value={beep.bpm} onChange={handleBeep} />
@@ -196,10 +202,10 @@ function NewBeepPage() {
             </div>
             <p></p>
 
-    {/* step select, see script notes within*/}
+            {/* step select, see script notes within*/}
             <div className="step-select-container">
 
-                    {/* maps over beep.steps and returns that many step-selectors */}
+                {/* maps over beep.steps and returns that many step-selectors */}
                 {beep.steps.map((step, i) => {
                     return (
                         <select id={i} onChange={handleStep} key={i}>
@@ -213,7 +219,7 @@ function NewBeepPage() {
                         </select>
                     )
                 }) // end map script
-                } 
+                }
             </div>
             <p></p>
 

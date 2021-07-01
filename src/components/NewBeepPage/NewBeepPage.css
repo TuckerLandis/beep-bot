@@ -4,7 +4,7 @@
 }
 .filter-container{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .seq-params-container{
     display: flex;
