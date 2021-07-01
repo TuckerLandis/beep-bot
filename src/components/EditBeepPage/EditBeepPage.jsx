@@ -13,36 +13,31 @@ import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
+import axios from "axios";
 
 
 function EditBeepPage() {
     const dispatch = useDispatch()
     let { id } = useParams()
 
+ 
+
     useEffect(() => {
         console.log(id);
         dispatch({ 
             type: 'SELECT_BEEP',
             payload: id
-    
     });
       }, []);
 
-    //beep to edit
+         //beep to edit
     const beep = useSelector(store => store.editBeepReducer)
-
+   
     // // default: sets an array of all notes to be the options in the root note select map
     let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
-    // // default: notes array for selector
-    // const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
-
-    // changes when a scale is selected, controlled by handle scale choice function
-    const [selectedScale, setSelectedScale] = useState(beep.scale) 
-
     // select populator for scale choice drop dowm
     let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
-
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -52,23 +47,26 @@ function EditBeepPage() {
         console.log('changing: ', event.target.id);
         let newSteps = beep.steps
         newSteps.splice(event.target.id, 1, event.target.value)
-        setBeep({
-            ...beep, steps: newSteps
+        dispatch({
+            type: "EDIT_SELECTED_STEPS",
+            payload: newSteps
         })
     }
-
 
     /**
      * Takes in all events for beep paramaters except steps, changes beep object properties accordingly
      * @param {*} event 
      */
     function handleBeep(event) {
-        setBeep({
-            ...beep, [event.target.id]: event.target.value
-        })
-        handleScaleChoice(beep)
-    }
 
+        dispatch({
+            type: "EDIT_SELECTED",
+            payload: {
+                key: [event.target.id],
+                value: event.target.value
+            }
+        })
+    }
 
     /**
      * overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
@@ -90,7 +88,9 @@ function EditBeepPage() {
         console.log('scale with octave', scaleO);
 
         // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
-        setSelectedScale(scaleO)
+        return scaleO
+
+
     }
 
     /**
@@ -108,11 +108,11 @@ function EditBeepPage() {
                 })
             }
         
-    
-
     console.log(beep);
+    const selectedScale = handleScaleChoice(beep)
     
     // ------------------------------- DOM Return -------------------------------------- //
+    
     return (
         <div>
             <div className="synth-params-container">
@@ -177,7 +177,6 @@ function EditBeepPage() {
                             )
                         })
                     }
-
                 </select>
 
     {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
@@ -193,12 +192,13 @@ function EditBeepPage() {
             <div className="step-select-container">
 
                     {/* maps over beep.steps and returns that many step-selectors */}
-                {beep?.steps?.map((step, i) => {
+                {beep.steps?.map((step, i) => {
                     return (
-                        <select id={i} onChange={handleStep} key={i}>
+                        <select id={i} onChange={handleStep} key={i} value={step}>
 
+                    {/* <option key={i} value={note}>{note}</option> */}
                             {/* uses selectedScale state to return a list of notes based on handScaleChoice */}
-                            {selectedScale.map((note, i) => {
+                            {selectedScale?.map((note, i) => {
                                 return (
                                     <option key={i} value={note}>{note}</option>
                                 )

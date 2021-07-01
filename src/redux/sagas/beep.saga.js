@@ -79,11 +79,29 @@ function* selectBeep(action) {
         const response = yield axios.get(`/api/beep/edit/${action.payload}`)
         yield put({
             type: 'LOAD_BEEP',
-            payload: response.data
+            payload: response.data[0]   /// <--------added trying to fix render edit bug
         })
     } catch (error) {
         console.log(error);
+    }
+}
 
+
+/**
+ * 
+ * @param {*} action 
+ */
+function* updateBeep(action) {
+    console.log('Updating a beep', action.payload);
+    
+    try {
+        yield axios.put(`/api/beep/${action.payload.beep_id}`, action.payload)
+        yield put({
+            type:'FETCH_USER_BEEPS'
+        })
+    } catch (error) {
+        console.log(error);
+        
     }
 
 }
@@ -94,6 +112,7 @@ export function* beepSaga() {
     yield takeEvery('FETCH_COMMUNITY_BEEPS', fetchCommunityBeeps)
     yield takeEvery('DELETE_BEEP', deleteUserBeep)
     yield takeEvery('SELECT_BEEP', selectBeep)
+    yield takeEvery('UPDATE_BEEP', updateBeep)
 }
 
 

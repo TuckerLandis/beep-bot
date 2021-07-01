@@ -64,7 +64,7 @@ function UserBeeps() {
         return (
           <div key={i}>
             {/* TODO contain info about beep when DB represents it */}
-            <p>Beepname</p>
+            <p>{beep.beep_name}</p>
             <PlayButton beep={beep} key={i} />
             <button onClick={() => deleteBeep(beep)}>Delete</button>
             <button onClick={() => editBeep(beep)}>Load</button>
