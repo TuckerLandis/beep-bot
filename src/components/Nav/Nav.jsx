@@ -20,7 +20,7 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        <h2 className="nav-title">Beep Bot</h2>
       </Link>
       <Link className="navLink" to="/newbeep">
           New Beep

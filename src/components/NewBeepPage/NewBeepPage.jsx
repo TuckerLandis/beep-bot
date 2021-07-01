@@ -4,21 +4,9 @@ import { useDispatch } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
 
-
-// ! todo
-/* 
-!!!!!! add modal for saving, name. upon name, render name. nice. also need DB column for name at next table drop
-refactor handleStep
-refactor render functions
-refactor entire file while you're at it
-
-
-*/
-
 function NewBeepPage() {
     const dispatch = useDispatch()
-
-    // default beep
+// default beep
     const [beep, setBeep] = useState({
         osc_type: 'triangle8',
         filter_type: 'lowpass',
@@ -27,7 +15,8 @@ function NewBeepPage() {
         octave: 4,
         root: 'C',
         bpm: 120,
-        steps: [null, null, null, null, null, null, null, null]
+        steps: [null, null, null, null, null, null, null, null],
+        stepcount: 8
     })
 
     // sets an array of all notes to be the options in the root note select map
@@ -43,108 +32,50 @@ function NewBeepPage() {
 
 
 
-    // -------------------------------------------------------------------------Handle Change Zone ----------------------------------------------------////
+    // ------------------------------------------ Handle Change Zone -------------------------------------------- //
 
-// rewrite using .last of event.target.id
+    /**
+     * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
+     * @param {*} event 
+     */
     function handleStep(event) {
         console.log('changing: ', event.target.id);
         let newSteps = beep.steps
-
-        switch (event.target.id) {
-            case "step1":
-                newSteps.splice(0, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step2":
-                newSteps.splice(1, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step3":
-                newSteps.splice(2, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step4":
-                newSteps.splice(3, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step5":
-                newSteps.splice(4, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step6":
-                newSteps.splice(5, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step7":
-                newSteps.splice(6, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-            case "step8":
-                newSteps.splice(7, 1, event.target.value)
-                setBeep({
-                    ...beep, steps: newSteps
-                })
-                break;
-        }
-    }
-
-
-    // ! todo: rewrite handle SeqParams as one
-    // BPM handler, gets saved
-    const handleBPM = (event) => {
+        newSteps.splice(event.target.id, 1, event.target.value)
         setBeep({
-            ...beep, bpm: event.target.value
+            ...beep, steps: newSteps
         })
     }
 
-    // handles scale option select, calls handleScaleChoice
-    const handleScaleName = (event) => {
+
+    /**
+     * Takes in all events for beep paramaters except steps
+     * @param {*} event 
+     */
+    function handleBeep(event) {
         setBeep({
-            ...beep, scale: event.target.value
+            ...beep, [event.target.id]: event.target.value
         })
-        handleScaleChoice()
+        handleScaleChoice(beep)
     }
 
-    // handles octave change, calls handle scale choice
-    const handleOctave = (event) => {
-        setBeep({
-            ...beep, octave: event.target.value
-        })
-        handleScaleChoice()
-    }
 
-    // handles change of rootnote, calls handle scale choice
-    const handleRoot = (event) => {
-        setBeep({
-            ...beep, rootNote: event.target.value
-        })
-        handleScaleChoice()
-    }
+    /**
+     * overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
+     * and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
+     * @param {*} beep 
+     */
+    function handleScaleChoice(beep) {
 
-    // overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
-    // and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
-    function handleScaleChoice() {
-        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes) // sets temp var to scale.get using root note and scalename
+        // sets temp variable to scale.get using root note and scalename
+        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes) 
 
         // loops over scale array, and adds the respective octave to the array for rendering by Tone
         for (let i = 0; i < scaleO.length; i++) {
             scaleO[i] += beep.octave
         }
-        // adds an "off" option to the front of the array and the selection, this is the default for the note selectors
+
+        // adds an "off" option to the front of the array and the selection, this is the default for the note selectors/sequence
         scaleO.unshift('off')
         console.log('scale with octave', scaleO);
 
@@ -152,76 +83,45 @@ function NewBeepPage() {
         setSelectedScale(scaleO)
     }
 
-
-    const handleSynthParams = (event) => {
-        switch (event.target.id) {
-            case "osc-type":
-                console.log('changing osc-type');
-                setBeep({
-                    ...beep, osc_type: event.target.value
-                })
-                break;
-            case "filter_type":
-                console.log('changing filter-type');
-                setBeep({
-                    ...beep, filter_type: event.target.value
-                })
-                break;
-            case "filter_cutoff":
-                console.log('changing filter-cutoff');
-                setBeep({
-                    ...beep, filter_cutoff: Number(event.target.value)
-                })
-                break;
-        }
-    }
-
-
-
-    // Post Dispatch
+    /**
+     * Upon pressing save, a sweet alert pops up that asks the user for a name to save their beep as. 
+     * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
+     * button -> dispatch -> beep saga -> beep router
+     */
     const handleSave = () => {
         console.log('saving a beep :)', beep);
 
         (async () => {
-
             const { value: name } = await Swal.fire({
-              title: 'What should we call this beep?',
-              input: 'text',
-              inputPlaceholder: 'Enter a name for your beep',
-              showCancelButton: true,
-              inputValidator: (value) => {
-                if (!value) {
-                  return 'You need to write something!'
+                title: 'What should we call this beep?',
+                input: 'text',
+                inputPlaceholder: 'Enter a name for your beep',
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You need to write something!'
+                    }
                 }
-              }
             })
-            
             if (name) {
-              setBeep({
-                  ...beep, name : name
-              })
-
-              dispatch({
-                type: 'SAVE_NEW_BEEP',
-                payload: beep
-            })
+                setBeep({
+                    ...beep, name: name
+                })
+                dispatch({
+                    type: 'SAVE_NEW_BEEP',
+                    payload: beep
+                })
             }
-          
-
-            })()
+        })()
     }
 
-
-
-
-    // main return to DOM of our sequencer component
+    // ------------------------------- DOM Return -------------------------------------- //
     return (
         <div>
-            <div className="synth-params">
+            <div className="synth-params-container">
                 <div className="osc-type-container">
-
                     <label htmlFor="osc-type">Osc Type: </label>
-                    <select name="osc-type" id="osc-type" onChange={handleSynthParams} >
+                    <select name="osc-type" id="osc_type" onChange={handleBeep} >
                         <option value="triangle8">Triangle</option>
                         <option value="square8">Square</option>
                         <option value="sine8">Sine</option>
@@ -231,29 +131,23 @@ function NewBeepPage() {
                 </div>
                 <p></p>
                 <div className="filter-container">
-
                     <label htmlFor="filter-type">Filter Type: </label>
-                    <select name="filter-type" id="filter-type" onChange={handleSynthParams} >
-
+                    <select name="filter-type" id="filter_type" onChange={handleBeep} >
                         <option value="lowpass">Low Pass</option>
                         <option value="highpass">High Pass</option>
                         <option value="bandpass">Band Pass</option>
-
                     </select>
 
-                    <label htmlFor="filter-cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
+                    <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
                     <input type="range" id="filter_cutoff" name="filter_cutoff"
-                        min="0" max="20000" value={beep.filter_cutoff} onChange={handleSynthParams} />
-
+                        min="0" max="20000" value={beep.filter_cutoff} onChange={handleBeep} />
                 </div>
-
             </div>
-
             <p></p>
 
             <div className="seq-params-container">
                 <label htmlFor="scale-select">Scale: </label>
-                <select name="scale-select" id="scale-select" onChange={handleScaleName} >
+                <select name="scale-select" id="scale" onChange={handleBeep} >
                     {scaleList.map((scale, i) => {
                         return (
                             <option key={i} value={scale}>{scale}</option>
@@ -263,7 +157,7 @@ function NewBeepPage() {
 
                 {/* select for octave choice, triggers handle octave on change */}
                 <label htmlFor="octave-select">Octave: </label>
-                <select name="octave-select" id="octave-select" onChange={handleOctave} value={beep.octave} >
+                <select name="octave-select" id="octave" onChange={handleBeep} value={beep.octave} >
                     <option value="1"> 1 </option>
                     <option value="2"> 2 </option>
                     <option value="3"> 3 </option>
@@ -276,7 +170,7 @@ function NewBeepPage() {
 
                 {/* select for root note change, triggers handle root on change */}
                 <label htmlFor="root-select">Root Note: </label>
-                <select name="root-select" id="root-select" onChange={handleRoot} value={beep.rootNote}>
+                <select name="root-select" id="root" onChange={handleBeep} value={beep.rootNote}>
 
                     {
                         rootNotes.map((rootNote, i) => {
@@ -291,7 +185,7 @@ function NewBeepPage() {
                 {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
                 <label htmlFor="BPM">BPM{beep.bpm}</label>
                 <input type="range" id="BPM" name="BPM"
-                    min="40" max="200" value={beep.bpm} onChange={handleBPM} />
+                    min="40" max="200" value={beep.bpm} onChange={handleBeep} />
 
 
             </div>
@@ -301,77 +195,20 @@ function NewBeepPage() {
 
                 {/* these will eventually be mapped over based on sequence length(stretch) */}
 
-                <select name="selectOne" id="step1" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
+                {beep.steps.map((step, i) => {
+                    return (
+                        <select id={i} onChange={handleStep} key={i}>
 
-                <select name="selectTwo" id="step2" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
-
-                <select name="selectThree" id="step3" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
-
-                <select name="selectFour" id="step4" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
-
-                <select name="selectFive" id="step5" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
-
-                <select name="selectSix" id="step6" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
-
-                <select name="selectSeven" id="step7" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
-
-                <select name="selectEight" id="step8" onChange={handleStep}>
-                    {/* uses selectedScale state to return a list of notes in selected selectedScale */}
-                    {selectedScale.map((note, i) => {
-                        return (
-                            <option key={i} value={note}>{note}</option>
-                        )
-                    })}
-                </select>
+                            {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                            {selectedScale.map((note, i) => {
+                                return (
+                                    <option key={i} value={note}>{note}</option>
+                                )
+                            })}
+                        </select>
+                    )
+                }) // end map script
+                } 
             </div>
             <p></p>
 
