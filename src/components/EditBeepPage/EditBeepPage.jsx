@@ -32,33 +32,12 @@ function EditBeepPage() {
 
          //beep to edit
     const beep = useSelector(store => store.editBeepReducer)
-    // function fetchEditBeep () {
-    //     axios.get(`/api/edit/${id}`)
-    // }
-
-    //   useEffect(() => {
-    //       async function setEditBeep () {
-    //          let response = await fetchEditBeep()
-    //           setBeep(response)
-    //       }
-    //   })
-
-
-
-    
-
+   
     // // default: sets an array of all notes to be the options in the root note select map
     let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
-    // // default: notes array for selector
-    // const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
-
-    // changes when a scale is selected, controlled by handle scale choice function
-    // const [selectedScale, setSelectedScale] = useState(beep?.scale) 
-
     // select populator for scale choice drop dowm
     let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
-
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -72,13 +51,7 @@ function EditBeepPage() {
             type: "EDIT_SELECTED_STEPS",
             payload: newSteps
         })
-        
-        
-        // setBeep({
-        //     ...beep, steps: newSteps
-        // })
     }
-
 
     /**
      * Takes in all events for beep paramaters except steps, changes beep object properties accordingly
@@ -93,15 +66,7 @@ function EditBeepPage() {
                 value: event.target.value
             }
         })
-
-        // setBeep({
-        //     ...beep, [event.target.id]: event.target.value
-        //  })
-       // handleScaleChoice(beep) // being handled
-
-       // send a dispatch here to edit beep reducer, handle logic there
     }
-
 
     /**
      * overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
@@ -143,12 +108,11 @@ function EditBeepPage() {
                 })
             }
         
-    
-
     console.log(beep);
     const selectedScale = handleScaleChoice(beep)
     
     // ------------------------------- DOM Return -------------------------------------- //
+    
     return (
         <div>
             <div className="synth-params-container">
@@ -213,7 +177,6 @@ function EditBeepPage() {
                             )
                         })
                     }
-
                 </select>
 
     {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
