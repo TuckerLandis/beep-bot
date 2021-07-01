@@ -17,7 +17,9 @@ function NewBeepPage() {
         root: 'C',
         bpm: 120,
         steps: [null, null, null, null, null, null, null, null],
-        stepcount: 8
+        stepcount: 8,
+        name: null
+
     })
 
     // default: sets an array of all notes to be the options in the root note select map
@@ -31,10 +33,6 @@ function NewBeepPage() {
 
     // select populator for scale choice drop dowm
     let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
-
-
-
-    // ------------------------------------------ Handle Change Zone -------------------------------------------- //
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -107,14 +105,18 @@ function NewBeepPage() {
             })
             if (name) {
                 setBeep({
-                    ...beep, name: name
+                    ...beep, name: name // doesn't set? 
                 })
-                dispatch({
-                    type: 'SAVE_NEW_BEEP',
-                    payload: beep
-                })
+              dispatchBeep(beep)
             }
         })()
+    }
+
+    function dispatchBeep(beep) {
+        dispatch({
+            type: 'SAVE_NEW_BEEP',
+            payload: beep
+        })
     }
 
     // ------------------------------- DOM Return -------------------------------------- //

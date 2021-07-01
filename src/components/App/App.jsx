@@ -23,6 +23,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 //added
 import NewBeepPage from '../NewBeepPage/NewBeepPage';
 import UserBeeps from '../UserBeeps/UserBeeps'
+import EditBeepPage from '../EditBeepPage/EditBeepPage';
 
 import './App.css';
 
@@ -64,6 +65,16 @@ function App() {
           path="/userbeeps"
           >
             <UserBeeps />
+          </Route>
+
+          <Route
+            // with authRedirect:
+            // - if logged in, redirects to "/edit"
+            // - else shows login at "/login"
+            path="/edit"
+           
+          >
+            <EditBeepPage />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.

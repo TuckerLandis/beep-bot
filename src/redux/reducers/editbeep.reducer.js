@@ -1,6 +1,6 @@
-const userBeeps = (state = [], action) => {
+const editBeepReducer = (state = {}, action) => {
     switch (action.type) {
-      case 'SET_USER_BEEPS':
+      case 'LOAD_BEEP':
         return action.payload;
     
       default:
@@ -8,4 +8,5 @@ const userBeeps = (state = [], action) => {
     }
   };
   
-  export default userBeeps;
+
+  export default editBeepReducer

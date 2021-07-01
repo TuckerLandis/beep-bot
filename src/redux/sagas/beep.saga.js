@@ -30,7 +30,6 @@ function* deleteUserBeep(action) {
         })
     } catch (error) {
         console.log(error);
-
     }
 
 }
@@ -71,11 +70,30 @@ function* fetchCommunityBeeps(action) {
     }
 }
 
+/**
+ *  Selects a beep for loading into the edit page
+ */
+function* selectBeep(action) {
+    console.log('Selecting a beep for edit...', action.payload);
+    try {
+        const response = yield axios.get(`/api/beep/edit/${action.payload}`)
+        yield put({
+            type: 'LOAD_BEEP',
+            payload: response.data
+        })
+    } catch (error) {
+        console.log(error);
+
+    }
+
+}
+
 export function* beepSaga() {
     yield takeEvery('SAVE_NEW_BEEP', saveBeep);
     yield takeEvery('FETCH_USER_BEEPS', fetchUserBeeps)
     yield takeEvery('FETCH_COMMUNITY_BEEPS', fetchCommunityBeeps)
     yield takeEvery('DELETE_BEEP', deleteUserBeep)
+    yield takeEvery('SELECT_BEEP', selectBeep)
 }
 
 
