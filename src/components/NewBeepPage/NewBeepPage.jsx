@@ -106,10 +106,10 @@ function NewBeepPage() {
         }).then(result => {
             console.log(result);
             if (result.isConfirmed) {
-                setBeep({
+                
+                dispatchBeep({
                     ...beep, name: result.value// doesn't set? 
                 })
-                dispatchBeep(beep)
             }
         }
         )
