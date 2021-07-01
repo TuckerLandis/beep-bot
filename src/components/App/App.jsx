@@ -52,12 +52,12 @@ function App() {
           </Route>
 
 
-          <Route 
+          <ProtectedRoute 
           exact 
           path="/newbeep"
           >
             <NewBeepPage />
-          </Route>
+          </ProtectedRoute>
 
 
           <Route 
@@ -67,7 +67,7 @@ function App() {
             <UserBeeps />
           </Route>
 
-          <Route
+          <ProtectedRoute
             // with authRedirect:
             // - if logged in, redirects to "/edit"
             // - else shows login at "/login"
@@ -75,7 +75,7 @@ function App() {
            
           >
             
-          </Route>
+          </ProtectedRoute>
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
