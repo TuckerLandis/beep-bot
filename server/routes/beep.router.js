@@ -79,9 +79,10 @@ router.post('/', (req, res) => {
       "octave",
       "root",
       "bpm",
-      "steps"
+      "steps",
+      "beep_name"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 );`;
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 );`;
 
   pool.query(queryText, [
     req.user.id, // $1 
@@ -92,7 +93,8 @@ router.post('/', (req, res) => {
     beep.octave, // $6
     beep.root, // $7
     beep.bpm,  // $8
-    beep.steps // $9
+    beep.steps, // $9
+    beep.name // $10
   ])
     .then(result => {
       res.sendStatus(201)
