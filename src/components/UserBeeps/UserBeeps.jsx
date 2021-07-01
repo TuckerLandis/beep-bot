@@ -40,9 +40,6 @@ const userBeeps = useSelector(store => store.userBeeps)
             })
           }
         })
-
-
-
       }
 
     console.log('user beeps :)', userBeeps);

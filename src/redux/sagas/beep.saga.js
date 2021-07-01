@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 
-// posts a beep to the DB on save
+/**
+ * Posts a beep to the beep table
+ * @param {*} action 
+ */
 function* saveBeep(action) {
     console.log('Saving a new beep (saga) ...', action.payload);
     try {
@@ -13,25 +16,31 @@ function* saveBeep(action) {
     }
 }
 
-// deletes a beep from user page
+/**
+ * Deletes a beep. action.payload === beep_id
+ * @param {*} action 
+ */
 function* deleteUserBeep(action) {
     console.log('deleting...', action.payload);
-    
+
     try {
         yield axios.delete(`/api/beep/${action.payload}`)
-        yield put ({
+        yield put({
             type: 'FETCH_USER_BEEPS'
         })
     } catch (error) {
         console.log(error);
-        
+
     }
-    
+
 }
 
+/**
+ * // Gets user beeps, set userBeep reducer to response from DB
+ * @param {*} action 
+ */
 function* fetchUserBeeps(action) {
     console.log('Fetching user beeps ...')
-// send a get, set userBeep reducer to response
     try {
         const response = yield axios.get('/api/beep/user')
         yield put({
@@ -40,13 +49,16 @@ function* fetchUserBeeps(action) {
         })
     } catch (error) {
         console.log(error);
-
     }
 }
 
+/**
+ * Fetches all beeps not associated with the user, and sets the community reducer to response from DB
+ * @param {*} action 
+ */
 function* fetchCommunityBeeps(action) {
     console.log('Fetching community beeps ...')
-// send a get, set userBeep reducer to response
+    // send a get, set userBeep reducer to response
     try {
         const response = yield axios.get('/api/beep/community')
         yield put({

@@ -1,6 +1,16 @@
 .synth-params-container {
-
+    display: flex;
+    justify-content: space-around;
 }
 .filter-container{
-    
+    display: flex;
+    justify-content: space-around;
+}
+.seq-params-container{
+    display: flex;
+    justify-content: space-around;
+}
+.step-select-container{
+    display: flex;
+    justify-content: center;
 }

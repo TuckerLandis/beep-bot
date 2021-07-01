@@ -3,6 +3,7 @@ import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
+import './NewBeepPage.css'
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -19,16 +20,17 @@ function NewBeepPage() {
         stepcount: 8
     })
 
-    // sets an array of all notes to be the options in the root note select map
+    // default: sets an array of all notes to be the options in the root note select map
     let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
-    // default notes array
+    // default: notes array for selector
     const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
-    // array of notes in selected scale, defaults to C_Major
-    const [selectedScale, setSelectedScale] = useState(c_major) // set this to scaleChoice function ? --useeffect scaleschoice function
 
-    // select populator for scale choice
-    let scaleList = ["major", "minor", "pentatonic", "chromatic", "mixolydian", "aeolian"]
+    // changes when a scale is selected, controlled by handle scale choice function
+    const [selectedScale, setSelectedScale] = useState(c_major) 
+
+    // select populator for scale choice drop dowm
+    let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
 
 
 
@@ -130,6 +132,7 @@ function NewBeepPage() {
 
                 </div>
                 <p></p>
+    {/* filter_type select */}
                 <div className="filter-container">
                     <label htmlFor="filter-type">Filter Type: </label>
                     <select name="filter-type" id="filter_type" onChange={handleBeep} >
@@ -137,14 +140,14 @@ function NewBeepPage() {
                         <option value="highpass">High Pass</option>
                         <option value="bandpass">Band Pass</option>
                     </select>
-
+    {/* filter_cutoff select */}
                     <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
                     <input type="range" id="filter_cutoff" name="filter_cutoff"
                         min="0" max="20000" value={beep.filter_cutoff} onChange={handleBeep} />
                 </div>
             </div>
             <p></p>
-
+    {/* scale nam select */}
             <div className="seq-params-container">
                 <label htmlFor="scale-select">Scale: </label>
                 <select name="scale-select" id="scale" onChange={handleBeep} >
@@ -155,7 +158,7 @@ function NewBeepPage() {
                     })}
                 </select>
 
-                {/* select for octave choice, triggers handle octave on change */}
+    {/* select for octave choice, triggers handle octave on change */}
                 <label htmlFor="octave-select">Octave: </label>
                 <select name="octave-select" id="octave" onChange={handleBeep} value={beep.octave} >
                     <option value="1"> 1 </option>
@@ -168,7 +171,7 @@ function NewBeepPage() {
                     <option value="8"> 8 </option>
                 </select>
 
-                {/* select for root note change, triggers handle root on change */}
+    {/* select for root note change, triggers handle root on change */}
                 <label htmlFor="root-select">Root Note: </label>
                 <select name="root-select" id="root" onChange={handleBeep} value={beep.rootNote}>
 
@@ -182,24 +185,24 @@ function NewBeepPage() {
 
                 </select>
 
-                {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
+    {/* range input for BPM, min = 40, max = 200 (arbitrary) */}
                 <label htmlFor="BPM">BPM{beep.bpm}</label>
-                <input type="range" id="BPM" name="BPM"
+                <input type="range" id="bpm" name="BPM"
                     min="40" max="200" value={beep.bpm} onChange={handleBeep} />
 
 
             </div>
             <p></p>
 
+    {/* step select, see script notes within*/}
             <div className="step-select-container">
 
-                {/* these will eventually be mapped over based on sequence length(stretch) */}
-
+                    {/* maps over beep.steps and returns that many step-selectors */}
                 {beep.steps.map((step, i) => {
                     return (
                         <select id={i} onChange={handleStep} key={i}>
 
-                            {/* uses selectedScale state to return a list of notes in selected selectedScale */}
+                            {/* uses selectedScale state to return a list of notes based on handScaleChoice */}
                             {selectedScale.map((note, i) => {
                                 return (
                                     <option key={i} value={note}>{note}</option>
