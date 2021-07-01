@@ -2,6 +2,7 @@ const { useDispatch, useSelector } = require("react-redux");
 import React, { useEffect, useState } from 'react';
 import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
+import { useHistory } from 'react-router-dom';
 
 /* 
 ! ToDo
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2'
 */
 
 function UserBeeps() {
+  const history = useHistory()
   const dispatch = useDispatch() // declare dispatch for use below
   const userBeeps = useSelector(store => store.userBeeps)
 
@@ -47,6 +49,7 @@ function UserBeeps() {
       type: "SELECT_BEEP",
       payload: beep.beep_id
     })
+    history.push(`/edit/${beep.beep_id}`)
   }
 
   console.log('user beeps :)', userBeeps);
