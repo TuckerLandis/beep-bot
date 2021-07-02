@@ -109,7 +109,7 @@ function EditBeepPage() {
     }
 
     console.log(beep);
-    const selectedScale = handleScaleChoice(beep)
+    let selectedScale = handleScaleChoice(beep)
 
     // ------------------------------- DOM Return -------------------------------------- //
 

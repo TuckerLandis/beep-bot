@@ -177,3 +177,11 @@ input {
 .range-text{
   font-size: 30px;
 }
+
+select{
+  width: 100px;
+}
+
+swal-class-bg{
+  background-color: black;
+}

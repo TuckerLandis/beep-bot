@@ -97,7 +97,8 @@ router.post('/', (req, res) => {
     beep.name // $10
   ])
     .then(result => {
-      res.sendStatus(201)
+      res.send()
+     
     })
     .catch(error => {
       console.log('error - insert', error);

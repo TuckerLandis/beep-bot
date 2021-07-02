@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as Tone from 'tone'
-import { useLocation } from "react-router";
-import { useDispatch } from "react-redux";
+
+import './PlayButton.css'
 
 
 function PlayButton (props) { //// <--------<------<-----<------The play Button -------------------------- ////> nned to abstract, pass in steps?
@@ -9,6 +9,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
 
     const [isPlaying, setIsPlaying] = useState(false)
     const [playButtonText, setPlayButtonText] = useState('play')
+    const [buttonColor, setButtonColor] = useState('green')
 
 
 
@@ -22,6 +23,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
         if (!isPlaying) {  // starts Tone if stopped
             setIsPlaying(true)  // flips playing boolean
             setPlayButtonText('stop') // flips button text
+            setButtonColor('red')
     
             Tone.start() // start tone audio context on user interaction per spec of web audio api
     
@@ -57,6 +59,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
         } else { // if transport is playing, 
             setIsPlaying(false) // set play bool to off
             setPlayButtonText('play') // flip play button text
+            setButtonColor('green')
             Tone.Transport.stop(); // STOP the transport , music
         }
 
@@ -69,7 +72,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     
     
     return (
-        <button onClick={()=> startStop()}>{playButtonText}</button>
+        <button className={buttonColor} onClick={()=> startStop()}>{playButtonText}</button>
     )
 }
 

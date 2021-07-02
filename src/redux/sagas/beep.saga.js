@@ -9,7 +9,7 @@ function* saveBeep(action) {
     console.log('Saving a new beep (saga) ...', action.payload);
     try {
         yield axios.post('/api/beep', action.payload) // post a new beep
-        yield fetchUserBeeps // get userbeeps
+        yield fetchUserBeeps() // get userbeeps
     } catch (error) {
         console.log(error);
 

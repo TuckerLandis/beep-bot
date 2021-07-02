@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
 import './NewBeepPage.css'
+import { useHistory } from 'react-router';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
+    const history = useHistory()
+    const userBeeps = useSelector(store => store.userBeeps)
+
     // default beep
     const [beep, setBeep] = useState({
         osc_type: 'triangle8',
@@ -29,7 +33,7 @@ function NewBeepPage() {
     const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
 
     // changes when a scale is selected, controlled by handle scale choice function
-    const [selectedScale, setSelectedScale] = useState(c_major)
+    // const [selectedScale, setSelectedScale] = useState(c_major)
 
     // select populator for scale choice drop dowm
     let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
@@ -80,7 +84,7 @@ function NewBeepPage() {
         console.log('scale with octave', scaleO);
 
         // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
-        setSelectedScale(scaleO)
+        return scaleO
     }
 
     /**
@@ -98,6 +102,26 @@ function NewBeepPage() {
             inputValue: '',
             inputPlaceholder: 'Enter a name for your beep',
             showCancelButton: true,
+             customClass: {
+                container: 'swal-class-bg',
+                popup: 'swal-class-bg',
+                header: '...',
+                title: '...',
+                closeButton: '...',
+                icon: '...',
+                image: '...',
+                content: '...',
+                htmlContainer: '...',
+                input: '...',
+                inputLabel: '...',
+                validationMessage: '...',
+                actions: '...',
+                confirmButton: '...',
+                denyButton: '...',
+                cancelButton: '...',
+                loader: '...',
+                footer: '....'
+            },
             inputValidator: (value) => {
                 if (!value) {
                     return 'You need to write something!'
@@ -108,14 +132,15 @@ function NewBeepPage() {
             if (result.isConfirmed) {
 
                 dispatchBeep({
-                    ...beep, name: result.value// doesn't set? 
+                    ...beep, name: result.value
                 })
             }
         }
-        )
-
-
-
+        ).then(()=> {
+            let latestBeep = userBeeps[userBeeps.length-1]
+            console.log(latestBeep)
+            // history.push
+        })
     }
 
     function dispatchBeep(beep) {
@@ -125,8 +150,10 @@ function NewBeepPage() {
         })
     }
 
+    console.log(userBeeps);
+    let selectedScale = handleScaleChoice(beep)
     // ------------------------------- DOM Return -------------------------------------- //
-        
+
     return (
         <section>
             <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
