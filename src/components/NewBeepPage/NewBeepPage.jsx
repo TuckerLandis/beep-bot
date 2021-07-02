@@ -103,22 +103,23 @@ function NewBeepPage() {
             inputPlaceholder: 'Enter a name for your beep',
             showCancelButton: true,
              customClass: {
-                container: 'swal-class-bg',
+                container: 'swal-class-container',
                 popup: 'swal-class-bg',
-                header: '...',
-                title: '...',
+                header: 'swal-class-text',
+                title: 'swal-class-text',
                 closeButton: '...',
                 icon: '...',
                 image: '...',
                 content: '...',
                 htmlContainer: '...',
-                input: '...',
+                input: 'swal-class-text',
+                inputPlaceholder: 'swal-class-text',
                 inputLabel: '...',
                 validationMessage: '...',
                 actions: '...',
-                confirmButton: '...',
+                confirmButton: 'swal-class-bg',
                 denyButton: '...',
-                cancelButton: '...',
+                cancelButton: 'swal-class-button-cancel',
                 loader: '...',
                 footer: '....'
             },
@@ -136,16 +137,21 @@ function NewBeepPage() {
                 })
             }
         }
-        ).then(()=> {
-            let latestBeep = userBeeps[userBeeps.length-1]
-            console.log(latestBeep)
-            // history.push
-        })
+        )
+        //.then(()=> {
+        //     let latestBeep = userBeeps[userBeeps?.length-1]
+        //     console.log(latestBeep?.beep_id)
+        //     history.push(`/edit/${latestBeep?.beep_id}`)
+        // })
     }
 
     function dispatchBeep(beep) {
         dispatch({
             type: 'SAVE_NEW_BEEP',
+            payload: beep
+        })
+        dispatch({
+            type: 'SELECT_BEEP',
             payload: beep
         })
     }

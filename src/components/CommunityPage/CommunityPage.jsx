@@ -24,11 +24,11 @@ function CommunityPage() {
           <div key={i} className="beep-item">
           <h2>{beep.beep_name}</h2> 
           <h4>beep.username</h4>
-          <p>Steps: {JSON.stringify(beep.steps)}</p>
-          <p>BPM: {beep.bpm}</p>
+          <h3>Steps: {JSON.stringify(beep.steps)}</h3>
+          <h3>BPM: {beep.bpm}</h3>
 
           <PlayButton beep={beep} steps={beep.steps} key={i}/>
-          <button> 💚 </button>
+          <button>🖤</button>
           </div>
         
         

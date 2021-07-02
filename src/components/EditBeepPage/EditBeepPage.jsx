@@ -14,6 +14,7 @@ import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 
 function EditBeepPage() {
@@ -101,11 +102,32 @@ function EditBeepPage() {
     const handleSave = () => {
         console.log('saving a beep :)', beep);
 
+        
+        Swal.fire({
+          title: 'Do you want to overwrite this beep?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes'
+        }).then((result) => {
 
-        dispatch({
-            type: 'UPDATE_BEEP',
-            payload: beep
+            
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Overwritten',
+              '',
+              'success'
+            )
+            dispatch({
+                type: 'UPDATE_BEEP',
+                payload: beep
+            })
+          }
         })
+
+
+        
     }
 
     console.log(beep);
@@ -115,7 +137,7 @@ function EditBeepPage() {
 
     return (
         <section>
-            <h1>{beep.beep_name}</h1>
+            <h1>editing... {beep.beep_name}</h1>
             <div>
 
                 <div className="synth-params-container">

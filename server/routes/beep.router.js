@@ -110,7 +110,7 @@ router.put('/:id', (req, res) => {
   console.log('got to beep router (PUT)');
   let beep = req.body
 
-  let queryText = 'UPDATE beep SET "osc_type" = $2, "filter_type" = $3, "filter_cutoff" = $4, "scale"= $5, "octave"= $6, "root" = $7, "bpm" = $8, "steps" = $9, "beep_name"= $10 WHERE "beep_id" = $1;';
+  let queryText = 'UPDATE beep SET "osc_type" = $2, "filter_type" = $3, "filter_cutoff" = $4, "scale"= $5, "octave"= $6, "root" = $7, "bpm" = $8, "steps" = $9, WHERE "beep_id" = $1;';
 
   pool.query(queryText, [ 
     beep.beep_id, // $1 
@@ -122,7 +122,6 @@ router.put('/:id', (req, res) => {
     beep.root, // $7
     beep.bpm,  // $8
     beep.steps, // $9
-    beep.name // $10
   ])
   .then(result => {
     res.sendStatus(200)
