@@ -2,17 +2,19 @@ html,
 body,
 #react-root {
   height: 100%;
+  background-color: black;
+  color: #00ff00;
 }
 
 /* uncomment for robot font  */
-/* @font-face {
+@font-face {
   font-family: 'vt323regular';
   src: url('../../assets/VT323/webfontkit-20210628-231156/vt323-regular-webfont.woff2') format('woff2'),
        url('../../assets/VT323/webfontkit-20210628-231156/vt323-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 
-} */
+}
 
 body {
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,6 +25,42 @@ img {
   display: inline-block;
   max-width: 100%;
 }
+
+label{
+  color: #00ff00;
+  font-size: 20px;
+}
+
+.slider{
+  -webkit-appearance: none;
+  width: 25%;
+  height: 10px;
+  background: #000;
+  outline: none;
+  border: 2px solid lawngreen;
+
+  
+}
+
+
+/* for chrome/safari */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 20px;
+  background: #000;
+  cursor: pointer;
+  border: 5px solid lawngreen;
+  
+}
+
+select{
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: black;
+  color: lawngreen;
+  font-size: 20px;
+}
+
 
 /* --------------------------------------------------------------------------------
 Container
@@ -35,6 +73,21 @@ Container
 /* --------------------------------------------------------------------------------
 Button
 -------------------------------------------------------------------------------- */
+
+button{
+  padding: 10px;
+  background-color: lawngreen;
+  color: black;
+  font-size: 25px;
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button:hover {
+  padding: 10px;
+  background-color: black;
+  color: lawngreen;
+  cursor: crosshair;
+}
 
 .btn {
   display: inline-block;
@@ -119,4 +172,8 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
+}
+
+.range-text{
+  font-size: 30px;
 }

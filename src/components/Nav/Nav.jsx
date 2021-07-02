@@ -23,29 +23,29 @@ function Nav() {
         <h2 className="nav-title">Beep Bot</h2>
       </Link>
       <Link className="navLink" to="/newbeep">
-          New Beep
+          New Beep +
         </Link>
         <Link className="navLink" to="/userbeeps">
           Your Beeps
         </Link>
-      <div>
+      
         <Link className="navLink" to={loginLinkData.path}>
           {loginLinkData.text}
         </Link>
-
+{/* 
         {user.id && (
           <>
-            <Link className="navLink" to="/info">
+             <Link className="navLink" to="/info">
               Info Page
             </Link>
-            <LogOutButton className="navLink" />
-          </>
-        )}
+            <LogOutButton className="navLink" /> 
+          </> 
+        )} */}
 
         <Link className="navLink" to="/about">
           About
         </Link>
-      </div>
+      
     </div>
   );
 }
