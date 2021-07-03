@@ -15,7 +15,7 @@ function NewBeepPage() {
         dispatch({ type: 'FETCH_USER_BEEPS' });
       }, []);
 
-    // default beep
+    // default beep. manipulated by the user on change of all inputs on the page
     const [beep, setBeep] = useState({
         osc_type: 'triangle8',
         filter_type: 'lowpass',
@@ -75,7 +75,7 @@ function NewBeepPage() {
      */
     function handleScaleChoice(beep) {
 
-        // sets temp variable to scale.get using root note and scalename
+        // sets temp variable to scale.get using the beep properties: root, scale, octave
         let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes)
 
         // loops over scale array, and adds the respective octave to the array for rendering by Tone
@@ -100,6 +100,7 @@ function NewBeepPage() {
         console.log('saving a beep :)', beep);
 
 
+        // this prompt is fired upon pressing the save button on the new beep page, it takes in a required name input
         Swal.fire({
             title: 'What should we call this beep?',
             input: 'text',
@@ -127,35 +128,36 @@ function NewBeepPage() {
                 loader: '...',
                 footer: '....'
             },
+            // validates that the user has entered a value. if !value, stop here
             inputValidator: (value) => {
                 if (!value) {
                     return 'You need to write something!'
                 }
             }
+            // once the input has been validated, send a dispatch like below
         }).then(result => {
             console.log(result);
             if (result.isConfirmed) {
 
+                // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
                 dispatchBeep({
                     ...beep, name: result.value,
                 })
-
-
             }
         }
         )
-        .then(()=> {
-            // let latestBeep = userBeeps[userBeeps?.length-1]
-            // console.log(latestBeep?.beep_id)
-            // history.push(`/edit/${userBeeps[userBeeps?.length]?.beep_id}`)
-        })
     }
 
+    // this function is sent to the beep saga in the dispatch below to send a user to the edit page via the new post's response.id
     function pushToEdit(beep_id) {
-        // this function is sent in the dispatch below to pass a user to the edit page via the new post's response.id
+       
+        // simple history push with the returned beep ID from our post. presently undefined. passed to the saga
         history.push(`/edit/${beep_id}`)
     }
 
+    /**
+     * sends a dispatch containing: beep object, pushToEdit function as described above
+     */
     function dispatchBeep(beep) {
         dispatch({
             type: 'SAVE_NEW_BEEP',
@@ -168,8 +170,15 @@ function NewBeepPage() {
 
     }
 
-    console.log(userBeeps[userBeeps.length]);
+    /**
+     * Sets an array of notes within the scale specified by the user. handleScaleChoice is a function declared above, it runs a call to the tonal library
+     *  with the beep object's root, scale, and octave properties, which change on user input. The array set here by handleScaleChoice is what populates the 
+     * step select's options
+     */
     let selectedScale = handleScaleChoice(beep)
+
+
+
     // ------------------------------- DOM Return -------------------------------------- //
 
     return (

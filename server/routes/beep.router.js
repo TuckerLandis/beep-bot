@@ -68,7 +68,8 @@ router.get('/edit/:id', (req,res) => {
  */
 router.post('/', (req, res) => {
   console.log('got to beep router (POST)', req.body);
-  let beep = req.body // for legibility below
+
+  let beep = req.body
 
   let queryText = `INSERT INTO "beep" (
     "user_id",
@@ -83,7 +84,7 @@ router.post('/', (req, res) => {
       "beep_name"
       )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )
-            RETURNING "beep".beep_id
+        RETURNING "beep_id"
             ;`;
 
   pool.query(queryText, [
@@ -98,8 +99,17 @@ router.post('/', (req, res) => {
     beep.steps, // $9
     beep.name // $10
   ])
-    .then(result => {
-      res.send(beep_id)
+    .then( (result) => {
+
+      console.log('New Beep Id:', result.rows[0].beep_id); //logs ID correctly
+    
+      const createdBeepID = result.rows[0].beep_id // if i just send this, i get an error for invalid status code
+
+      const created = {
+        beep_id: createdBeepID
+      } // creating an object so as not to be sending a number, i also tried making createdBeepID a string above
+
+      res.send(result.rows)// no matter what i send, this is always a promise when logged in the saga
      
     })
     .catch(error => {
@@ -135,6 +145,9 @@ router.put('/:id', (req, res) => {
 })
 
 
+/**
+ * Deletes a beep, based off of it's beep_id serial key from the userbeeps page
+ */
 router.delete('/:id', (req, res) => {
   console.log('got to beep router (DELETE)');
 
