@@ -82,7 +82,9 @@ router.post('/', (req, res) => {
       "steps",
       "beep_name"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 );`;
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )
+            RETURNING "beep".beep_id
+            ;`;
 
   pool.query(queryText, [
     req.user.id, // $1 
@@ -97,7 +99,7 @@ router.post('/', (req, res) => {
     beep.name // $10
   ])
     .then(result => {
-      res.send()
+      res.send(beep_id)
      
     })
     .catch(error => {

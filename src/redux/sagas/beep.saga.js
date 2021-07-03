@@ -6,9 +6,12 @@ import { put, takeEvery, takeLatest } from 'redux-saga/effects';
  * @param {*} action 
  */
 function* saveBeep(action) {
-    console.log('Saving a new beep (saga) ...', action.payload);
+    console.log('Saving a new beep (saga) ...', action.payload.beep);
     try {
-        yield axios.post('/api/beep', action.payload) // post a new beep
+        const response = axios.post('/api/beep', action.payload.beep) // post a new beep
+        console.log('response from post:', response);
+        
+        yield action.payload.pushToEditFunction(response.beep_id)
         yield fetchUserBeeps() // get userbeeps
     } catch (error) {
         console.log(error);
@@ -28,6 +31,7 @@ function* deleteUserBeep(action) {
         yield put({
             type: 'FETCH_USER_BEEPS'
         })
+        yield put
     } catch (error) {
         console.log(error);
     }
@@ -101,10 +105,16 @@ function* updateBeep(action) {
         })
     } catch (error) {
         console.log(error);
-        
     }
-
 }
+
+/**
+ * 
+ */
+function* loadNewestBeep (action) {
+    // this is a function i might not need
+}
+
 
 export function* beepSaga() {
     yield takeEvery('SAVE_NEW_BEEP', saveBeep);
@@ -113,6 +123,7 @@ export function* beepSaga() {
     yield takeEvery('DELETE_BEEP', deleteUserBeep)
     yield takeEvery('SELECT_BEEP', selectBeep)
     yield takeEvery('UPDATE_BEEP', updateBeep)
+    yield takeEvery('LOAD_NEW_BEEP', loadNewestBeep)
 }
 
 

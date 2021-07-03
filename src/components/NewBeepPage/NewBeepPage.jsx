@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
@@ -10,6 +10,10 @@ function NewBeepPage() {
     const dispatch = useDispatch()
     const history = useHistory()
     const userBeeps = useSelector(store => store.userBeeps)
+
+    useEffect(() => {
+        dispatch({ type: 'FETCH_USER_BEEPS' });
+      }, []);
 
     // default beep
     const [beep, setBeep] = useState({
@@ -133,30 +137,38 @@ function NewBeepPage() {
             if (result.isConfirmed) {
 
                 dispatchBeep({
-                    ...beep, name: result.value
+                    ...beep, name: result.value,
                 })
+
+
             }
         }
         )
-        //.then(()=> {
-        //     let latestBeep = userBeeps[userBeeps?.length-1]
-        //     console.log(latestBeep?.beep_id)
-        //     history.push(`/edit/${latestBeep?.beep_id}`)
-        // })
+        .then(()=> {
+            // let latestBeep = userBeeps[userBeeps?.length-1]
+            // console.log(latestBeep?.beep_id)
+            // history.push(`/edit/${userBeeps[userBeeps?.length]?.beep_id}`)
+        })
+    }
+
+    function pushToEdit(beep_id) {
+        // this function is sent in the dispatch below to pass a user to the edit page via the new post's response.id
+        history.push(`/edit/${beep_id}`)
     }
 
     function dispatchBeep(beep) {
         dispatch({
             type: 'SAVE_NEW_BEEP',
-            payload: beep
+            payload: {
+                beep : beep,
+                pushToEditFunction : pushToEdit
+            }
         })
-        dispatch({
-            type: 'SELECT_BEEP',
-            payload: beep
-        })
+        // this action needs to include a history.push callback function to route the user to the edit page with the ID from beep.beep_id
+
     }
 
-    console.log(userBeeps);
+    console.log(userBeeps[userBeeps.length]);
     let selectedScale = handleScaleChoice(beep)
     // ------------------------------- DOM Return -------------------------------------- //
 

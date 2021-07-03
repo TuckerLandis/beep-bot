@@ -10,6 +10,8 @@ function AboutPage() {
   return (
     <div className="container">
       <div className="next">
+        <h1>Technologies used</h1>
+        <h3>Tone.js | Tonal.js</h3>
         <h1>Next</h1>
         <h3>Flow, bring user to edit upon save</h3>
         <h3>Rendering data on list views</h3>
