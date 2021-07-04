@@ -99,23 +99,30 @@ router.post('/', (req, res) => {
     beep.steps, // $9
     beep.name // $10
   ])
-    .then( (result) => {
-
+    .then( result => {
+      console.log('ln 103', result);
+      
+      console.log(req.body);
+      
+      
+      // req.body.pushToEdit(result.beep_id)
       console.log('New Beep Id:', result.rows[0].beep_id); //logs ID correctly
     
       const createdBeepID = result.rows[0].beep_id // if i just send this, i get an error for invalid status code
 
-      const created = {
+      const createdObj = {
         beep_id: createdBeepID
       } // creating an object so as not to be sending a number, i also tried making createdBeepID a string above
 
-      res.send(result.rows)// no matter what i send, this is always a promise when logged in the saga
+
+      res.send(createdObj)
      
     })
     .catch(error => {
       console.log('error - insert', error);
       res.sendStatus(500);
     })
+    
 });
 
 router.put('/:id', (req, res) => {

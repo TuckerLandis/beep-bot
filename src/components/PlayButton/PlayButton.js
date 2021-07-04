@@ -54,6 +54,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     
             // starts the transport. what actually STARTs our sequence
             Tone.Transport.start();
+            // seq.start()
     
     
         } else { // if transport is playing, 
@@ -61,6 +62,8 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
             setPlayButtonText('play') // flip play button text
             setButtonColor('green')
             Tone.Transport.stop(); // STOP the transport , music
+            
+            // Tone.stop() // attempt to stop audio context for play button instance doesn't fix double play bug
         }
 
 

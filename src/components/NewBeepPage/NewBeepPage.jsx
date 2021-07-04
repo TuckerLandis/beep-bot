@@ -9,11 +9,7 @@ import { useHistory } from 'react-router';
 function NewBeepPage() {
     const dispatch = useDispatch()
     const history = useHistory()
-    const userBeeps = useSelector(store => store.userBeeps)
 
-    useEffect(() => {
-        dispatch({ type: 'FETCH_USER_BEEPS' });
-      }, []);
 
     // default beep. manipulated by the user on change of all inputs on the page
     const [beep, setBeep] = useState({
@@ -166,7 +162,7 @@ function NewBeepPage() {
             type: 'SAVE_NEW_BEEP',
             payload: {
                 beep : beep,
-                pushToEditFunction : pushToEdit
+                pushToEdit : pushToEdit
             }
         })
         // this action needs to include a history.push callback function to route the user to the edit page with the ID from beep.beep_id

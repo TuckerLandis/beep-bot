@@ -6,14 +6,17 @@ import { put, takeEvery, takeLatest } from 'redux-saga/effects';
  * @param {*} action 
  */
 function* saveBeep(action) {
-    console.log('Saving a new beep (saga) ...', action.payload.beep);
+    console.log('Saving a new beep (saga) ...', action.payload);
 
     try {
-        const response = axios.post('/api/beep', action.payload.beep) // post a new beep
-        console.log('response from post:', response);
-        
-        // attempting to pass a property of the response to 
-        yield action.payload.pushToEditFunction(response.beep_id)
+        // set a 'response' variable t
+       const response = (yield axios.post('/api/beep', action.payload.beep)) // post a new beep
+       console.log('response from post:', response.data.rows[0].beep_id);
+       
+
+        // run the push to edit function sent with the dispatch with an argument of the newly
+        // created beep's ID. push user to edit page with the ID in URL params for data persist
+        yield action.payload.pushToEdit(response.data.rows[0].beep_id)
         // this function is passed in the action dispatch from the save button on the new beep page
         yield fetchUserBeeps() // get userbeeps
     } catch (error) {
@@ -34,7 +37,6 @@ function* deleteUserBeep(action) {
         yield axios.delete(`/api/beep/${action.payload}`)
         // refresh user beeps upon delete
         yield fetchUserBeeps()
-        yield put
     } catch (error) {
         console.log(error);
     }
