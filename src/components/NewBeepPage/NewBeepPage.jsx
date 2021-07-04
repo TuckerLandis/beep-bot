@@ -48,8 +48,11 @@ function NewBeepPage() {
      */
     function handleStep(event) {
         console.log('changing: ', event.target.id);
+        // declares a new array of steps based on the values already in beep.steps
         let newSteps = beep.steps
+        // splices a step value at the index of the target, with the value of the event from the specific step select
         newSteps.splice(event.target.id, 1, event.target.value)
+        // spreads the beep state object and inserts the new steps array
         setBeep({
             ...beep, steps: newSteps
         })
@@ -78,7 +81,7 @@ function NewBeepPage() {
         // sets temp variable to scale.get using the beep properties: root, scale, octave
         let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes)
 
-        // loops over scale array, and adds the respective octave to the array for rendering by Tone
+        // loops over scale array, and adds the relevant octave number character to the string, to each index of the notes array
         for (let i = 0; i < scaleO.length; i++) {
             scaleO[i] += beep.octave
         }
@@ -92,7 +95,7 @@ function NewBeepPage() {
     }
 
     /**
-     * Upon pressing save, a sweet alert pops up that asks the user for a name to save their beep as. 
+     * Upon pressing save, a sweet alert pops up that asks the user for a name to save their beep under. 
      * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
      * button -> dispatch -> beep saga -> beep router
      */
