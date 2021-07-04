@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
+
 import './Community.css'
 
 function CommunityPage() {
@@ -28,7 +29,7 @@ function CommunityPage() {
           <h3>BPM: {beep.bpm}</h3>
 
           <PlayButton beep={beep} steps={beep.steps} key={i}/>
-          <button>🖤</button>
+          <button className="nes-btn btn">🖤</button>
           </div>
         
         

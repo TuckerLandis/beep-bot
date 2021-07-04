@@ -75,7 +75,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     
     
     return (
-        <button className={buttonColor} onClick={()=> startStop()}>{playButtonText}</button>
+        <button className={buttonColor} className=" btn nes-btn is-success " onClick={()=> startStop()}>{playButtonText}</button>
     )
 }
 

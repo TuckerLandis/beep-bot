@@ -38,8 +38,6 @@ label{
   background: #000;
   outline: none;
   border: 2px solid lawngreen;
-
-  
 }
 
 
@@ -75,20 +73,17 @@ Button
 -------------------------------------------------------------------------------- */
 
 button{
-  padding: 10px;
-  background-color: lawngreen;
-  color: black;
+
+  color: black !important;
   font-size: 25px;
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 button:hover {
-  padding: 10px;
-  border: 2px solid lawngreen;
-  background-color: rgba(126, 252, 0, 0.591);
-  color: black;
-  cursor: crosshair;
-}
+  border: 1px solid lawngreen;
+  display: inline-block;
+  padding: 10px 20px;
+} 
 
 .red:hover {
   border: 2px solid red;
@@ -98,14 +93,10 @@ button:hover {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  border-color: #014041;
-  border-width: 1px 1px 3px;
-  border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
-  font-size: 1.1rem;
-  outline: 0;
-  cursor: pointer;
+  background-color: lawngreen;
+  color: black;
+  font-size: 25px;
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn_sizeMin {
@@ -124,8 +115,13 @@ button:hover {
 }
 
 .btn:hover {
-  background-color: #008183;
-  text-decoration: none;
+  color: black;
+  font-size: 25px;
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgba(126, 252, 0, 0.591);
+
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */

@@ -25,6 +25,7 @@ import NewBeepPage from '../NewBeepPage/NewBeepPage';
 import UserBeeps from '../UserBeeps/UserBeeps'
 import EditBeepPage from '../EditBeepPage/EditBeepPage';
 
+import "nes.css/css/nes.min.css";
 import './App.css';
 
 function App() {
