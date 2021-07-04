@@ -4,6 +4,8 @@ import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom';
 
+import './UserBeep.css'
+
 /* 
 ! ToDo
 
@@ -64,7 +66,7 @@ function UserBeeps() {
         return (
           <div key={i}>
             {/* TODO contain info about beep when DB represents it */}
-            <p>{beep.beep_name}</p>
+            <h3>{beep.beep_name}</h3>
             <PlayButton beep={beep} key={i} />
             <button onClick={() => deleteBeep(beep)}>Delete</button>
             <button onClick={() => editBeep(beep)}>Load</button>

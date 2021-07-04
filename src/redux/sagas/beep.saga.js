@@ -7,9 +7,18 @@ import { put, takeEvery, takeLatest } from 'redux-saga/effects';
  */
 function* saveBeep(action) {
     console.log('Saving a new beep (saga) ...', action.payload);
+
     try {
-        yield axios.post('/api/beep', action.payload) // post a new beep
-        yield fetchUserBeeps // get userbeeps
+        // set a 'response' variable t
+       const response = (yield axios.post('/api/beep', action.payload.beep)) // post a new beep
+       console.log('response from post:', response.data.rows[0].beep_id);
+       
+
+        // run the push to edit function sent with the dispatch with an argument of the newly
+        // created beep's ID. push user to edit page with the ID in URL params for data persist
+        yield action.payload.pushToEdit(response.data.rows[0].beep_id)
+        // this function is passed in the action dispatch from the save button on the new beep page
+        yield fetchUserBeeps() // get userbeeps
     } catch (error) {
         console.log(error);
 
@@ -24,10 +33,10 @@ function* deleteUserBeep(action) {
     console.log('deleting...', action.payload);
 
     try {
+        //sends a delete to the beep router, using the ID of the beep object in the userBeeps reducer
         yield axios.delete(`/api/beep/${action.payload}`)
-        yield put({
-            type: 'FETCH_USER_BEEPS'
-        })
+        // refresh user beeps upon delete
+        yield fetchUserBeeps()
     } catch (error) {
         console.log(error);
     }
@@ -41,7 +50,9 @@ function* deleteUserBeep(action) {
 function* fetchUserBeeps(action) {
     console.log('Fetching user beeps ...')
     try {
+        // get the user beeps on page load of the userbeeps page. sends that db response to the user beeps reducer
         const response = yield axios.get('/api/beep/user')
+        // sends action to set the user beeps to the response from the user beep get
         yield put({
             type: 'SET_USER_BEEPS',
             payload: response.data
@@ -57,7 +68,7 @@ function* fetchUserBeeps(action) {
  */
 function* fetchCommunityBeeps(action) {
     console.log('Fetching community beeps ...')
-    // send a get, set userBeep reducer to response
+    // send a get, set communityBeeps reducer to response
     try {
         const response = yield axios.get('/api/beep/community')
         yield put({
@@ -76,7 +87,9 @@ function* fetchCommunityBeeps(action) {
 function* selectBeep(action) {
     console.log('Selecting a beep for edit...', action.payload);
     try {
+        // gets a specific beep upon load, the ID of which is set upon load button press in the userbeeps page
         const response = yield axios.get(`/api/beep/edit/${action.payload}`)
+        // 'load' the specific beep into the editbeep reducer, for manipulation on the edit page
         yield put({
             type: 'LOAD_BEEP',
             payload: response.data[0]   /// <--------added trying to fix render edit bug
@@ -88,6 +101,7 @@ function* selectBeep(action) {
 
 
 /**
+ * Upon pressing save on the edit page, this action is dispatched to yield a PUT request to update the entry for the loaded beep
  * 
  * @param {*} action 
  */
@@ -101,10 +115,10 @@ function* updateBeep(action) {
         })
     } catch (error) {
         console.log(error);
-        
     }
-
 }
+
+
 
 export function* beepSaga() {
     yield takeEvery('SAVE_NEW_BEEP', saveBeep);

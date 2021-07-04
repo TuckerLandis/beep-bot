@@ -68,7 +68,8 @@ router.get('/edit/:id', (req,res) => {
  */
 router.post('/', (req, res) => {
   console.log('got to beep router (POST)', req.body);
-  let beep = req.body // for legibility below
+
+  let beep = req.body
 
   let queryText = `INSERT INTO "beep" (
     "user_id",
@@ -82,7 +83,9 @@ router.post('/', (req, res) => {
       "steps",
       "beep_name"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 );`;
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )
+        RETURNING "beep_id"
+            ;`;
 
   pool.query(queryText, [
     req.user.id, // $1 
@@ -96,20 +99,37 @@ router.post('/', (req, res) => {
     beep.steps, // $9
     beep.name // $10
   ])
-    .then(result => {
-      res.sendStatus(201)
+    .then( result => {
+      console.log('ln 103', result);
+      
+      console.log(req.body);
+      
+      
+      // req.body.pushToEdit(result.beep_id)
+      console.log('New Beep Id:', result.rows[0].beep_id); //logs ID correctly
+    
+      const createdBeepID = result.rows[0].beep_id // if i just send this, i get an error for invalid status code
+
+      const createdObj = {
+        beep_id: createdBeepID
+      } // creating an object so as not to be sending a number, i also tried making createdBeepID a string above
+
+
+      res.send(createdObj)
+     
     })
     .catch(error => {
       console.log('error - insert', error);
       res.sendStatus(500);
     })
+    
 });
 
 router.put('/:id', (req, res) => {
   console.log('got to beep router (PUT)');
   let beep = req.body
 
-  let queryText = 'UPDATE beep SET "osc_type" = $2, "filter_type" = $3, "filter_cutoff" = $4, "scale"= $5, "octave"= $6, "root" = $7, "bpm" = $8, "steps" = $9, "beep_name"= $10 WHERE "beep_id" = $1;';
+  let queryText = 'UPDATE beep SET "osc_type" = $2, "filter_type" = $3, "filter_cutoff" = $4, "scale"= $5, "octave"= $6, "root" = $7, "bpm" = $8, "steps" = $9, WHERE "beep_id" = $1;';
 
   pool.query(queryText, [ 
     beep.beep_id, // $1 
@@ -121,7 +141,6 @@ router.put('/:id', (req, res) => {
     beep.root, // $7
     beep.bpm,  // $8
     beep.steps, // $9
-    beep.name // $10
   ])
   .then(result => {
     res.sendStatus(200)
@@ -133,6 +152,9 @@ router.put('/:id', (req, res) => {
 })
 
 
+/**
+ * Deletes a beep, based off of it's beep_id serial key from the userbeeps page
+ */
 router.delete('/:id', (req, res) => {
   console.log('got to beep router (DELETE)');
 
