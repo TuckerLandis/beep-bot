@@ -183,6 +183,7 @@ function NewBeepPage() {
                 <label htmlFor="root-select">Root Note: </label>
                 <select name="root-select" id="root" onChange={handleBeep} value={beep.rootNote}>
 
+                    {/* maps over the root note default defined above, produces options for the root note selector */}
                     {
                         rootNotes.map((rootNote, i) => {
                             return (
@@ -197,7 +198,6 @@ function NewBeepPage() {
                 <label htmlFor="BPM">BPM{beep.bpm}</label>
                 <input type="range" id="bpm" name="BPM"
                     min="40" max="200" value={beep.bpm} onChange={handleBeep} />
-
 
             </div>
             <p></p>
@@ -224,6 +224,8 @@ function NewBeepPage() {
             <p></p>
 
             <PlayButton beep={beep} />
+
+            on
             <button onClick={handleSave}>save</button>
 
         </div>
