@@ -107,7 +107,6 @@ function* selectBeep(action) {
  */
 function* updateBeep(action) {
     console.log('Updating a beep', action.payload);
-    
     try {
         yield axios.put(`/api/beep/${action.payload.beep_id}`, action.payload)
         yield put({
@@ -119,7 +118,7 @@ function* updateBeep(action) {
 }
 
 
-
+// combine and export sagas
 export function* beepSaga() {
     yield takeEvery('SAVE_NEW_BEEP', saveBeep);
     yield takeEvery('FETCH_USER_BEEPS', fetchUserBeeps)

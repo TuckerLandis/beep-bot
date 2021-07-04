@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
@@ -106,7 +106,7 @@ function NewBeepPage() {
             inputValue: '',
             inputPlaceholder: 'Enter a name for your beep',
             showCancelButton: true,
-             customClass: {
+            customClass: {
                 container: 'swal-class-container',
                 popup: 'swal-class-bg',
                 header: 'swal-class-text',
@@ -149,7 +149,7 @@ function NewBeepPage() {
 
     // this function is sent to the beep saga in the dispatch below to send a user to the edit page via the new post's response.id
     function pushToEdit(beep_id) {
-       
+
         // simple history push with the returned beep ID from our post. presently undefined. passed to the saga
         history.push(`/edit/${beep_id}`)
     }
@@ -161,12 +161,10 @@ function NewBeepPage() {
         dispatch({
             type: 'SAVE_NEW_BEEP',
             payload: {
-                beep : beep,
-                pushToEdit : pushToEdit
+                beep: beep,
+                pushToEdit: pushToEdit
             }
         })
-        // this action needs to include a history.push callback function to route the user to the edit page with the ID from beep.beep_id
-
     }
 
     /**
@@ -279,6 +277,8 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
 
+
+                {/* to be replaced */}
                 {/* step select, see script notes within*/}
                 <div className="step-select-container">
 
