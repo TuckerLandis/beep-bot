@@ -69,3 +69,6 @@ package-lock.json
 
 # none of your business
 scrapheap.js
+
+# vs code settings
+.vscode

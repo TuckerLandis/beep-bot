@@ -2,17 +2,19 @@ html,
 body,
 #react-root {
   height: 100%;
+  background-color: black;
+  color: #00ff00;
 }
 
 /* uncomment for robot font  */
-/* @font-face {
+@font-face {
   font-family: 'vt323regular';
   src: url('../../assets/VT323/webfontkit-20210628-231156/vt323-regular-webfont.woff2') format('woff2'),
        url('../../assets/VT323/webfontkit-20210628-231156/vt323-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 
-} */
+}
 
 body {
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,6 +25,42 @@ img {
   display: inline-block;
   max-width: 100%;
 }
+
+label{
+  color: #00ff00;
+  font-size: 20px;
+}
+
+.slider{
+  -webkit-appearance: none;
+  width: 25%;
+  height: 10px;
+  background: #000;
+  outline: none;
+  border: 2px solid lawngreen;
+
+  
+}
+
+
+/* for chrome/safari */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 20px;
+  background: #000;
+  cursor: pointer;
+  border: 5px solid lawngreen;
+  
+}
+
+select{
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: black;
+  color: lawngreen;
+  font-size: 20px;
+}
+
 
 /* --------------------------------------------------------------------------------
 Container
@@ -35,6 +73,27 @@ Container
 /* --------------------------------------------------------------------------------
 Button
 -------------------------------------------------------------------------------- */
+
+button{
+  padding: 10px;
+  background-color: lawngreen;
+  color: black;
+  font-size: 25px;
+  font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button:hover {
+  padding: 10px;
+  border: 2px solid lawngreen;
+  background-color: rgba(126, 252, 0, 0.591);
+  color: black;
+  cursor: crosshair;
+}
+
+.red:hover {
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 0.571);
+}
 
 .btn {
   display: inline-block;
@@ -111,7 +170,7 @@ Form Treatment
   max-width: 100%;
   padding: 25px;
   margin: 0 auto 20px;
-  background-color: #efefef;
+  background-color: black;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }
@@ -119,4 +178,27 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
+}
+
+.range-text{
+  font-size: 30px;
+}
+
+select{
+  width: 100px;
+}
+
+.swal-class-bg{
+  border: 2px solid lawngreen;
+  background-color: black;
+  color: lawngreen;
+}
+
+.swal-class-text{
+  color: lawngreen;
+}
+
+.swal-class-button-confirm{
+  background-color: lawngreen;
+  color: #000;
 }

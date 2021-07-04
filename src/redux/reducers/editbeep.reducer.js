@@ -9,6 +9,7 @@ const editBeepReducer = (state = {}, action) => {
         state = {...state, steps : action.payload}
         return state
     
+    
       default:
         return state;
     }
