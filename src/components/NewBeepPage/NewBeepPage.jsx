@@ -24,7 +24,8 @@ function NewBeepPage() {
         steps: [null, null, null, null, null, null, null, null],
         stepcount: 8,
         name: null,
-        users_that_like: ['-1']
+        likes: 0,
+        users_that_like: [-1]
 
     })
 

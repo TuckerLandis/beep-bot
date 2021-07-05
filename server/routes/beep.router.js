@@ -85,9 +85,10 @@ router.post('/', (req, res) => {
       "steps",
       "beep_name",
       "user_name",
-      "users_that_like"
+      "users_that_like",
+      "likes"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 )
         RETURNING "beep_id"
             ;`;
 
@@ -103,7 +104,8 @@ router.post('/', (req, res) => {
     beep.steps, // $9
     beep.name, // $10
     beep.user_name, // $11
-    beep.users_that_like // $12
+    beep.users_that_like, // $12
+    beep.likes // $13
 
 
   ])
@@ -155,15 +157,16 @@ router.put('/:id', (req, res) => {
   })
 })
 
+// like button put
 router.put('/like/:id', (req, res) => {
-  console.log('got to beep router (LIKE) (PUT)', req.body.beep);
+  console.log('got to beep router (LIKE) (PUT)', req.body);
   let beep = req.body.beep
 
   let queryText = 'UPDATE beep SET "likes" = "likes"+1, "users_that_like" = $2 WHERE "beep_id" = $1;';
 
   pool.query(queryText, [ 
     beep.beep_id, // $1 
-    req.body.users_that_like // $2
+    beep.users_that_like // $2
    
   ])
   .then(result => {

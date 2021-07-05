@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
   function LikeButton(props) {
       const dispatch = useDispatch()
 
-    function handleLike(beep) {
-        if (props.beep.users_that_like?.includes(props.user.id)) {
+    async function handleLike(beep) {
+        await props.beep
+        if (props.beep.users_that_like?.includes(JSON.stringify(props.user.id))) {
           console.log('user already likes this');
           return
         } else {
@@ -31,7 +32,7 @@ import { useDispatch } from "react-redux";
       }
 
 
-    if (props.beep.users_that_like?.includes(props.user.id)) {
+    if (props.beep.users_that_like?.includes(JSON.stringify(props.user.id))) {
       return (
         <button className="nes-btn"><i class="nes-icon is-medium heart is-full"></i></button>
       )
