@@ -35,6 +35,9 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
             const volumeNode = new Tone.Volume(-18).toDestination();
     
             // instantiates a mono synth. the parameters are set to the state object "synthParams".'param":"value"
+
+
+            // this needs to come out!!
             const synth = new Tone.MonoSynth({
                 oscillator: {
                     type: props.beep.osc_type
@@ -45,16 +48,20 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
                 }
             }).chain(volumeNode, Tone.Destination);
     
-            const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
+
+            // this needs to come out!
+            let seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
                 synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
                 // subdivisions are given as subarrays
-            }, props.beep.steps).start(0); // which notes? newSteps array. start takes arg of "now" time
+            }, props.beep.steps)
+            //.start(0); // which notes? newSteps array. start takes arg of "now" time
+            
     
             console.log(synth.get()); // logs synth params to ensure change is read
     
             // starts the transport. what actually STARTs our sequence
             Tone.Transport.start();
-            // seq.start()
+            seq.start()
     
     
         } else { // if transport is playing, 

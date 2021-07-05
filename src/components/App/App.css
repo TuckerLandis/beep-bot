@@ -24,6 +24,7 @@ body {
 img {
   display: inline-block;
   max-width: 100%;
+
 }
 
 label{
@@ -71,7 +72,7 @@ Container
 /* --------------------------------------------------------------------------------
 Button
 -------------------------------------------------------------------------------- */
-
+/* 
 button{
 
   color: black !important;
@@ -125,7 +126,7 @@ button:hover {
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */
-.btn_asLink {
+/* .btn_asLink {
   padding: 0;
   border-width: 0;
   border-bottom: 1px solid #444;
@@ -139,7 +140,7 @@ button:hover {
   background-color: transparent;
   border-color: #008183;
   color: #008183;
-}
+} */ */
 
 /* --------------------------------------------------------------------------------
 Alert
