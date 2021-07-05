@@ -200,17 +200,25 @@ function NewBeepPage() {
 
                     {/* FILTER TYPE*/}
                     <div className="filter-container">
+                        <div>
                         <label htmlFor="filter-type">Filter Type: </label>
                         <select name="filter-type" id="filter_type" onChange={handleBeep} >
                             <option value="lowpass">Low Pass</option>
                             <option value="highpass">High Pass</option>
                             <option value="bandpass">Band Pass</option>
                         </select>
+                        </div>
+                        
 
                         {/* FILTER CUTOFF */}
+                      
                         <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
-                        <input type="range" id="filter_cutoff" name="filter_cutoff" className="slider"
+                       
+                       
+                       <input type="range" id="filter_cutoff" name="filter_cutoff" className="slider"
                             min="0" max="20000" value={beep.filter_cutoff} onChange={handleBeep} />
+                       
+                       
                     </div>
                 </div>
                 <br></br>
@@ -267,7 +275,10 @@ function NewBeepPage() {
 
                     </div>
                     <div style={{ width: "30%" }}>
+                        <div>
                         <label htmlFor="BPM"><span className="range-text">BPM: {beep.bpm}</span></label>
+                        </div>
+                        
                         <input type="range" id="bpm" name="BPM" className="slider"
                             min="40" max="200" value={beep.bpm} onChange={handleBeep} />
                     </div>
@@ -304,7 +315,7 @@ function NewBeepPage() {
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button onClick={handleSave}>save</button>
+                    <button className="nes-btn is-primary"onClick={handleSave}>save</button>
                 </div>
 
             </div>

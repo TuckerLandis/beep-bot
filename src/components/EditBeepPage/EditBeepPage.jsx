@@ -259,7 +259,7 @@ function EditBeepPage() {
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button onClick={handleSave}>save</button>
+                    <button className="nes-btn is-primary"onClick={handleSave}>save</button>
                 </div>
 
             </div>
