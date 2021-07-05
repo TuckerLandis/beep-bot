@@ -30,6 +30,9 @@ CREATE TABLE "beep" (
 	"root" varchar(20) NOT NULL,
 	"bpm" integer(3) NOT NULL,
 	"steps" varchar(1000) NOT NULL,
+	"user_name" varchar(80),
+	"likes" int,
+	"date_created" date CURRENT_DATE
 );
 
 

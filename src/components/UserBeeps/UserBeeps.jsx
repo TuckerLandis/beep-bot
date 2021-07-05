@@ -62,14 +62,14 @@ function UserBeeps() {
 
 
       {userBeeps.map((beep, i) => {
-        console.log(beep);
+        // console.log(beep);
         return (
           <div key={i}>
             {/* TODO contain info about beep when DB represents it */}
             <h3>{beep.beep_name}</h3>
             <PlayButton beep={beep} key={i} />
-            <button onClick={() => deleteBeep(beep)}>Delete</button>
-            <button onClick={() => editBeep(beep)}>Load</button>
+            <button className="nes-btn is-error" onClick={() => deleteBeep(beep)}>delete</button>
+            <button className=" nes-btn is-warning" onClick={() => editBeep(beep)}>load</button>
           </div>
 
 

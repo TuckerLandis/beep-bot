@@ -9,7 +9,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
 
     const [isPlaying, setIsPlaying] = useState(false)
     const [playButtonText, setPlayButtonText] = useState('play')
-    const [buttonColor, setButtonColor] = useState('green')
+    const [buttonClass, setButtonClass] = useState('btn nes-btn is-success')
 
 
 
@@ -23,9 +23,11 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
         if (!isPlaying) {  // starts Tone if stopped
             setIsPlaying(true)  // flips playing boolean
             setPlayButtonText('stop') // flips button text
-            setButtonColor('red')
+            setButtonClass('btn nes-btn is-error')
     
             Tone.start() // start tone audio context on user interaction per spec of web audio api
+
+            let seq = 'nothing'
     
     
             // leaving space mentally for a section for configuring (stretch) probability of the sequence
@@ -50,25 +52,31 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     
 
             // this needs to come out!
-            let seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
+            seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
                 synth.triggerAttackRelease(note, 0.1, time); // note comes from notes array state. 
                 // subdivisions are given as subarrays
             }, props.beep.steps)
             //.start(0); // which notes? newSteps array. start takes arg of "now" time
-            
+
     
             console.log(synth.get()); // logs synth params to ensure change is read
     
             // starts the transport. what actually STARTs our sequence
             Tone.Transport.start();
             seq.start()
+            console.log('tone sequence', seq);
+            console.log('tone transport', Tone.Transport);
+            
+            
     
     
         } else { // if transport is playing, 
             setIsPlaying(false) // set play bool to off
             setPlayButtonText('play') // flip play button text
-            setButtonColor('green')
+            setButtonClass('btn nes-btn is-success')
             Tone.Transport.stop(); // STOP the transport , music
+            Tone.Transport.clear('seq') // seemingly inneffective, trying to clear transport of all events
+            // Tone.Transport.dispose('seq')
             
             // Tone.stop() // attempt to stop audio context for play button instance doesn't fix double play bug
         }
@@ -82,7 +90,7 @@ function PlayButton (props) { //// <--------<------<-----<------The play Button 
     
     
     return (
-        <button className={buttonColor} className=" btn nes-btn is-success " onClick={()=> startStop()}>{playButtonText}</button>
+     <button className={buttonClass} onClick={()=> startStop()}>{playButtonText}</button>
     )
 }
 

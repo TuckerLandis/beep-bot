@@ -72,7 +72,7 @@ Container
 /* --------------------------------------------------------------------------------
 Button
 -------------------------------------------------------------------------------- */
-/* 
+
 button{
 
   color: black !important;
@@ -80,6 +80,7 @@ button{
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* 
 button:hover {
   border: 1px solid lawngreen;
   display: inline-block;

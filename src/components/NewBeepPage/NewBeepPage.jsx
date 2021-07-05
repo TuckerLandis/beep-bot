@@ -315,7 +315,7 @@ function NewBeepPage() {
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button className="nes-btn btn"onClick={handleSave}>save</button>
+                    <button className="nes-btn is-primary"onClick={handleSave}>save</button>
                 </div>
 
             </div>

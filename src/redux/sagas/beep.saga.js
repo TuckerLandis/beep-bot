@@ -9,18 +9,20 @@ function* saveBeep(action) {
     console.log('Saving a new beep (saga) ...', action.payload);
 
     try {
-        // set a 'response' variable t
+        // set a 'response' variable to the return from the DB
        const response = (yield axios.post('/api/beep', action.payload.beep)) // post a new beep
-       console.log('response from post:', response.data.rows[0].beep_id);
+       console.log('response from post:', response.data);
+        // console.log('response from post:', response);
        
 
-        // run the push to edit function sent with the dispatch with an argument of the newly
-        // created beep's ID. push user to edit page with the ID in URL params for data persist
-        yield action.payload.pushToEdit(response.data.rows[0].beep_id)
+    //     // run the push to edit function sent with the dispatch with an argument of the newly
+    //     // created beep's ID. push user to edit page with the ID in URL params for data persist
+        yield action.payload.pushToEdit(response.data.beep_id)
         // this function is passed in the action dispatch from the save button on the new beep page
         yield fetchUserBeeps() // get userbeeps
     } catch (error) {
         console.log(error);
+        
 
     }
 }
