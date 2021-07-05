@@ -24,7 +24,7 @@ function CommunityPage() {
         return (
           <div key={i} className="beep-item">
           <h2>{beep.beep_name}</h2> 
-          <h4>beep.username</h4>
+          <h4>{beep.user_name}</h4>
           <h3>Steps: {JSON.stringify(beep.steps)}</h3>
           <h3>BPM: {beep.bpm}</h3>
 

@@ -5,6 +5,7 @@ import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
 import './NewBeepPage.css'
 import { useHistory } from 'react-router';
+import userReducer from '../../redux/reducers/user.reducer';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -25,6 +26,8 @@ function NewBeepPage() {
         name: null
 
     })
+
+    const userObj = useSelector((store) => store.user)
 
     // default: sets an array of all notes to be the options in the root note select map
     let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
@@ -140,7 +143,7 @@ function NewBeepPage() {
 
                 // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
                 dispatchBeep({
-                    ...beep, name: result.value,
+                    ...beep, name: result.value, user_name : userObj.username
                 })
             }
         }
