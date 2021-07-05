@@ -156,14 +156,14 @@ router.put('/:id', (req, res) => {
 })
 
 router.put('/like/:id', (req, res) => {
-  console.log('got to beep router (PUT)');
+  console.log('got to beep router (LIKE) (PUT)', req.body.beep);
   let beep = req.body.beep
 
-  let queryText = 'UPDATE beep SET "likes" = "likes"+1, "users_that_like" = $2, WHERE "beep_id" = $1;';
+  let queryText = 'UPDATE beep SET "likes" = "likes"+1, "users_that_like" = $2 WHERE "beep_id" = $1;';
 
   pool.query(queryText, [ 
     beep.beep_id, // $1 
-    beep.users_that_like // $2
+    req.body.users_that_like // $2
    
   ])
   .then(result => {
