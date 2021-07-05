@@ -12,6 +12,35 @@ function CommunityPage() {
   }, []);
   
   const communityBeeps = useSelector((store) => store.communityBeeps);
+  const user = useSelector((store) => store.user)
+
+  function LikeButton(beep) {
+    if (beep.users_that_like.includes(user.id)) {
+      return (
+        <button className="nes-btn"><i class="nes-icon is-medium heart is-full"></i></button>
+      )
+    } else {
+      return (
+        <button className="nes-btn" onClick={()=>{handleLike(beep)}}><i class="nes-icon is-medium heart is-empty"></i></button>
+      )
+    }
+  }
+
+  function handleLike (beep) {
+    if (beep.users_that_like.includes(user.id)) {
+      return
+    } else {
+      dispatch({
+        type:"LIKE_BEEP",
+        payload: {
+          beep : beep,
+          user : user
+        }
+      })
+    }
+
+
+  } 
 
   return (
     <div className="container">
@@ -29,7 +58,7 @@ function CommunityPage() {
           <h3>BPM: {beep.bpm}</h3>
 
           <PlayButton beep={beep} steps={beep.steps} key={i}/>
-          <button className="nes-btn btn">🖤</button>
+          <LikeButton beep ={beep}/>
           </div>
         
         

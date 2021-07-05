@@ -23,7 +23,8 @@ function NewBeepPage() {
         bpm: 120,
         steps: [null, null, null, null, null, null, null, null],
         stepcount: 8,
-        name: null
+        name: null,
+        users_that_like: ['-1']
 
     })
 
