@@ -15,7 +15,7 @@ function CommunityPage() {
   const user = useSelector((store) => store.user)
 
   function LikeButton(beep) {
-    if (beep.users_that_like.includes(user.id)) {
+    if (beep.users_that_like?.includes(user.id)) {
       return (
         <button className="nes-btn"><i class="nes-icon is-medium heart is-full"></i></button>
       )
@@ -27,7 +27,7 @@ function CommunityPage() {
   }
 
   function handleLike (beep) {
-    if (beep.users_that_like.includes(user.id)) {
+    if (beep.users_that_like?.includes(user.id)) {
       return
     } else {
       dispatch({

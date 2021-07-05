@@ -84,9 +84,10 @@ router.post('/', (req, res) => {
       "bpm",
       "steps",
       "beep_name",
-      "user_name"
+      "user_name",
+      "users_that_like"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )
         RETURNING "beep_id"
             ;`;
 
@@ -101,7 +102,9 @@ router.post('/', (req, res) => {
     beep.bpm,  // $8
     beep.steps, // $9
     beep.name, // $10
-    beep.user_name // $11
+    beep.user_name, // $11
+    beep.users_that_like // $12
+
 
   ])
     .then( result => {
