@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import userReducer from '../../redux/reducers/user.reducer';
 
 // form components
+import BeepTitle from '../FormComponents/BeepTitle';
 import OscillatorType from '../FormComponents/OscillatorType';
 import FilterType from '../FormComponents/FilterType';
 import FilterCutoff from '../FormComponents/FilterCutoff'
@@ -16,6 +17,7 @@ import Octave from '../FormComponents/Octave'
 import RootNote from '../FormComponents/RootNote';
 import BPM from '../FormComponents/BPM'
 import StepSelect from '../FormComponents/StepSelect';
+import StepRadio from '../FormComponents/StepRadio';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -184,11 +186,7 @@ function NewBeepPage() {
 
     return (
         <section>
-            <div className="title-container">
-                <div className="beep-title">
-                    <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
-                </div>
-            </div>
+            <BeepTitle beep={beep}/>
 
             <div>
                 <div className="synth-params-container">
@@ -196,7 +194,7 @@ function NewBeepPage() {
                     {/* OSCILLATOR TYPE */}
                     <OscillatorType handleBeep={handleBeep} />
 
-                        {/* FILTER TYPE*/}
+                    {/* FILTER TYPE*/}
                     <div className="filter-container">
                         <FilterType handleBeep={handleBeep} />
 
@@ -227,6 +225,7 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
                 <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
 
                 <br></br>
                 <br></br>
