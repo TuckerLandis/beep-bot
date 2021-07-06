@@ -10,6 +10,7 @@ import userReducer from '../../redux/reducers/user.reducer';
 // form components
 import OscillatorType from '../FormComponents/OscillatorType';
 import FilterType from '../FormComponents/FilterType';
+import FilterCutoff from '../FormComponents/FilterCutoff'
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -212,15 +213,11 @@ function NewBeepPage() {
                     <FilterType handleBeep={handleBeep} />
                         
 
-                        {/* FILTER CUTOFF */}
-                      <div>
-                          
-                      </div>
-                        <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
-                       
-                       
-                       <input type="range" id="filter_cutoff" name="filter_cutoff" className="slider"
-                            min="0" max="20000" value={beep.filter_cutoff} onChange={handleBeep} />
+                    {/* FILTER CUTOFF */}
+                    <FilterCutoff handleBeep={handleBeep} beep={beep} />
+
+                      
+                        
                        
                        
                     </div>
