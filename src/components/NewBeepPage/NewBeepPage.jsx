@@ -11,6 +11,7 @@ import userReducer from '../../redux/reducers/user.reducer';
 import OscillatorType from '../FormComponents/OscillatorType';
 import FilterType from '../FormComponents/FilterType';
 import FilterCutoff from '../FormComponents/FilterCutoff'
+import ScaleName from '../FormComponents/ScaleName'
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -45,8 +46,7 @@ function NewBeepPage() {
     // changes when a scale is selected, controlled by handle scale choice function
     // const [selectedScale, setSelectedScale] = useState(c_major)
 
-    // select populator for scale choice drop dowm
-    let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
+    
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -206,7 +206,7 @@ function NewBeepPage() {
 
                     {/* OSCILLATOR TYPE */}
                    <OscillatorType handleBeep={handleBeep} />
-                    <p></p>
+                    
 
                     {/* FILTER TYPE*/}
                     <div className="filter-container">
@@ -225,18 +225,10 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
 
-                {/* SCALE NAME */}
+               
                 <div className="seq-params-container">
-                    <div>
-                        <label htmlFor="scale-select">Scale: </label>
-                        <select name="scale-select" id="scale" onChange={handleBeep} className="wider-select">
-                            {scaleList.map((scale, i) => {
-                                return (
-                                    <option key={i} value={scale}>{scale}</option>
-                                )
-                            })}
-                        </select>
-                    </div>
+                     {/* SCALE NAME */}
+                     <ScaleName handleBeep={handleBeep} beep={beep} />
 
 
                     {/* OCTAVE */}
