@@ -9,6 +9,7 @@ import userReducer from '../../redux/reducers/user.reducer';
 
 // form components
 import OscillatorType from '../FormComponents/OscillatorType';
+import FilterType from '../FormComponents/FilterType';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -208,18 +209,13 @@ function NewBeepPage() {
 
                     {/* FILTER TYPE*/}
                     <div className="filter-container">
-                        <div>
-                        <label htmlFor="filter-type">Filter Type: </label>
-                        <select name="filter-type" id="filter_type" onChange={handleBeep} className="wider-select">
-                            <option value="lowpass">Low Pass</option>
-                            <option value="highpass">High Pass</option>
-                            <option value="bandpass">Band Pass</option>
-                        </select>
-                        </div>
+                    <FilterType handleBeep={handleBeep} />
                         
 
                         {/* FILTER CUTOFF */}
-                      
+                      <div>
+                          
+                      </div>
                         <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
                        
                        
