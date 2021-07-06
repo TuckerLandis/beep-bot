@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 import LikeButton from '../LikeButton/LikeButton';
+import FavoriteButton from '../FavoriteButton/FavoriteButton';
 
 import './Community.css'
 
@@ -27,11 +28,12 @@ function CommunityPage() {
 
             <h1>{beep.beep_name}</h1>
             <h3>{beep.user_name}</h3>
-            <h3>Steps: {JSON.stringify(beep.steps)}</h3>
+            <h3>Likes: {beep.likes}</h3>
             <h3>BPM: {beep.bpm}</h3>
             <div className="button-div">
               <PlayButton beep={beep} steps={beep.steps} key={i} />
               <LikeButton beep={beep} user={user} />
+              <FavoriteButton beep={beep} user={user} />
             </div>
 
           </div>

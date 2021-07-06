@@ -178,6 +178,27 @@ router.put('/like/:id', (req, res) => {
   })
 })
 
+// unlike button put
+router.put('/unlike/:id', (req, res) => {
+  console.log('got to beep router (LIKE) (PUT)', req.body);
+  let beep = req.body
+
+  let queryText = 'UPDATE beep SET "likes" = "likes"-1, "users_that_like" = $2 WHERE "beep_id" = $1;';
+
+  pool.query(queryText, [ 
+    beep.beep_id, // $1 
+    beep.users_that_like // $2
+   
+  ])
+  .then(result => {
+    res.sendStatus(200)
+  })
+  .catch(error => {
+    console.log(error);
+    res.sendStatus(500)
+  })
+})
+
 
 /**
  * Deletes a beep, based off of it's beep_id serial key from the userbeeps page

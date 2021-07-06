@@ -30,7 +30,7 @@ function UserBeeps() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
@@ -66,12 +66,18 @@ function UserBeeps() {
         return (
           <div key={i} className="beep-item">
             {/* TODO contain info about beep when DB represents it */}
-            <h3>{beep.beep_name}</h3>
+            <div>
+            <h2>{beep.beep_name}</h2>
             <PlayButton beep={beep} key={i} />
             <button className="nes-btn is-error" onClick={() => deleteBeep(beep)}>delete</button>
             <button className=" nes-btn is-warning" onClick={() => editBeep(beep)}>load</button>
+            </div>
+            <h3>Scale: {beep.scale}</h3>
+            <h3>Root: {beep.root}</h3>
+            <h3>Octave: {beep.octave}</h3>
+            <h3>Likes: {beep.likes}</h3>
           </div>
-
+      
 
         )
       })}
