@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/community', (req, res) => {
   console.log('got to beep router (GET) (COMMUNITY)');
 
-  let queryText = `SELECT * FROM "beep" WHERE user_id != $1;`;
+  let queryText = `SELECT * FROM "beep" WHERE user_id != $1 ORDER BY "date_created";`;
 
   pool.query(queryText, [req.user.id])
     .then(result => {

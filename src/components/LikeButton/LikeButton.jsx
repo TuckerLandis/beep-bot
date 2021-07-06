@@ -31,7 +31,7 @@ import { useDispatch } from "react-redux";
 
     if (props.beep.users_that_like?.includes(JSON.stringify(props.user.id))) {
       return (
-        <button className="nes-btn is-warning"><i class="nes-icon is-medium heart is-full"></i></button>
+        <button className="nes-btn is-primary"><i class="nes-icon is-medium heart is-full"></i></button>
       )
     } else {
       return (

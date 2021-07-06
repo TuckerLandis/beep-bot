@@ -2,8 +2,9 @@ html,
 body,
 #react-root {
   height: 100%;
-  background-color: black;
-  color: #92cc41
+  background-color: rgb(36, 36, 36);
+  color: #92cc41;
+  border: 5px solid black
 }
 
 /* uncomment for robot font  */
@@ -42,7 +43,7 @@ label{
   -webkit-appearance: none;
   width: 25%;
   height: 10px;
-  background: #000;
+  background-color: rgb(53, 51, 51);
   outline: none;
   border: 2px solid #92cc41;
 }
@@ -61,7 +62,7 @@ label{
 
 select{
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: black;
+  background-color: rgb(53, 51, 51);
   color: #92cc41;
   font-size: 20px;
 }

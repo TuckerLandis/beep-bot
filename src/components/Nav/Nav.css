@@ -41,3 +41,7 @@
   background-color: black;
   color: lawngreen;
 }
+
+.nav-img {
+  display: inline-block;
+}
