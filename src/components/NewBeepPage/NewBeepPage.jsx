@@ -13,6 +13,9 @@ import FilterType from '../FormComponents/FilterType';
 import FilterCutoff from '../FormComponents/FilterCutoff'
 import ScaleName from '../FormComponents/ScaleName'
 import Octave from '../FormComponents/Octave'
+import RootNote from '../FormComponents/RootNote';
+import BPM from '../FormComponents/BPM'
+import StepSelect from '../FormComponents/StepSelect';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -37,17 +40,6 @@ function NewBeepPage() {
     })
 
     const userObj = useSelector((store) => store.user)
-
-    // default: sets an array of all notes to be the options in the root note select map
-    let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
-
-    // default: notes array for selector
-    const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
-
-    // changes when a scale is selected, controlled by handle scale choice function
-    // const [selectedScale, setSelectedScale] = useState(c_major)
-
-    
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -152,7 +144,7 @@ function NewBeepPage() {
 
                 // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
                 dispatchBeep({
-                    ...beep, name: result.value, user_name : userObj.username
+                    ...beep, name: result.value, user_name: userObj.username
                 })
             }
         }
@@ -193,111 +185,55 @@ function NewBeepPage() {
     return (
         <section>
             <div className="title-container">
-            <div className="beep-title">
-            <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
-            
+                <div className="beep-title">
+                    <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
+                </div>
             </div>
-            
-            </div>
-            
-            
-            <div>
 
+            <div>
                 <div className="synth-params-container">
 
                     {/* OSCILLATOR TYPE */}
-                   <OscillatorType handleBeep={handleBeep} />
-                    
+                    <OscillatorType handleBeep={handleBeep} />
 
-                    {/* FILTER TYPE*/}
+                        {/* FILTER TYPE*/}
                     <div className="filter-container">
-                    <FilterType handleBeep={handleBeep} />
-                        
+                        <FilterType handleBeep={handleBeep} />
 
-                    {/* FILTER CUTOFF */}
-                    <FilterCutoff handleBeep={handleBeep} beep={beep} />
-
-                      
-                        
-                       
-                       
+                        {/* FILTER CUTOFF */}
+                        <FilterCutoff handleBeep={handleBeep} beep={beep} />
                     </div>
                 </div>
                 <br></br>
                 <br></br>
 
-               
                 <div className="seq-params-container">
-                     {/* SCALE NAME */}
-                     <ScaleName handleBeep={handleBeep} beep={beep} />
-
+                    {/* SCALE NAME */}
+                    <ScaleName handleBeep={handleBeep} beep={beep} />
 
                     {/* OCTAVE */}
                     <Octave handleBeep={handleBeep} beep={beep} />
 
-
                     {/* ROOT NOTE*/}
-                    <div>
-                        <label htmlFor="root-select">Root Note: </label>
-                        <select name="root-select" id="root" onChange={handleBeep} value={beep.root}>
-
-                            {
-                                rootNotes.map((rootNote, i) => {
-                                    return (
-                                        <option key={i} value={rootNote}>{rootNote}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-
+                    <RootNote handleBeep={handleBeep} beep={beep} />
 
                     {/* TEMPO (BPM)*/}
                     <div>
-
                     </div>
-                    <div style={{ width: "30%" }}>
-                        <div>
-                        <label htmlFor="BPM"><span className="range-text">BPM: {beep.bpm}</span></label>
-                        </div>
-                        
-                        <input type="range" id="bpm" name="BPM" className="slider"
-                            min="40" max="200" value={beep.bpm} onChange={handleBeep} />
-                    </div>
+                    <BPM handleBeep={handleBeep} beep={beep} />
 
 
                 </div>
                 <br></br>
                 <br></br>
+                <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
 
-
-                {/* to be replaced */}
-                {/* step select, see script notes within*/}
-                <div className="step-select-container">
-
-                    {/* maps over beep.steps and returns that many step-selectors */}
-                    {beep.steps?.map((step, i) => {
-                        return (
-                            <select id={i} onChange={handleStep} key={i} value={step}>
-
-                                {/* <option key={i} value={note}>{note}</option> */}
-                                {/* uses selectedScale state to return a list of notes based on handScaleChoice */}
-                                {selectedScale?.map((note, i) => {
-                                    return (
-                                        <option key={i} value={note}>{note}</option>
-                                    )
-                                })}
-                            </select>
-                        )
-                    }) // end map script
-                    }
-                </div>
                 <br></br>
                 <br></br>
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button className="nes-btn is-primary"onClick={handleSave}>save</button>
+                    <button className="nes-btn is-primary" onClick={handleSave}>save</button>
                 </div>
 
             </div>
