@@ -201,6 +201,16 @@ router.put('/unlike/:id', rejectUnauthenticated, (req, res) => {
 })
 
 
+router.put('/favorite/:id', rejectUnauthenticated, (req, res) => {
+console.log('got to beep router (Fav) (PUT'), req.body;
+
+
+
+
+})
+
+
+
 /**
  * Deletes a beep, based off of it's beep_id serial key from the userbeeps page
  */

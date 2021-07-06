@@ -5,12 +5,12 @@
         "activityBar.inactiveForeground": "#8F2034",
         "activityBarBadge.foreground": "#000000",
         "activityBarBadge.background": "#B9B22F",
-        "statusBar.foreground": "#F0E585",
-        "statusBar.background": "#6D6202",
-        "statusBarItem.hoverBackground": "#3D520B",
-        "statusBarItem.remoteForeground": "#B7FF8E",
-        "statusBarItem.remoteBackground": "#347E0A",
-        "statusBar.debuggingForeground": "#000000",
-        "statusBar.debuggingBackground": "#A49939"
+        "statusBar.foreground": "#FFE0F2",
+        "statusBar.background": "#A53074",
+        "statusBarItem.hoverBackground": "#732D3D",
+        "statusBarItem.remoteForeground": "#FFD0C6",
+        "statusBarItem.remoteBackground": "#9D412E",
+        "statusBar.debuggingForeground": "#2B0019",
+        "statusBar.debuggingBackground": "#DC66AA"
     }
 }
