@@ -33,7 +33,6 @@ function EditBeepPage() {
     let { id } = useParams()
 
 
-
     useEffect(() => {
         console.log(id);
         dispatch({
@@ -42,14 +41,8 @@ function EditBeepPage() {
         });
     }, []);
 
-    //beep to edit
+    //beep to edit, gets passed down as props
     const beep = useSelector(store => store.editBeepReducer)
-
-    // // default: sets an array of all notes to be the options in the root note select map
-    let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
-
-    // select populator for scale choice drop dowm
-    let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -113,32 +106,54 @@ function EditBeepPage() {
     const handleSave = () => {
         console.log('saving a beep :)', beep);
 
-        
+
         Swal.fire({
-          title: 'Do you want to overwrite this beep?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes'
+            title: 'Do you want to overwrite this beep?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            customClass: {
+                container: 'swal-class-container',
+                popup: 'swal-class-bg',
+                header: 'swal-class-text',
+                title: 'swal-class-text',
+                closeButton: '...',
+                icon: '...',
+                image: '...',
+                content: '...',
+                htmlContainer: '...',
+                input: 'swal-class-text',
+                inputPlaceholder: 'swal-class-text',
+                inputLabel: '...',
+                inputValidator: 'swal-class-container',
+                validationMessage: '...',
+                actions: '...',
+                confirmButton: 'nes-btn is-primary',
+                denyButton: '...',
+                cancelButton: 'nes-btn is-error',
+                loader: '...',
+                footer: '....'
+            },
         }).then((result) => {
 
-            
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Overwritten',
-              '',
-              'success'
-            )
-            dispatch({
-                type: 'UPDATE_BEEP',
-                payload: beep
-            })
-          }
+
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Overwritten',
+                    '',
+                    'success'
+                )
+                dispatch({
+                    type: 'UPDATE_BEEP',
+                    payload: beep
+                })
+            }
         })
 
 
-        
+
     }
 
     console.log(beep);
@@ -148,7 +163,7 @@ function EditBeepPage() {
 
     return (
         <section>
-            <BeepTitle beep={beep}/>
+            <BeepTitle beep={beep} />
 
             <div>
                 <div className="synth-params-container">
@@ -187,7 +202,8 @@ function EditBeepPage() {
                 <br></br>
                 <br></br>
                 <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
-                <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+
+                {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
                 <br></br>
                 <br></br>

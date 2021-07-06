@@ -58,7 +58,7 @@ function UserBeeps() {
 
   return (
     <div className="container">
-      <h2>Your Beeps</h2>
+      <h1 className="page-title">Your Beeps</h1>
 
 
       {userBeeps.map((beep, i) => {
@@ -67,15 +67,16 @@ function UserBeeps() {
           <div key={i} className="beep-item">
             {/* TODO contain info about beep when DB represents it */}
             <div>
-            <h2>{beep.beep_name}</h2>
-            <PlayButton beep={beep} key={i} />
-            <button className="nes-btn is-error" onClick={() => deleteBeep(beep)}>delete</button>
-            <button className=" nes-btn is-warning" onClick={() => editBeep(beep)}>load</button>
+            <h1 className="beep-item-title">{beep.beep_name}</h1>
+           
             </div>
             <h3>Scale: {beep.scale}</h3>
             <h3>Root: {beep.root}</h3>
             <h3>Octave: {beep.octave}</h3>
             <h3>Likes: {beep.likes}</h3>
+            <PlayButton beep={beep} key={i} />
+            <button className="nes-btn is-error" onClick={() => deleteBeep(beep)}>delete</button>
+            <button className=" nes-btn is-warning" onClick={() => editBeep(beep)}>load</button>
           </div>
       
 

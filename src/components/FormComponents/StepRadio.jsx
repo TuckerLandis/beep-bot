@@ -13,7 +13,7 @@ export default function StepRadio(props) {
                         {props.selectedScale?.map((note, i) => {
                             return (
                                 <label>
-                                    <input className="nes-radio" type="radio" key={i} value={note} /> 
+                                    <input className="" type="radio" key={i} value={note} /> 
                                     {/* how to get ID of form above? */}
                                     <span>{note}</span>
                                 </label>

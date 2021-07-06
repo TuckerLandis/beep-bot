@@ -19,14 +19,14 @@ function CommunityPage() {
 
   return (
     <div className="container">
-      <h1>Recent Beeps</h1>
+      <h1 className="page-title">Recent Beeps</h1>
       <br></br>
 
       {communityBeeps.map((beep, i) => {
         return (
           <div key={i} className="beep-item">
 
-            <h1>{beep.beep_name}</h1>
+            <h1 className="beep-item-title">{beep.beep_name}</h1>
             <h3>{beep.user_name}</h3>
             <h3>Likes: {beep.likes}</h3>
             <h3>BPM: {beep.bpm}</h3>
@@ -37,9 +37,7 @@ function CommunityPage() {
             </div>
 
           </div>
-
-
-
+          
         )
       })}
 

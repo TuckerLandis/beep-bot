@@ -186,7 +186,7 @@ function NewBeepPage() {
 
     return (
         <section>
-            <BeepTitle beep={beep}/>
+            <BeepTitle beep={beep} />
 
             <div>
                 <div className="synth-params-container">
@@ -197,11 +197,12 @@ function NewBeepPage() {
                     {/* FILTER TYPE*/}
                     <div className="filter-container">
                         <FilterType handleBeep={handleBeep} />
-
+                        <div className="filter-spacer"></div>
                         {/* FILTER CUTOFF */}
                         <FilterCutoff handleBeep={handleBeep} beep={beep} />
                     </div>
                 </div>
+                <br></br>
                 <br></br>
                 <br></br>
 
@@ -225,7 +226,7 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
                 <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
-                <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
                 <br></br>
                 <br></br>
