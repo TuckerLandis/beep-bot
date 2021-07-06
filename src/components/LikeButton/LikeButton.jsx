@@ -23,10 +23,7 @@ import { useDispatch } from "react-redux";
       
           dispatch({
             type: "LIKE_BEEP",
-            payload: {
-              beep: beep,
-              user: props.user
-            }
+            payload: beep
           })
         }
       }

@@ -160,7 +160,7 @@ router.put('/:id', (req, res) => {
 // like button put
 router.put('/like/:id', (req, res) => {
   console.log('got to beep router (LIKE) (PUT)', req.body);
-  let beep = req.body.beep
+  let beep = req.body
 
   let queryText = 'UPDATE beep SET "likes" = "likes"+1, "users_that_like" = $2 WHERE "beep_id" = $1;';
 

@@ -124,11 +124,12 @@ function NewBeepPage() {
                 input: 'swal-class-text',
                 inputPlaceholder: 'swal-class-text',
                 inputLabel: '...',
+                inputValidator: 'swal-class-container',
                 validationMessage: '...',
                 actions: '...',
-                confirmButton: 'swal-class-bg',
+                confirmButton: 'nes-btn is-primary',
                 denyButton: '...',
-                cancelButton: 'swal-class-button-cancel',
+                cancelButton: 'nes-btn is-error',
                 loader: '...',
                 footer: '....'
             },
@@ -185,7 +186,15 @@ function NewBeepPage() {
 
     return (
         <section>
+            <div className="title-container">
+            <div className="beep-title">
             <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
+            
+            </div>
+            
+            </div>
+            
+            
             <div>
 
                 <div className="synth-params-container">
