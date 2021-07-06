@@ -7,6 +7,9 @@ import './NewBeepPage.css'
 import { useHistory } from 'react-router';
 import userReducer from '../../redux/reducers/user.reducer';
 
+// form components
+import OscillatorType from '../FormComponents/OscillatorType';
+
 function NewBeepPage() {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -200,16 +203,7 @@ function NewBeepPage() {
                 <div className="synth-params-container">
 
                     {/* OSCILLATOR TYPE */}
-                    <div className="osc-type-container nes-pointer">
-                        <label htmlFor="osc-type">Osc Type: </label>
-                        <select name="osc-type" id="osc_type" onChange={handleBeep} className="wider-select" >
-                            <option value="triangle8">Triangle</option>
-                            <option value="square8">Square</option>
-                            <option value="sine8">Sine</option>
-                            <option value="sawtooth">Saw</option>
-                        </select>
-
-                    </div>
+                   <OscillatorType handleBeep={handleBeep} />
                     <p></p>
 
                     {/* FILTER TYPE*/}

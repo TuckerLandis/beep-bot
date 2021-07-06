@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * GET For User Beeps. Gets the user's beeps upon <UserBeeps /> useEffect
  */
-router.get('/community', (req, res) => {
+router.get('/community', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (GET) (COMMUNITY)');
 
   let queryText = `SELECT * FROM "beep" WHERE user_id != $1 ORDER BY "date_created";`;
@@ -26,7 +26,7 @@ router.get('/community', (req, res) => {
 /**
  * GET For community beeps. Gets the user's beeps upon <UserBeeps /> useEffect
  */
-router.get('/user', (req, res) => {
+router.get('/user', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (GET) (USER)');
 
   let queryText = `SELECT * FROM "beep" WHERE user_id = $1;`;
@@ -45,7 +45,7 @@ router.get('/user', (req, res) => {
 /**
  * GET for edit beeps
  */
-router.get('/edit/:id', (req,res) => {
+router.get('/edit/:id', rejectUnauthenticated, (req,res) => {
   console.log('got to beep router (GET) (EDIT)');
 
   let queryText = 'SELECT * FROM "beep" WHERE beep_id = $1'
@@ -66,7 +66,7 @@ router.get('/edit/:id', (req,res) => {
 /**
  * POST For saving a beep. Posts a beep object to the DB upon pressing save on edit/create page
  */
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (POST)', req);
   console.log(req.user);
   
@@ -131,7 +131,7 @@ router.post('/', (req, res) => {
     
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (PUT)');
   let beep = req.body
 
@@ -158,7 +158,7 @@ router.put('/:id', (req, res) => {
 })
 
 // like button put
-router.put('/like/:id', (req, res) => {
+router.put('/like/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (LIKE) (PUT)', req.body);
   let beep = req.body
 
@@ -179,7 +179,7 @@ router.put('/like/:id', (req, res) => {
 })
 
 // unlike button put
-router.put('/unlike/:id', (req, res) => {
+router.put('/unlike/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (LIKE) (PUT)', req.body);
   let beep = req.body
 
@@ -203,7 +203,7 @@ router.put('/unlike/:id', (req, res) => {
 /**
  * Deletes a beep, based off of it's beep_id serial key from the userbeeps page
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (DELETE)');
 
   let queryText = `DELETE FROM "beep" WHERE beep_id = $1;`;
