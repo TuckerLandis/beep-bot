@@ -1,3 +1,5 @@
+  // Does nothing ATM     !!!!
+
 import { useDispatch } from "react-redux";
 
   function FavoriteButton(props) {
@@ -5,37 +7,37 @@ import { useDispatch } from "react-redux";
 
     async function handleFavorite(beep) {
         await props.beep
-        // if (props.beep.users_that_favorite?.includes(JSON.stringify(props.user.id))) {
-        //   console.log('user already favorites this');
-        //   return
-        // } else {
-        //   console.log(props.beep);
+        if (props.beep.users_that_favorite?.includes(props.user.username)) {
+          console.log('user already favorites this');
+          return
+        } else {
+          console.log(props.beep);
           
-        //   let newLikes = props.beep.users_that_like
+          let newFaves = props.beep.users_that_favorite
 
-        //  newLikes.push(props.user.id)
+         newFaves.push(props.user.username)
           
-        //   beep = {
-        //       ...beep, users_that_like : newLikes
-        //   }
+          beep = {
+              ...beep, users_that_favorite : newFaves
+          }
     
           
       
-        //   dispatch({
-        //     type: "FAVORITE_BEEP",
-        //     payload: beep
-        //   })
-        // }
+          dispatch({
+            type: "FAVORITE_BEEP",
+            payload: beep
+          })
+        }
       }
 
 
-    if ('userfavorite') {
+    if (props.beep.users_that_favorite?.includes(props.user.username)) {
       return (
         <button className="nes-btn is-warning"><i className="nes-icon is-medium star is-full"></i></button>
       )
     } else {
       return (
-        <button className="nes-btn is-warning" onClick={() => { handleFavorite(props.beep) }}><i className="nes-icon is-medium star is-empty"></i></button>
+        <button className="nes-btn is-warning" onClick={() => {handleFavorite(props.beep) }}><i className="nes-icon is-medium star is-empty"></i></button>
       )
     }
   }
@@ -43,4 +45,3 @@ import { useDispatch } from "react-redux";
   export default FavoriteButton
 
 
-  // Does nothing ATM     !!!!

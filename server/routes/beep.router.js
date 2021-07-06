@@ -86,9 +86,10 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       "beep_name",
       "user_name",
       "users_that_like",
-      "likes"
+      "likes",
+      "users_that_favorite"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 )
         RETURNING "beep_id"
             ;`;
 
@@ -105,23 +106,23 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     beep.name, // $10
     beep.user_name, // $11
     beep.users_that_like, // $12
-    beep.likes // $13
+    beep.likes, // $13
+    beep.users_that_favorite // $14
 
 
   ])
     .then( result => {
      
       
-      console.log('New Beep Id:', result.rows[0].beep_id); //logs ID correctly
+      console.log('New Beep Id:', result.rows[0].beep_id); // logs ID of new beep
     
-      const createdBeepID = result.rows[0].beep_id // if i just send this, i get an error for invalid status code
+      const createdBeepID = result.rows[0].beep_id // 
 
       const createdObj = {
         beep_id: createdBeepID
-      } // creating an object so as not to be sending a number, i also tried making createdBeepID a string above
-
-
-      res.send(createdObj)
+      } // creating an object so as not to be sending a number as a status,
+      // but this goes back to the saga and is the url param for edit page
+       res.send(createdObj)
      
     })
     .catch(error => {
