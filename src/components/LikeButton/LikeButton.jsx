@@ -31,11 +31,11 @@ import { useDispatch } from "react-redux";
 
     if (props.beep.users_that_like?.includes(JSON.stringify(props.user.id))) {
       return (
-        <button className="nes-btn"><i class="nes-icon is-medium heart is-full"></i></button>
+        <button className="nes-btn is-warning"><i class="nes-icon is-medium heart is-full"></i></button>
       )
     } else {
       return (
-        <button className="nes-btn" onClick={() => { handleLike(props.beep) }}><i className="nes-icon is-medium heart is-empty"></i></button>
+        <button className="nes-btn is-primary" onClick={() => { handleLike(props.beep) }}><i className="nes-icon is-medium heart is-empty"></i></button>
       )
     }
   }

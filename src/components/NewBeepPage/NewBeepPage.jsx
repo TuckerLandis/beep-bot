@@ -200,9 +200,9 @@ function NewBeepPage() {
                 <div className="synth-params-container">
 
                     {/* OSCILLATOR TYPE */}
-                    <div className="osc-type-container">
+                    <div className="osc-type-container nes-pointer">
                         <label htmlFor="osc-type">Osc Type: </label>
-                        <select name="osc-type" id="osc_type" onChange={handleBeep} >
+                        <select name="osc-type" id="osc_type" onChange={handleBeep} className="wider-select" >
                             <option value="triangle8">Triangle</option>
                             <option value="square8">Square</option>
                             <option value="sine8">Sine</option>
@@ -216,7 +216,7 @@ function NewBeepPage() {
                     <div className="filter-container">
                         <div>
                         <label htmlFor="filter-type">Filter Type: </label>
-                        <select name="filter-type" id="filter_type" onChange={handleBeep} >
+                        <select name="filter-type" id="filter_type" onChange={handleBeep} className="wider-select">
                             <option value="lowpass">Low Pass</option>
                             <option value="highpass">High Pass</option>
                             <option value="bandpass">Band Pass</option>
@@ -242,7 +242,7 @@ function NewBeepPage() {
                 <div className="seq-params-container">
                     <div>
                         <label htmlFor="scale-select">Scale: </label>
-                        <select name="scale-select" id="scale" onChange={handleBeep} >
+                        <select name="scale-select" id="scale" onChange={handleBeep} className="wider-select">
                             {scaleList.map((scale, i) => {
                                 return (
                                     <option key={i} value={scale}>{scale}</option>
