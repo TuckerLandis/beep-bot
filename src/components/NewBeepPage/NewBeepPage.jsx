@@ -12,6 +12,7 @@ import OscillatorType from '../FormComponents/OscillatorType';
 import FilterType from '../FormComponents/FilterType';
 import FilterCutoff from '../FormComponents/FilterCutoff'
 import ScaleName from '../FormComponents/ScaleName'
+import Octave from '../FormComponents/Octave'
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -232,19 +233,7 @@ function NewBeepPage() {
 
 
                     {/* OCTAVE */}
-                    <div>
-                        <label htmlFor="octave-select">Octave: </label>
-                        <select name="octave-select" id="octave" onChange={handleBeep} value={beep.octave} >
-                            <option value="1"> 1 </option>
-                            <option value="2"> 2 </option>
-                            <option value="3"> 3 </option>
-                            <option value="4"> 4 </option>
-                            <option value="5"> 5 </option>
-                            <option value="6"> 6 </option>
-                            <option value="7"> 7 </option>
-                            <option value="8"> 8 </option>
-                        </select>
-                    </div>
+                    <Octave handleBeep={handleBeep} beep={beep} />
 
 
                     {/* ROOT NOTE*/}
