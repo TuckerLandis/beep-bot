@@ -32,7 +32,7 @@ function EditBeepPage() {
     const dispatch = useDispatch()
     let { id } = useParams()
 
-
+    // on page load, send a dispatch to perform a get request to load the presently selected beep into the editbeep reducer
     useEffect(() => {
         console.log(id);
         dispatch({
@@ -99,7 +99,7 @@ function EditBeepPage() {
     }
 
     /**
-     * Upon pressing save, a sweet alert pops up that asks the user for a name to save their beep as. 
+     * Upon pressing save, a sweet alert pops up that asks the for overwrite confirmation
      * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
      * button -> dispatch -> beep saga -> beep router
      */
@@ -138,7 +138,7 @@ function EditBeepPage() {
             },
         }).then((result) => {
 
-
+            // if okay button is pressed, send a confirmation dialog, and send a put request to update beep
             if (result.isConfirmed) {
                 Swal.fire(
                     'Overwritten',
@@ -156,7 +156,10 @@ function EditBeepPage() {
 
     }
 
+    //logging beep to ensure values
     console.log(beep);
+
+    // calling handlescale choice just before return in order to populate note drop downs
     let selectedScale = handleScaleChoice(beep)
 
     // ------------------------------- DOM Return -------------------------------------- //

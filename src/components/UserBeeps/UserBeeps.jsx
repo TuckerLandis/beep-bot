@@ -5,13 +5,9 @@ import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom';
 
 import './UserBeep.css'
+import SwalClassObject from '../../assets/SwalClassObject/SwalClassObject';
 
-/* 
-! ToDo
 
-!load button => selected beep reducer
-
-*/
 
 function UserBeeps() {
   const history = useHistory()
@@ -22,22 +18,31 @@ function UserBeeps() {
     dispatch({ type: 'FETCH_USER_BEEPS' });
   }, []);
 
+  /**
+   * Deletes the selected Beep from the DB. gives a confirm dialog before proceeding
+   * @param {*} beep 
+   */
   function deleteBeep(beep) {
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "This is permanent!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonText: 'Yes',
+      customClass: SwalClassObject,
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${beep.beep_name} has been deleted`,
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: SwalClassObject,
+        })
+
         dispatch({
           type: 'DELETE_BEEP',
           payload: beep.beep_id
@@ -46,6 +51,10 @@ function UserBeeps() {
     })
   }
 
+  /**
+   * Sends user to the edit page with the beep ID in URL. 
+   * @param {*} beep 
+   */
   function editBeep(beep) {
     dispatch({
       type: "SELECT_BEEP",
@@ -54,7 +63,6 @@ function UserBeeps() {
     history.push(`/edit/${beep.beep_id}`)
   }
 
-  console.log('user beeps :)', userBeeps);
 
   return (
     <div className="container">
@@ -65,10 +73,9 @@ function UserBeeps() {
         // console.log(beep);
         return (
           <div key={i} className="beep-item">
-            {/* TODO contain info about beep when DB represents it */}
             <div>
-            <h1 className="beep-item-title">{beep.beep_name}</h1>
-           
+              <h1 className="beep-item-title">{beep.beep_name}</h1>
+
             </div>
             <h3>Scale: {beep.scale}</h3>
             <h3>Root: {beep.root}</h3>
@@ -78,7 +85,7 @@ function UserBeeps() {
             <button className="nes-btn is-error" onClick={() => deleteBeep(beep)}>delete</button>
             <button className=" nes-btn is-warning" onClick={() => editBeep(beep)}>load</button>
           </div>
-      
+
 
         )
       })}

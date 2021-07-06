@@ -7,6 +7,9 @@ import './NewBeepPage.css'
 import { useHistory } from 'react-router';
 import userReducer from '../../redux/reducers/user.reducer';
 
+// swal class object
+import SwalClassObject from '../../assets/SwalClassObject/SwalClassObject';
+
 // form components
 import BeepTitle from '../FormComponents/BeepTitle';
 import OscillatorType from '../FormComponents/OscillatorType';
@@ -111,28 +114,7 @@ function NewBeepPage() {
             inputValue: '',
             inputPlaceholder: 'Enter a name for your beep',
             showCancelButton: true,
-            customClass: {
-                container: 'swal-class-container',
-                popup: 'swal-class-bg',
-                header: 'swal-class-text',
-                title: 'swal-class-text',
-                closeButton: '...',
-                icon: '...',
-                image: '...',
-                content: '...',
-                htmlContainer: '...',
-                input: 'swal-class-text',
-                inputPlaceholder: 'swal-class-text',
-                inputLabel: '...',
-                inputValidator: 'swal-class-container',
-                validationMessage: '...',
-                actions: '...',
-                confirmButton: 'nes-btn is-primary',
-                denyButton: '...',
-                cancelButton: 'nes-btn is-error',
-                loader: '...',
-                footer: '....'
-            },
+            customClass: SwalClassObject,
             // validates that the user has entered a value. if !value, stop here
             inputValidator: (value) => {
                 if (!value) {

@@ -31,7 +31,7 @@ import { useDispatch } from "react-redux";
 
     if ('userfavorite') {
       return (
-        <button className="nes-btn is-warning"><i class="nes-icon is-medium star is-full"></i></button>
+        <button className="nes-btn is-warning"><i className="nes-icon is-medium star is-full"></i></button>
       )
     } else {
       return (
@@ -41,3 +41,6 @@ import { useDispatch } from "react-redux";
   }
 
   export default FavoriteButton
+
+
+  // Does nothing ATM     !!!!

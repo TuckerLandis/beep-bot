@@ -57,7 +57,7 @@ function LoginForm() {
         </label>
       </div>
       <div>
-        <button type="submit" name="submit" value="Log In">Enter</button>
+        <button className="nes-btn is-success" type="submit" name="submit" value="Log In">Enter</button>
       </div>
     </form>
   );

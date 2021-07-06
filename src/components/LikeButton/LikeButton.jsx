@@ -3,6 +3,13 @@ import { useDispatch } from "react-redux";
 function LikeButton(props) {
   const dispatch = useDispatch()
 
+
+  /**
+   * Conditionally adds/ removes a like from the beep item in the DB. this was prrof of concept, i plan to change the ID array here
+   * to an array of usernames, so users can see who likes what <3
+   * @param {*} beep 
+   * @returns 
+   */
   async function handleLike(beep) {
     await props.beep
     // if the user's user.id is in the array of user id's that like this element, do the following
@@ -50,12 +57,12 @@ function LikeButton(props) {
 
   if (props.beep.users_that_like?.includes(JSON.stringify(props.user.id))) {
     return (
-      // if user likes, give a button with a full icon, and function to unlike
-      <button className="nes-btn is-primary" onClick={() => { handleLike(props.beep) }}><i class="nes-icon is-medium heart is-full"></i></button>
+      // if user likes, return a button with a full icon, and function to unlike
+      <button className="nes-btn is-primary" onClick={() => { handleLike(props.beep) }}><i className="nes-icon is-medium heart is-full"></i></button>
     )
   } else {
     return (
-      // if user doesn't like, give buutton with empty heart, function to like
+      // if user doesn't like, return buutton with empty heart, function to like
       <button className="nes-btn is-primary" onClick={() => { handleLike(props.beep) }}><i className="nes-icon is-medium heart is-empty"></i></button>
     )
   }
