@@ -24,7 +24,7 @@ function Nav() {
         <h2 className="nav-title">Beep Bot</h2>
         
       </Link>
-      <img src={beepman}alt="" width="40px" class="nav-img"/>
+      <img src={beepman}alt="" width="40px" className="nav-img"/>
       {user.id && (
         <>
       <Link className="navLink" to="/newbeep">

@@ -8,7 +8,16 @@ import { useHistory } from 'react-router';
 import userReducer from '../../redux/reducers/user.reducer';
 
 // form components
+import BeepTitle from '../FormComponents/BeepTitle';
 import OscillatorType from '../FormComponents/OscillatorType';
+import FilterType from '../FormComponents/FilterType';
+import FilterCutoff from '../FormComponents/FilterCutoff'
+import ScaleName from '../FormComponents/ScaleName'
+import Octave from '../FormComponents/Octave'
+import RootNote from '../FormComponents/RootNote';
+import BPM from '../FormComponents/BPM'
+import StepSelect from '../FormComponents/StepSelect';
+import StepRadio from '../FormComponents/StepRadio';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -33,18 +42,6 @@ function NewBeepPage() {
     })
 
     const userObj = useSelector((store) => store.user)
-
-    // default: sets an array of all notes to be the options in the root note select map
-    let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
-
-    // default: notes array for selector
-    const c_major = ["off", "C4", "D4", "E4", "F4", "G4", "A4", "B4"]
-
-    // changes when a scale is selected, controlled by handle scale choice function
-    // const [selectedScale, setSelectedScale] = useState(c_major)
-
-    // select populator for scale choice drop dowm
-    let scaleList = ["major", "minor", "pentatonic", "ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -149,7 +146,7 @@ function NewBeepPage() {
 
                 // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
                 dispatchBeep({
-                    ...beep, name: result.value, user_name : userObj.username
+                    ...beep, name: result.value, user_name: userObj.username
                 })
             }
         }
@@ -189,141 +186,54 @@ function NewBeepPage() {
 
     return (
         <section>
-            <div className="title-container">
-            <div className="beep-title">
-            <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
-            
-            </div>
-            
-            </div>
-            
-            
-            <div>
+            <BeepTitle beep={beep} />
 
+            <div>
                 <div className="synth-params-container">
 
                     {/* OSCILLATOR TYPE */}
-                   <OscillatorType handleBeep={handleBeep} />
-                    <p></p>
+                    <OscillatorType handleBeep={handleBeep} />
 
                     {/* FILTER TYPE*/}
                     <div className="filter-container">
-                        <div>
-                        <label htmlFor="filter-type">Filter Type: </label>
-                        <select name="filter-type" id="filter_type" onChange={handleBeep} className="wider-select">
-                            <option value="lowpass">Low Pass</option>
-                            <option value="highpass">High Pass</option>
-                            <option value="bandpass">Band Pass</option>
-                        </select>
-                        </div>
-                        
-
+                        <FilterType handleBeep={handleBeep} />
+                        <div className="filter-spacer"></div>
                         {/* FILTER CUTOFF */}
-                      
-                        <label htmlFor="filter_cutoff">Filter Cutoff: {beep.filter_cutoff} </label>
-                       
-                       
-                       <input type="range" id="filter_cutoff" name="filter_cutoff" className="slider"
-                            min="0" max="20000" value={beep.filter_cutoff} onChange={handleBeep} />
-                       
-                       
+                        <FilterCutoff handleBeep={handleBeep} beep={beep} />
                     </div>
                 </div>
                 <br></br>
                 <br></br>
+                <br></br>
 
-                {/* SCALE NAME */}
                 <div className="seq-params-container">
-                    <div>
-                        <label htmlFor="scale-select">Scale: </label>
-                        <select name="scale-select" id="scale" onChange={handleBeep} className="wider-select">
-                            {scaleList.map((scale, i) => {
-                                return (
-                                    <option key={i} value={scale}>{scale}</option>
-                                )
-                            })}
-                        </select>
-                    </div>
-
+                    {/* SCALE NAME */}
+                    <ScaleName handleBeep={handleBeep} beep={beep} />
 
                     {/* OCTAVE */}
-                    <div>
-                        <label htmlFor="octave-select">Octave: </label>
-                        <select name="octave-select" id="octave" onChange={handleBeep} value={beep.octave} >
-                            <option value="1"> 1 </option>
-                            <option value="2"> 2 </option>
-                            <option value="3"> 3 </option>
-                            <option value="4"> 4 </option>
-                            <option value="5"> 5 </option>
-                            <option value="6"> 6 </option>
-                            <option value="7"> 7 </option>
-                            <option value="8"> 8 </option>
-                        </select>
-                    </div>
-
+                    <Octave handleBeep={handleBeep} beep={beep} />
 
                     {/* ROOT NOTE*/}
-                    <div>
-                        <label htmlFor="root-select">Root Note: </label>
-                        <select name="root-select" id="root" onChange={handleBeep} value={beep.root}>
-
-                            {
-                                rootNotes.map((rootNote, i) => {
-                                    return (
-                                        <option key={i} value={rootNote}>{rootNote}</option>
-                                    )
-                                })
-                            }
-                        </select>
-                    </div>
-
+                    <RootNote handleBeep={handleBeep} beep={beep} />
 
                     {/* TEMPO (BPM)*/}
                     <div>
-
                     </div>
-                    <div style={{ width: "30%" }}>
-                        <div>
-                        <label htmlFor="BPM"><span className="range-text">BPM: {beep.bpm}</span></label>
-                        </div>
-                        
-                        <input type="range" id="bpm" name="BPM" className="slider"
-                            min="40" max="200" value={beep.bpm} onChange={handleBeep} />
-                    </div>
+                    <BPM handleBeep={handleBeep} beep={beep} />
 
 
                 </div>
                 <br></br>
                 <br></br>
+                <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
-
-                {/* to be replaced */}
-                {/* step select, see script notes within*/}
-                <div className="step-select-container">
-
-                    {/* maps over beep.steps and returns that many step-selectors */}
-                    {beep.steps?.map((step, i) => {
-                        return (
-                            <select id={i} onChange={handleStep} key={i} value={step}>
-
-                                {/* <option key={i} value={note}>{note}</option> */}
-                                {/* uses selectedScale state to return a list of notes based on handScaleChoice */}
-                                {selectedScale?.map((note, i) => {
-                                    return (
-                                        <option key={i} value={note}>{note}</option>
-                                    )
-                                })}
-                            </select>
-                        )
-                    }) // end map script
-                    }
-                </div>
                 <br></br>
                 <br></br>
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button className="nes-btn is-primary"onClick={handleSave}>save</button>
+                    <button className="nes-btn is-primary" onClick={handleSave}>save</button>
                 </div>
 
             </div>

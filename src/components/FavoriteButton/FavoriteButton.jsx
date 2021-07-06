@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
   function FavoriteButton(props) {
       const dispatch = useDispatch()
 
-    async function handleLike(beep) {
+    async function handleFavorite(beep) {
         await props.beep
         // if (props.beep.users_that_favorite?.includes(JSON.stringify(props.user.id))) {
         //   console.log('user already favorites this');
