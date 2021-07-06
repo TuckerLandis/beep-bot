@@ -64,7 +64,7 @@ function UserBeeps() {
       {userBeeps.map((beep, i) => {
         // console.log(beep);
         return (
-          <div key={i}>
+          <div key={i} className="beep-item">
             {/* TODO contain info about beep when DB represents it */}
             <h3>{beep.beep_name}</h3>
             <PlayButton beep={beep} key={i} />
