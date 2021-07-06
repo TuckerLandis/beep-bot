@@ -5,6 +5,7 @@ import PlayButton from '../PlayButton/PlayButton';
 import Swal from 'sweetalert2'
 import './NewBeepPage.css'
 import { useHistory } from 'react-router';
+import userReducer from '../../redux/reducers/user.reducer';
 
 function NewBeepPage() {
     const dispatch = useDispatch()
@@ -22,9 +23,13 @@ function NewBeepPage() {
         bpm: 120,
         steps: [null, null, null, null, null, null, null, null],
         stepcount: 8,
-        name: null
+        name: null,
+        likes: 0,
+        users_that_like: [-1]
 
     })
+
+    const userObj = useSelector((store) => store.user)
 
     // default: sets an array of all notes to be the options in the root note select map
     let rootNotes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
@@ -119,11 +124,12 @@ function NewBeepPage() {
                 input: 'swal-class-text',
                 inputPlaceholder: 'swal-class-text',
                 inputLabel: '...',
+                inputValidator: 'swal-class-container',
                 validationMessage: '...',
                 actions: '...',
-                confirmButton: 'swal-class-bg',
+                confirmButton: 'nes-btn is-primary',
                 denyButton: '...',
-                cancelButton: 'swal-class-button-cancel',
+                cancelButton: 'nes-btn is-error',
                 loader: '...',
                 footer: '....'
             },
@@ -140,7 +146,7 @@ function NewBeepPage() {
 
                 // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
                 dispatchBeep({
-                    ...beep, name: result.value,
+                    ...beep, name: result.value, user_name : userObj.username
                 })
             }
         }
@@ -180,7 +186,15 @@ function NewBeepPage() {
 
     return (
         <section>
+            <div className="title-container">
+            <div className="beep-title">
             <h1>{beep.beep_name ? beep.beep_name : "Untitled"}</h1>
+            
+            </div>
+            
+            </div>
+            
+            
             <div>
 
                 <div className="synth-params-container">

@@ -2,8 +2,8 @@ html,
 body,
 #react-root {
   height: 100%;
-  background-color: black;
-  color: #00ff00;
+  background-color: rgb(53, 51, 51);
+  color: #92cc41
 }
 
 /* uncomment for robot font  */
@@ -28,8 +28,8 @@ img {
 }
 
 label{
-  color: #00ff00;
-  font-size: 20px;
+  color: #92cc41;
+  font-size: 30px;
 }
 
 .slider{
@@ -38,7 +38,7 @@ label{
   height: 10px;
   background: #000;
   outline: none;
-  border: 2px solid lawngreen;
+  border: 2px solid #92cc41;
 }
 
 
@@ -56,7 +56,7 @@ label{
 select{
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: black;
-  color: lawngreen;
+  color: #92cc41;
   font-size: 20px;
 }
 
@@ -74,9 +74,10 @@ Button
 -------------------------------------------------------------------------------- */
 
 button{
-
+  height: 77px;
+  width: 90px;
   color: black !important;
-  font-size: 25px;
+  font-size: 25px !important;
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -187,16 +188,29 @@ select{
 }
 
 .swal-class-bg{
-  border: 2px solid lawngreen;
+  border: 2px solid #92cc41;
   background-color: black;
-  color: lawngreen;
+  color: #92cc41
 }
 
 .swal-class-text{
-  color: lawngreen;
+  color: #92cc41;
+  font-size: 30px;
 }
 
 .swal-class-button-confirm{
   background-color: lawngreen;
   color: #000;
+}
+
+.title-container{
+  display: flex;
+  justify-content: center;
+}
+
+.beep-title {
+  border: 2px solid #92cc41;
+  width: 30%;
+  margin-bottom: 4em ;
+  background-color: black
 }

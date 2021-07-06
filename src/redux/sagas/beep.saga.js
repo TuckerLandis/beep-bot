@@ -119,6 +119,24 @@ function* updateBeep(action) {
     }
 }
 
+/**
+ * 
+ * @param {*} action 
+ */
+function* likeBeep(action) {
+    console.log('liking a beep (saga)', action);
+    try {
+        yield axios.put(`/api/beep/like/${action.payload.beep_id}`, action.payload)
+        yield put({
+            type: "FETCH_COMMUNITY_BEEPS"
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+
+}
+
 
 // combine and export sagas
 export function* beepSaga() {
@@ -128,6 +146,7 @@ export function* beepSaga() {
     yield takeEvery('DELETE_BEEP', deleteUserBeep)
     yield takeEvery('SELECT_BEEP', selectBeep)
     yield takeEvery('UPDATE_BEEP', updateBeep)
+    yield takeEvery('LIKE_BEEP', likeBeep)
 }
 
 

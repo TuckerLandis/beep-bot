@@ -9,32 +9,24 @@ CREATE TABLE "user" (
     "password" VARCHAR (1000) NOT NULL
 );
 
-
-CREATE TABLE "user" (
-	"id" serial NOT NULL,
-	"username" varchar(80) NOT NULL,
-	"password" varchar(1000) NOT NULL,
-	CONSTRAINT "user_pk" PRIMARY KEY ("id")
-);
-
-
-
 CREATE TABLE "beep" (
 	"user_id" serial NOT NULL,
 	"beep_id" serial PRIMARY KEY,
 	"osc_type" varchar(20) NOT NULL,
 	"filter_type" varchar(20) NOT NULL,
-	"filter_cutoff" int(20000) NOT NULL,
+	"filter_cutoff" int NOT NULL,
 	"scale" varchar(20) NOT NULL,
 	"octave" varchar(20) NOT NULL,
 	"root" varchar(20) NOT NULL,
-	"bpm" integer(3) NOT NULL,
-	"steps" varchar(1000) NOT NULL,
+	"bpm" int NOT NULL,
+	"steps" varchar(1000)[] NOT NULL,
+	"beep_name" varchar(80) NOT NULL,
 	"user_name" varchar(80),
 	"likes" int,
-	"date_created" date CURRENT_DATE
+	"users_that_like" varchar (1000)[],  
+	"date_created" timestamp not null default CURRENT_TIMESTAMP
+
 );
 
+DROP TABLE "beep";
 
---CHANGES--
---beeps need a date

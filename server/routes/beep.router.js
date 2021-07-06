@@ -67,7 +67,9 @@ router.get('/edit/:id', (req,res) => {
  * POST For saving a beep. Posts a beep object to the DB upon pressing save on edit/create page
  */
 router.post('/', (req, res) => {
-  console.log('got to beep router (POST)', req.body);
+  console.log('got to beep router (POST)', req);
+  console.log(req.user);
+  
 
   let beep = req.body
 
@@ -81,9 +83,12 @@ router.post('/', (req, res) => {
       "root",
       "bpm",
       "steps",
-      "beep_name"
+      "beep_name",
+      "user_name",
+      "users_that_like",
+      "likes"
       )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 )
         RETURNING "beep_id"
             ;`;
 
@@ -97,15 +102,16 @@ router.post('/', (req, res) => {
     beep.root, // $7
     beep.bpm,  // $8
     beep.steps, // $9
-    beep.name // $10
+    beep.name, // $10
+    beep.user_name, // $11
+    beep.users_that_like, // $12
+    beep.likes // $13
+
+
   ])
     .then( result => {
-      console.log('ln 103', result);
+     
       
-      console.log(req.body);
-      
-      
-      // req.body.pushToEdit(result.beep_id)
       console.log('New Beep Id:', result.rows[0].beep_id); //logs ID correctly
     
       const createdBeepID = result.rows[0].beep_id // if i just send this, i get an error for invalid status code
@@ -141,6 +147,27 @@ router.put('/:id', (req, res) => {
     beep.root, // $7
     beep.bpm,  // $8
     beep.steps, // $9
+  ])
+  .then(result => {
+    res.sendStatus(200)
+  })
+  .catch(error => {
+    console.log(error);
+    res.sendStatus(500)
+  })
+})
+
+// like button put
+router.put('/like/:id', (req, res) => {
+  console.log('got to beep router (LIKE) (PUT)', req.body);
+  let beep = req.body
+
+  let queryText = 'UPDATE beep SET "likes" = "likes"+1, "users_that_like" = $2 WHERE "beep_id" = $1;';
+
+  pool.query(queryText, [ 
+    beep.beep_id, // $1 
+    beep.users_that_like // $2
+   
   ])
   .then(result => {
     res.sendStatus(200)
