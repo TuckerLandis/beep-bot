@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
-import Swal from 'sweetalert2'
+
 import './NewBeepPage.css'
 import { useHistory } from 'react-router';
 import userReducer from '../../redux/reducers/user.reducer';
 
-// swal class object
-import SwalClassObject from '../../assets/SwalClassObject/SwalClassObject';
 
 // form components
 import BeepTitle from '../FormComponents/BeepTitle';
@@ -20,6 +18,7 @@ import Octave from '../FormComponents/Octave'
 import RootNote from '../FormComponents/RootNote';
 import BPM from '../FormComponents/BPM'
 import StepSelect from '../FormComponents/StepSelect';
+import SaveButton from '../FormComponents/SaveButton';
 import StepRadio from '../FormComponents/StepRadio';
 
 function NewBeepPage() {
@@ -45,7 +44,7 @@ function NewBeepPage() {
 
     })
 
-    const userObj = useSelector((store) => store.user)
+   
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -99,62 +98,7 @@ function NewBeepPage() {
         return scaleO
     }
 
-    /**
-     * Upon pressing save, a sweet alert pops up that asks the user for a name to save their beep under. 
-     * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
-     * button -> dispatch -> beep saga -> beep router
-     */
-    const handleSave = async () => {
-        console.log('saving a beep :)', beep);
 
-
-        // this prompt is fired upon pressing the save button on the new beep page, it takes in a required name input
-        Swal.fire({
-            title: 'What should we call this beep?',
-            input: 'text',
-            inputValue: '',
-            inputPlaceholder: 'Enter a name for your beep',
-            showCancelButton: true,
-            customClass: SwalClassObject,
-            // validates that the user has entered a value. if !value, stop here
-            inputValidator: (value) => {
-                if (!value) {
-                    return 'You need to write something!'
-                }
-            }
-            // once the input has been validated, send a dispatch like below
-        }).then(result => {
-            console.log(result);
-            if (result.isConfirmed) {
-
-                // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
-                dispatchBeep({
-                    ...beep, name: result.value, user_name: userObj.username
-                })
-            }
-        }
-        )
-    }
-
-    // this function is sent to the beep saga in the dispatch below to send a user to the edit page via the new post's response.id
-    function pushToEdit(beep_id) {
-
-        // simple history push with the returned beep ID from our post. presently undefined. passed to the saga
-        history.push(`/edit/${beep_id}`)
-    }
-
-    /**
-     * sends a dispatch containing: beep object, pushToEdit function as described above
-     */
-    function dispatchBeep(beep) {
-        dispatch({
-            type: 'SAVE_NEW_BEEP',
-            payload: {
-                beep: beep,
-                pushToEdit: pushToEdit
-            }
-        })
-    }
 
     /**
      * Sets an array of notes within the scale specified by the user. handleScaleChoice is a function declared above, it runs a call to the tonal library
@@ -173,24 +117,25 @@ function NewBeepPage() {
     return (
         <section>
             <BeepTitle beep={beep} />
-
+            
             <div className="entire-ui">
                 <div className="synth-params-container">
-                <div className="scale-container nes-container with-title is-centered">
-                <p className="title is-dark">Tweak the synthesizer!</p>
+                    <div className="scale-container nes-container with-title is-centered">
+                        <p className="title is-dark">Tweak the synthesizer!</p>
+                        
 
-                    {/* OSCILLATOR TYPE */}
-                    <OscillatorType handleBeep={handleBeep} />
-                    <div className="filter-spacer"></div>
-
-                    {/* FILTER TYPE*/}
-                    <div className="filter-container">
-                        <FilterType handleBeep={handleBeep} />
+                        {/* OSCILLATOR TYPE */}
+                        <OscillatorType handleBeep={handleBeep} />
                         <div className="filter-spacer"></div>
-                        {/* FILTER CUTOFF */}
-                        <FilterCutoff handleBeep={handleBeep} beep={beep} />
+
+                        {/* FILTER TYPE*/}
+                        <div className="filter-container">
+                            <FilterType handleBeep={handleBeep} />
+                            <div className="filter-spacer"></div>
+                            {/* FILTER CUTOFF */}
+                            <FilterCutoff handleBeep={handleBeep} beep={beep} />
+                        </div>
                     </div>
-                </div>
                 </div>
                 <br></br>
                 <br></br>
@@ -199,7 +144,7 @@ function NewBeepPage() {
                 <div className="seq-params-container">
                     <div className="scale-container nes-container with-title is-centered">
 
-                    <p className="title is-dark">Select a Scale!</p>
+                        <p className="title is-dark">Select a Scale!</p>
                         {/* SCALE NAME */}
                         <ScaleName handleBeep={handleBeep} beep={beep} />
 
@@ -211,51 +156,51 @@ function NewBeepPage() {
 
                     </div>
 
-                
+
                     {/* TEMPO (BPM)*/}
 
                 </div>
 
-                
-                <div className="seq-params-container">
-                <h3>Notes in your scale: {selectedScale.map((note, i)=>{
-                    if(note === "off") {
-
-                    } else {
-                        return (
-                            <p className="note-display">{note}</p>
-                        )
-                    }
-                    
-                })} </h3>
-                </div>
-                
 
                 <div className="seq-params-container">
-                <div className="tempo-container nes-container with-title is-centered">
-                <p className="title is-dark">Set a Tempo!</p>
-                <BPM handleBeep={handleBeep} beep={beep} />
+                    <h3>Notes in your scale: {selectedScale.map((note, i) => {
+                        if (note === "off") {
+
+                        } else {
+                            return (
+                                <p className="note-display">{note}</p>
+                            )
+                        }
+
+                    })} </h3>
                 </div>
+
+
+                <div className="seq-params-container">
+                    <div className="tempo-container nes-container with-title is-centered">
+                        <p className="title is-dark">Set a Tempo!</p>
+                        <BPM handleBeep={handleBeep} beep={beep} />
+                    </div>
                 </div>
-                
-                
+
+
 
                 <br></br>
                 <br></br>
                 <div className="seq-params-container">
-                <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
-                {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
+                    <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                    {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
-                
+
                 </div>
-                
+
 
                 <br></br>
                 <br></br>
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button className="nes-btn is-primary" onClick={handleSave}>save</button>
+                    <SaveButton beep={beep} />
                 </div>
 
             </div>

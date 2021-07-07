@@ -229,11 +229,13 @@ select{
 .scale-container{
   display: flex;
   justify-content: space-between;
+  box-shadow: 2px 2px 2px 2px inset #92cc41;
 }
 .tempo-container{
   display: flex;
   justify-content: space-between;
   width: 500px;
+  box-shadow: 2px 2px 2px 2px inset #92cc41;
 }
 
 .title{
@@ -241,13 +243,16 @@ select{
   font-size: 24pt !important;
   border: 2px solid black !important;
   height: 50px;
+  box-shadow: 1px 1px 1px 1px inset #92cc41;
 }
 label{
   margin-left: 20px;
 }
 
 
-
+.save{
+  display: inline;
+}
 
 
 

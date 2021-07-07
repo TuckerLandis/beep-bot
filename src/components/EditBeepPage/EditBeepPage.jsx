@@ -168,45 +168,81 @@ function EditBeepPage() {
         <section>
             <BeepTitle beep={beep} />
 
-            <div>
+            <div className="entire-ui">
                 <div className="synth-params-container">
+                    <div className="scale-container nes-container with-title is-centered">
+                        <p className="title is-dark">Tweak the synthesizer!</p>
 
-                    {/* OSCILLATOR TYPE */}
-                    <OscillatorType handleBeep={handleBeep} />
+                        {/* OSCILLATOR TYPE */}
+                        <OscillatorType handleBeep={handleBeep} />
+                        <div className="filter-spacer"></div>
 
-                    {/* FILTER TYPE*/}
-                    <div className="filter-container">
-                        <FilterType handleBeep={handleBeep} />
-
-                        {/* FILTER CUTOFF */}
-                        <FilterCutoff handleBeep={handleBeep} beep={beep} />
+                        {/* FILTER TYPE*/}
+                        <div className="filter-container">
+                            <FilterType handleBeep={handleBeep} />
+                            <div className="filter-spacer"></div>
+                            {/* FILTER CUTOFF */}
+                            <FilterCutoff handleBeep={handleBeep} beep={beep} />
+                        </div>
                     </div>
                 </div>
+                <br></br>
                 <br></br>
                 <br></br>
 
                 <div className="seq-params-container">
-                    {/* SCALE NAME */}
-                    <ScaleName handleBeep={handleBeep} beep={beep} />
+                    <div className="scale-container nes-container with-title is-centered">
 
-                    {/* OCTAVE */}
-                    <Octave handleBeep={handleBeep} beep={beep} />
+                        <p className="title is-dark">Select a Scale!</p>
+                        {/* SCALE NAME */}
+                        <ScaleName handleBeep={handleBeep} beep={beep} />
 
-                    {/* ROOT NOTE*/}
-                    <RootNote handleBeep={handleBeep} beep={beep} />
+                        {/* OCTAVE */}
+                        <Octave handleBeep={handleBeep} beep={beep} />
+
+                        {/* ROOT NOTE*/}
+                        <RootNote handleBeep={handleBeep} beep={beep} />
+
+                    </div>
+
 
                     {/* TEMPO (BPM)*/}
-                    <div>
+
+                </div>
+
+
+                <div className="seq-params-container">
+                    <h3>Notes in your scale: {selectedScale.map((note, i) => {
+                        if (note === "off") {
+
+                        } else {
+                            return (
+                                <p className="note-display">{note}</p>
+                            )
+                        }
+
+                    })} </h3>
+                </div>
+
+
+                <div className="seq-params-container">
+                    <div className="tempo-container nes-container with-title is-centered">
+                        <p className="title is-dark">Set a Tempo!</p>
+                        <BPM handleBeep={handleBeep} beep={beep} />
                     </div>
-                    <BPM handleBeep={handleBeep} beep={beep} />
+                </div>
+
+
+
+                <br></br>
+                <br></br>
+                <div className="seq-params-container">
+                    <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                    {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
 
                 </div>
-                <br></br>
-                <br></br>
-                <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
 
-                {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
                 <br></br>
                 <br></br>
