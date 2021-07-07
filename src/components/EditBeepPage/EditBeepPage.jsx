@@ -13,7 +13,6 @@ import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
-import Swal from 'sweetalert2'
 
 // form components
 import BeepTitle from '../FormComponents/BeepTitle';
@@ -26,6 +25,7 @@ import RootNote from '../FormComponents/RootNote';
 import BPM from '../FormComponents/BPM'
 import StepSelect from '../FormComponents/StepSelect';
 import StepRadio from '../FormComponents/StepRadio';
+import OverwriteButton from "../FormComponents/OverwriteButton";
 
 
 function EditBeepPage() {
@@ -98,63 +98,7 @@ function EditBeepPage() {
 
     }
 
-    /**
-     * Upon pressing save, a sweet alert pops up that asks the for overwrite confirmation
-     * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
-     * button -> dispatch -> beep saga -> beep router
-     */
-    const handleSave = () => {
-        console.log('saving a beep :)', beep);
 
-
-        Swal.fire({
-            title: 'Do you want to overwrite this beep?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes',
-            customClass: {
-                container: 'swal-class-container',
-                popup: 'swal-class-bg',
-                header: 'swal-class-text',
-                title: 'swal-class-text',
-                closeButton: '...',
-                icon: '...',
-                image: '...',
-                content: '...',
-                htmlContainer: '...',
-                input: 'swal-class-text',
-                inputPlaceholder: 'swal-class-text',
-                inputLabel: '...',
-                inputValidator: 'swal-class-container',
-                validationMessage: '...',
-                actions: '...',
-                confirmButton: 'nes-btn is-primary',
-                denyButton: '...',
-                cancelButton: 'nes-btn is-error',
-                loader: '...',
-                footer: '....'
-            },
-        }).then((result) => {
-
-            // if okay button is pressed, send a confirmation dialog, and send a put request to update beep
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Overwritten',
-                    '',
-                    'success'
-                )
-                dispatch({
-                    type: 'UPDATE_BEEP',
-                    payload: beep
-                })
-            }
-        })
-
-
-
-    }
 
     //logging beep to ensure values
     console.log(beep);
@@ -249,7 +193,7 @@ function EditBeepPage() {
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button className="nes-btn is-primary" onClick={handleSave}>save</button>
+                    <OverwriteButton beep={beep} />
                 </div>
 
             </div>

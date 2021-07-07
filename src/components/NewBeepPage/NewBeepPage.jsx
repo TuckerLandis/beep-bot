@@ -22,8 +22,6 @@ import SaveButton from '../FormComponents/SaveButton';
 import StepRadio from '../FormComponents/StepRadio';
 
 function NewBeepPage() {
-    const dispatch = useDispatch()
-    const history = useHistory()
 
 
     // default beep. manipulated by the user on change of all inputs on the page
@@ -44,7 +42,7 @@ function NewBeepPage() {
 
     })
 
-   
+
 
     /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
@@ -117,12 +115,12 @@ function NewBeepPage() {
     return (
         <section>
             <BeepTitle beep={beep} />
-            
+
             <div className="entire-ui">
                 <div className="synth-params-container">
                     <div className="scale-container nes-container with-title is-centered">
                         <p className="title is-dark">Tweak the synthesizer!</p>
-                        
+
 
                         {/* OSCILLATOR TYPE */}
                         <OscillatorType handleBeep={handleBeep} />
