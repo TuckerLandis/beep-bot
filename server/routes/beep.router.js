@@ -132,6 +132,9 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
 });
 
+/**
+ * Update Beep PUT, edits all declared values on beep row when save is pressed on edit page
+ */
 router.put('/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (PUT)');
   let beep = req.body
@@ -158,7 +161,9 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     })
 })
 
-// like button put
+/**
+ * PUT for liking a beep. edits array of users that like for rendering
+ */
 router.put('/like/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (LIKE) (PUT)', req.body);
   let beep = req.body
@@ -179,7 +184,9 @@ router.put('/like/:id', rejectUnauthenticated, (req, res) => {
     })
 })
 
-// unlike button put
+/**
+ * PUT for unliking, edits array of users that liek for rendering 
+ */
 router.put('/unlike/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (LIKE) (PUT)', req.body);
   let beep = req.body
@@ -200,7 +207,10 @@ router.put('/unlike/:id', rejectUnauthenticated, (req, res) => {
     })
 })
 
-
+/**
+ * PUT for favoriting a beep. Runs 2 queries. one to edit array of users that like for rendering on community page
+ * another for adding a relation in the favorites table
+ */
 router.put('/favorite/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (Fav) (PUT'), req.body;
   let beep = req.body
@@ -237,6 +247,10 @@ router.put('/favorite/:id', rejectUnauthenticated, (req, res) => {
 
 })
 
+/**
+ * PUT for unfavoriting a beep. Runs 2 queries. one to edit array of users that like for rendering on community page
+ * another for deleting a relation in the favorites table
+ */
 router.put('/unfavorite/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (Fav) (PUT'), req.body;
   let beep = req.body
@@ -273,7 +287,9 @@ router.put('/unfavorite/:id', rejectUnauthenticated, (req, res) => {
     })
 })
 
-
+/**
+ * GET for user favorites. mapped over in the Favorites page
+ */
 router.get('/userfaves', rejectUnauthenticated, (req,res) => {
   console.log('got to user faves (GET');
 

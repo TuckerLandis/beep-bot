@@ -120,7 +120,7 @@ function* updateBeep(action) {
 }
 
 /**
- * 
+ * Likes a beep via the like button on the community page
  * @param {*} action 
  */
 function* likeBeep(action) {
@@ -138,7 +138,7 @@ function* likeBeep(action) {
 }
 
 /**
- * 
+ * Unlikes a beep via the like button on the community page
  * @param {*} action 
  */
  function* unlikeBeep(action) {
@@ -155,6 +155,10 @@ function* likeBeep(action) {
     }
 }
 
+/**
+ * Favorites a beep for the specific user, see router exp.
+ * @param {*} action 
+ */
 function* favoriteBeep(action) {
     console.log('Favoriting a beep (saga)', action);
     try {
@@ -172,6 +176,10 @@ function* favoriteBeep(action) {
     
 }
 
+/**
+ * Unfavorites a beep for the specific user, see router exp
+ * @param {*} action 
+ */
 function* unfavoriteBeep(action) {
     console.log('Favoriting a beep (saga)', action);
     try {
@@ -189,6 +197,10 @@ function* unfavoriteBeep(action) {
     
 }
 
+/**
+ * GETS user's favorites on page load of the favorites page
+ * @param {*} action 
+ */
 function* fetchFavorites(action) {
     console.log('Fetching Favs (saga)', action);
     try {
