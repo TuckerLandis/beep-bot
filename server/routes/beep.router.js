@@ -207,10 +207,25 @@ router.put('/favorite/:id', rejectUnauthenticated, (req, res) => {
 
   let queryText = 'UPDATE beep SET "users_that_favorite" = $2 WHERE "beep_id" = $1;';
 
+
   pool.query(queryText, [
     beep.beep_id, // $1 
     beep.users_that_favorite // $2
 
+  ])
+    .then(result => {
+      
+    })
+    .catch(error => {
+      console.log(error);
+      res.sendStatus(500)
+    })
+
+  let queryText2 = 'INSERT INTO favorite ("fav_user_id", "fav_beep_id") VALUES ($1, $2);';
+
+  pool.query(queryText2, [
+    req.user.id, // $1 
+    beep.beep_id // $2
   ])
     .then(result => {
       res.sendStatus(200)
@@ -219,8 +234,6 @@ router.put('/favorite/:id', rejectUnauthenticated, (req, res) => {
       console.log(error);
       res.sendStatus(500)
     })
-
-
 
 })
 
@@ -236,6 +249,22 @@ router.put('/unfavorite/:id', rejectUnauthenticated, (req, res) => {
 
   ])
     .then(result => {
+
+    })
+    .catch(error => {
+      console.log(error);
+      res.sendStatus(500)
+    })
+
+
+  let queryText2 = 'DELETE FROM "favorite" WHERE "fav_user_id"= $1 AND "fav_beep_id" =$2;';
+
+  pool.query(queryText2, [
+    req.user.id, // $1 
+    beep.beep_id // $2
+
+  ])
+    .then(result => {
       res.sendStatus(200)
     })
     .catch(error => {
@@ -244,6 +273,24 @@ router.put('/unfavorite/:id', rejectUnauthenticated, (req, res) => {
     })
 })
 
+
+router.get('/userfaves', rejectUnauthenticated, (req,res) => {
+  console.log('got to user faves (GET');
+
+  let queryText = 'SELECT * FROM "favorite" join "beep" on "favorite".fav_beep_id = "beep".beep_id WHERE "favorite".fav_user_id = $1;';
+  pool.query(queryText, [req.user.id])
+    .then(result => {
+      
+
+      res.send(result.rows)
+    })
+    .catch(error => {
+      console.log('error-fav-get', error);
+
+    })
+
+  
+})
 
 
 /**

@@ -1,6 +1,8 @@
-// Does nothing ATM     !!!!
+
 
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import SwalClassObject from "../../assets/SwalClassObject/SwalClassObject";
 
 function FavoriteButton(props) {
   const dispatch = useDispatch()
@@ -9,29 +11,43 @@ function FavoriteButton(props) {
     await props.beep
     if (props.beep.users_that_favorite?.includes(props.user.username)) {
 
-      let newFaves = props.beep.users_that_favorite
-      // find index of user.id
-      let indexToRemove = newFaves.indexOf(props.user.username)
-      // if the user.id is in the array, remove it
-      if (indexToRemove > -1) {
-        newFaves.splice(indexToRemove, 1)
-      }
-     
-      // beep.users_that_like is now the newLikes array
-      beep = {
-        ...beep, users_that_favorite: newFaves
-      }
-      // sends dispatch to update likes array, and decrement like counter
-      dispatch({
-        type: "UNFAVORITE_BEEP",
-        payload: beep
+      Swal.fire({
+        title: 'Remove from favorites?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        customClass: SwalClassObject,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let newFaves = props.beep.users_that_favorite
+          // find index of user.id
+          let indexToRemove = newFaves.indexOf(props.user.username)
+          // if the user.id is in the array, remove it
+          if (indexToRemove > -1) {
+            newFaves.splice(indexToRemove, 1)
+          }
+
+          // beep.users_that_like is now the newLikes array
+          beep = {
+            ...beep, users_that_favorite: newFaves
+          }
+          // sends dispatch to update likes array, and decrement like counter
+          dispatch({
+            type: "UNFAVORITE_BEEP",
+            payload: beep
+          })
+
+          return
+        }
       })
 
-      return
 
 
 
-      return
+
+
     } else {
       console.log(props.beep);
 

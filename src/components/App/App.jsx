@@ -24,6 +24,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import NewBeepPage from '../NewBeepPage/NewBeepPage';
 import UserBeeps from '../UserBeeps/UserBeeps'
 import EditBeepPage from '../EditBeepPage/EditBeepPage';
+import FavoritesPage from '../FavoritesPage/FavoritesPage';
 
 import "nes.css/css/nes.min.css";
 import './App.css';
@@ -132,6 +133,14 @@ function App() {
             authRedirect="/community"
           >
             <LandingPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/favorite"
+          >
+            <FavoritesPage />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

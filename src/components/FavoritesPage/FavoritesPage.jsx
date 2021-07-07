@@ -2,10 +2,15 @@
 
 const { useDispatch, useSelector } = require("react-redux");
 import React, { useEffect, useState } from 'react';
-function UserBeeps() {
+
+import PlayButton from '../PlayButton/PlayButton';
+import FavoriteButton from '../FavoriteButton/FavoriteButton';
+
+function FavoritesPage() {
 
     const dispatch = useDispatch() // declare dispatch for use below
     const userFaves = useSelector(store => store.userFaves)
+    const user = useSelector((store) => store.user)
   
     useEffect(() => {
       dispatch({ type: 'FETCH_USER_FAVES' });
@@ -27,7 +32,7 @@ function UserBeeps() {
                 <h2>{beep.user_name}</h2>
                 <h3>Likes: {beep.likes}</h3>
                 <PlayButton beep={beep} key={i} />
-                
+                <FavoriteButton beep={beep} user={user} />
               </div>
     
     
@@ -38,3 +43,5 @@ function UserBeeps() {
       )
 
 }
+
+export default FavoritesPage
