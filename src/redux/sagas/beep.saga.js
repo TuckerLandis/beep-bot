@@ -148,11 +148,60 @@ function* likeBeep(action) {
         yield put({
             type: "FETCH_COMMUNITY_BEEPS"
         })
+        
     } catch (error) {
         console.log(error);
         
     }
+}
 
+function* favoriteBeep(action) {
+    console.log('Favoriting a beep (saga)', action);
+    try {
+        yield axios.put(`/api/beep/favorite/${action.payload.beep_id}`, action.payload)
+        yield put({
+            type: 'FETCH_COMMUNITY_BEEPS'
+        })
+        yield put({
+            type: 'FETCH_USER_FAVES'
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
+}
+
+function* unfavoriteBeep(action) {
+    console.log('Favoriting a beep (saga)', action);
+    try {
+        yield axios.put(`/api/beep/unfavorite/${action.payload.beep_id}`, action.payload)
+        yield put({
+            type: 'FETCH_COMMUNITY_BEEPS'
+        })
+        yield put({
+            type: 'FETCH_USER_FAVES'
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
+}
+
+function* fetchFavorites(action) {
+    console.log('Fetching Favs (saga)', action);
+    try {
+        const response = yield axios.get(`/api/beep/userfaves`)
+        yield put({
+            type: 'SET_USER_FAVES',
+            payload: response.data
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
 }
 
 // combine and export sagas
@@ -165,6 +214,9 @@ export function* beepSaga() {
     yield takeEvery('UPDATE_BEEP', updateBeep)
     yield takeEvery('LIKE_BEEP', likeBeep)
     yield takeEvery('UNLIKE_BEEP', unlikeBeep)
+    yield takeEvery('FAVORITE_BEEP', favoriteBeep)
+    yield takeEvery('UNFAVORITE_BEEP', unfavoriteBeep)
+    yield takeEvery('FETCH_USER_FAVES', fetchFavorites)
 }
 
 

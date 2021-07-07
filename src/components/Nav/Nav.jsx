@@ -33,6 +33,9 @@ function Nav() {
         <Link className="navLink" to="/userbeeps">
           Your Beeps
         </Link>
+        <Link className="navLink" to="/favorite">
+          Favorites
+        </Link>
         </>
         )}
       

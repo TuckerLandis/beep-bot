@@ -52,6 +52,7 @@ function PlayButton(props) {
 
         // seq.probability = 0.3 // works!! needs to take in an input 
 
+        
         if (!isPlaying) {  // starts Tone if stopped                                              - if 
             setIsPlaying(true)  // flips playing boolean
             setPlayButtonText('stop') // flips button text

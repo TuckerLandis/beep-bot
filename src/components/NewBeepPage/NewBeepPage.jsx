@@ -40,7 +40,8 @@ function NewBeepPage() {
         stepcount: 8,
         name: null,
         likes: 0,
-        users_that_like: [-1]
+        users_that_like: [-1],
+        users_that_favorite: ['Beep Bot']
 
     })
 
@@ -166,6 +167,8 @@ function NewBeepPage() {
 
     // ------------------------------- DOM Return -------------------------------------- //
 
+
+        /// all the components herein come from src/formcomponenets
     return (
         <section>
             <BeepTitle beep={beep} />

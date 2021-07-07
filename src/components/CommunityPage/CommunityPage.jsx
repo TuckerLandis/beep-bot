@@ -27,7 +27,7 @@ function CommunityPage() {
           <div key={i} className="beep-item">
 
             <h1 className="beep-item-title">{beep.beep_name}</h1>
-            <h3>{beep.user_name}</h3>
+            <h2>{beep.user_name}</h2>
             <h3>Likes: {beep.likes}</h3>
             <h3>BPM: {beep.bpm}</h3>
             <div className="button-div">
