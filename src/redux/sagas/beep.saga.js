@@ -159,7 +159,21 @@ function* favoriteBeep(action) {
     try {
         yield axios.put(`/api/beep/favorite/${action.payload.beep_id}`, action.payload)
         yield put({
-            type: fetchCommunityBeeps
+            type: 'FETCH_COMMUNITY_BEEPS'
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+    
+}
+
+function* unfavoriteBeep(action) {
+    console.log('Favoriting a beep (saga)', action);
+    try {
+        yield axios.put(`/api/beep/unfavorite/${action.payload.beep_id}`, action.payload)
+        yield put({
+            type: 'FETCH_COMMUNITY_BEEPS'
         })
     } catch (error) {
         console.log(error);
@@ -179,7 +193,7 @@ export function* beepSaga() {
     yield takeEvery('LIKE_BEEP', likeBeep)
     yield takeEvery('UNLIKE_BEEP', unlikeBeep)
     yield takeEvery('FAVORITE_BEEP', favoriteBeep)
-    // yield takeEvery('UNFAVORITE_BEEP', unfavoriteBeep)
+    yield takeEvery('UNFAVORITE_BEEP', unfavoriteBeep)
 }
 
 

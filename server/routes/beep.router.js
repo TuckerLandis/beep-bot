@@ -203,11 +203,46 @@ router.put('/unlike/:id', rejectUnauthenticated, (req, res) => {
 
 router.put('/favorite/:id', rejectUnauthenticated, (req, res) => {
 console.log('got to beep router (Fav) (PUT'), req.body;
+let beep = req.body
 
+let queryText = 'UPDATE beep SET "users_that_favorite" = $2 WHERE "beep_id" = $1;';
+
+pool.query(queryText, [ 
+  beep.beep_id, // $1 
+  beep.users_that_favorite // $2
+ 
+])
+.then(result => {
+  res.sendStatus(200)
+})
+.catch(error => {
+  console.log(error);
+  res.sendStatus(500)
+})
 
 
 
 })
+
+router.put('/unfavorite/:id', rejectUnauthenticated, (req, res) => {
+  console.log('got to beep router (Fav) (PUT'), req.body;
+  let beep = req.body
+  
+  let queryText = 'UPDATE beep SET "users_that_favorite" = $2 WHERE "beep_id" = $1;';
+  
+  pool.query(queryText, [ 
+    beep.beep_id, // $1 
+    beep.users_that_favorite // $2
+   
+  ])
+  .then(result => {
+    res.sendStatus(200)
+  })
+  .catch(error => {
+    console.log(error);
+    res.sendStatus(500)
+  })
+  })
 
 
 
