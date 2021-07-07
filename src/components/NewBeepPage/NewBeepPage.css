@@ -1,4 +1,4 @@
-.synth-params-container {
+/* .synth-params-container {
     display: flex;
     justify-content: center;
 }
@@ -9,6 +9,7 @@
 .seq-params-container{
     display: flex;
     justify-content: space-around;
+    margin-bottom : 2em;
 }
 .step-select-container{
     display: flex;
@@ -36,5 +37,5 @@
 }
 label{
     margin-left: 20px;
-}
+} */
 

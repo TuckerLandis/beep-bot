@@ -174,8 +174,10 @@ function NewBeepPage() {
         <section>
             <BeepTitle beep={beep} />
 
-            <div>
+            <div className="entire-ui">
                 <div className="synth-params-container">
+                <div className="scale-container nes-container with-title is-centered">
+                <p className="title is-dark">Tweak the synthesizer!</p>
 
                     {/* OSCILLATOR TYPE */}
                     <OscillatorType handleBeep={handleBeep} />
@@ -188,6 +190,7 @@ function NewBeepPage() {
                         {/* FILTER CUTOFF */}
                         <FilterCutoff handleBeep={handleBeep} beep={beep} />
                     </div>
+                </div>
                 </div>
                 <br></br>
                 <br></br>
@@ -205,20 +208,36 @@ function NewBeepPage() {
 
                         {/* ROOT NOTE*/}
                         <RootNote handleBeep={handleBeep} beep={beep} />
+
                     </div>
 
-
+                
                     {/* TEMPO (BPM)*/}
-                 
-                    
-
 
                 </div>
 
+                
+                <div className="seq-params-container">
+                <h3>Notes in your scale: {selectedScale.map((note, i)=>{
+                    if(note === "off") {
+
+                    } else {
+                        return (
+                            <p className="note-display">{note}</p>
+                        )
+                    }
+                    
+                })} </h3>
+                </div>
+                
+
+                <div className="seq-params-container">
                 <div className="tempo-container nes-container with-title is-centered">
-                <p className="title is-dark">Select a Tempo!</p>
+                <p className="title is-dark">Set a Tempo!</p>
                 <BPM handleBeep={handleBeep} beep={beep} />
                 </div>
+                </div>
+                
                 
 
                 <br></br>
