@@ -168,7 +168,7 @@ function NewBeepPage() {
     // ------------------------------- DOM Return -------------------------------------- //
 
 
-     /// all the components herein come from src/formcomponenets
+    /// all the components herein come from src/formcomponenets
 
     return (
         <section>
@@ -179,6 +179,7 @@ function NewBeepPage() {
 
                     {/* OSCILLATOR TYPE */}
                     <OscillatorType handleBeep={handleBeep} />
+                    <div className="filter-spacer"></div>
 
                     {/* FILTER TYPE*/}
                     <div className="filter-container">
@@ -193,26 +194,42 @@ function NewBeepPage() {
                 <br></br>
 
                 <div className="seq-params-container">
-                    {/* SCALE NAME */}
-                    <ScaleName handleBeep={handleBeep} beep={beep} />
+                    <div className="scale-container nes-container with-title is-centered">
 
-                    {/* OCTAVE */}
-                    <Octave handleBeep={handleBeep} beep={beep} />
+                    <p className="title is-dark">Select a Scale!</p>
+                        {/* SCALE NAME */}
+                        <ScaleName handleBeep={handleBeep} beep={beep} />
 
-                    {/* ROOT NOTE*/}
-                    <RootNote handleBeep={handleBeep} beep={beep} />
+                        {/* OCTAVE */}
+                        <Octave handleBeep={handleBeep} beep={beep} />
+
+                        {/* ROOT NOTE*/}
+                        <RootNote handleBeep={handleBeep} beep={beep} />
+                    </div>
+
 
                     {/* TEMPO (BPM)*/}
-                    <div>
-                    </div>
-                    <BPM handleBeep={handleBeep} beep={beep} />
+                 
+                    
 
 
                 </div>
+
+                <div className="tempo-container nes-container with-title is-centered">
+                <p className="title is-dark">Select a Tempo!</p>
+                <BPM handleBeep={handleBeep} beep={beep} />
+                </div>
+                
+
                 <br></br>
                 <br></br>
+                <div className="seq-params-container">
                 <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
                 {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
+
+                
+                </div>
+                
 
                 <br></br>
                 <br></br>
