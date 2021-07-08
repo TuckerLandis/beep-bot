@@ -5,6 +5,7 @@ import user from './user.reducer';
 import userBeeps from './userbeeps.reducer';
 import editBeepReducer from './editbeep.reducer';
 import userFaves from './userfaves.reducer';
+import animationCount from './animationcount.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   userBeeps, // place for user beeps, populated on load of "your beeps page"
   communityBeeps,
   editBeepReducer,
-  userFaves
+  userFaves,
+  animationCount
 });
 
 export default rootReducer;

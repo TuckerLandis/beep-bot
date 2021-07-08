@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
+import scale from 'music-scale'
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 
 import './NewBeepPage.css'
 import { useHistory } from 'react-router';
 import userReducer from '../../redux/reducers/user.reducer';
+import animationCount from '../../redux/reducers/animationcount.reducer';
 
 
 // form components
@@ -23,6 +25,7 @@ import StepRadio from '../FormComponents/StepRadio';
 
 function NewBeepPage() {
 
+    const animationCount = useSelector(store => store.animationCount)
 
     // default beep. manipulated by the user on change of all inputs on the page
     const [beep, setBeep] = useState({
@@ -79,18 +82,37 @@ function NewBeepPage() {
      * @param {*} beep 
      */
     function handleScaleChoice(beep) {
-
+        console.log('test scale', scale("major", "C4"));
         // sets temp variable to scale.get using the beep properties: root, scale, octave
         let scaleFormatted = (Scale.get(`${beep.root} ${beep.scale}`).notes)
 
         // loops over scale array, and adds the relevant octave number character to the string, to each index of the notes array
         for (let i = 0; i < scaleFormatted.length; i++) {
             scaleFormatted[i] += beep.octave
+
+
         }
+
 
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors/sequence
         scaleFormatted.unshift('off')
         console.log('scale with octave', scaleFormatted);
+
+        // // attempt to change 2 last notes to the octave above
+        // if (beep.scale === 'major' | 
+        // beep.scale === 'minor' | 
+        // beep.scale === 'ionian' | 
+        // beep.scale === 'dorian' |
+        // beep.scale === 'phrygian' |
+        // beep.scale === 'lydian' |
+        // beep.scale === 'mixolydian' | 
+        // beep.scale === 'locrian')
+        // {
+        //     for (let i = scaleFormatted.length; i < (scaleFormatted.length-2); i--){
+        //         console.log(i);
+        //     }
+
+        // }
 
         // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
         return scaleFormatted
@@ -105,9 +127,81 @@ function NewBeepPage() {
      */
     let selectedScale = handleScaleChoice(beep)
 
-    let animationCount = 0
+    
 
 
+
+    // function animate(animationCount) {
+    switch (animationCount) {
+        case 1:
+            console.log('its 1');
+            let el = document.getElementById('0')
+            let otherElements = document.getElementsByClassName("active")
+            otherElements.className = "inactive"
+            console.log(el);
+            el.className = "active"
+            break
+        case 2:
+            console.log('its 2');
+            let el1 = document.getElementById('1')
+            let otherElements1 = document.getElementsByClassName("active")
+            el.className = "inactive"
+            console.log(el1);
+            el1.className = "active"
+            break
+        case 3:
+            console.log('its 3');
+            let el2 = document.getElementById('2')
+            let otherElements2 = document.getElementsByClassName("active")
+            otherElements2.className = "inactive"
+            console.log(el2);
+            el2.className = "active"
+            break
+        case 4:
+            console.log('its 4');
+            let el4 = document.getElementById('3')
+            let otherElements3 = document.getElementsByClassName("active")
+            otherElements3.className = "inactive"
+            console.log(el4);
+            el4.className = "active"
+            break
+        case 5:
+            console.log('its 5');
+            let el5 = document.getElementById('4')
+            let otherElements4 = document.getElementsByClassName("active")
+            otherElements4.className = "inactive"
+            console.log(el5);
+            el5.className = "active"
+            break
+        case 6:
+            console.log('its 6');
+            let el6 = document.getElementById('5')
+            let otherElements5 = document.getElementsByClassName("active")
+            otherElements5.className = "inactive"
+            console.log(el6);
+            el6.className = "active"
+            break
+        case 7:
+            console.log('its 7');
+            let el7 = document.getElementById('6')
+            let otherElements6 = document.getElementsByClassName("active")
+            otherElements6.className = "inactive"
+            console.log(el7);
+            el7.className = "active"
+            break
+        case 8:
+            console.log('its 8');
+            let el8 = document.getElementById('7')
+            let otherElements7 = document.getElementsByClassName("active")
+            otherElements7.className = "inactive"
+            console.log(el8);
+            el8.className = "active"
+            break
+    }
+    // }
+
+    // let animated = animate(animationCount)
+    // console.log(animated);
     // ------------------------------- DOM Return -------------------------------------- //
 
 
@@ -116,10 +210,9 @@ function NewBeepPage() {
     return (
         <section>
             <div className="button-container">
-                <PlayButton beep={beep} animationCount={animationCount}/>
+                <PlayButton beep={beep} />
 
                 <BeepTitle beep={beep} />
-
 
                 <SaveButton beep={beep} />
             </div>
