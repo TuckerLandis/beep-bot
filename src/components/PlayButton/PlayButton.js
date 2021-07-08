@@ -102,6 +102,8 @@ function PlayButton(props) {
             Tone.Transport.stop(); // STOP the transport , music
             Tone.Transport.cancel(0) //cancels and scrubs tone.transport for re-initializtion
 
+            // reset animation count to fix load issues from user beep page
+            
             dispatch({
                 type:"ANIMATION_COUNT",
                 payload: 0

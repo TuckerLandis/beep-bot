@@ -249,7 +249,7 @@ function NewBeepPage() {
 
                 <div className="note-display-container">
                     <p className="notes-title-display"> Notes in your scale: {selectedScale.map((note, i) => {
-                        if (note === "off") {
+                        if (note === "-") {
 
                         } else {
                             return (
