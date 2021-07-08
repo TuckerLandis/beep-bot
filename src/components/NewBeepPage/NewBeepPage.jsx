@@ -81,19 +81,19 @@ function NewBeepPage() {
     function handleScaleChoice(beep) {
 
         // sets temp variable to scale.get using the beep properties: root, scale, octave
-        let scaleO = (Scale.get(`${beep.root} ${beep.scale}`).notes)
+        let scaleFormatted = (Scale.get(`${beep.root} ${beep.scale}`).notes)
 
         // loops over scale array, and adds the relevant octave number character to the string, to each index of the notes array
-        for (let i = 0; i < scaleO.length; i++) {
-            scaleO[i] += beep.octave
+        for (let i = 0; i < scaleFormatted.length; i++) {
+            scaleFormatted[i] += beep.octave
         }
 
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors/sequence
-        scaleO.unshift('off')
-        console.log('scale with octave', scaleO);
+        scaleFormatted.unshift('off')
+        console.log('scale with octave', scaleFormatted);
 
         // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
-        return scaleO
+        return scaleFormatted
     }
 
 
@@ -114,7 +114,15 @@ function NewBeepPage() {
 
     return (
         <section>
-            <BeepTitle beep={beep} />
+            <div className="button-container">
+                    <PlayButton beep={beep} />
+                
+                    <BeepTitle beep={beep} />
+                   
+                    
+                    <SaveButton beep={beep} />
+                </div>
+           
 
             <div className="entire-ui">
                 <div className="synth-params-container">
@@ -136,8 +144,7 @@ function NewBeepPage() {
                     </div>
                 </div>
                 <br></br>
-                <br></br>
-                <br></br>
+                
 
                 <div className="seq-params-container">
                     <div className="scale-container nes-container with-title is-centered">
@@ -153,15 +160,19 @@ function NewBeepPage() {
                         <RootNote handleBeep={handleBeep} beep={beep} />
 
                     </div>
+                    
+                    
+
+                    
 
 
-                    {/* TEMPO (BPM)*/}
+                    
 
                 </div>
 
 
                 <div className="seq-params-container">
-                    <h3>Notes in your scale: {selectedScale.map((note, i) => {
+                    <h1>Notes in your scale: {selectedScale.map((note, i) => {
                         if (note === "off") {
 
                         } else {
@@ -170,13 +181,19 @@ function NewBeepPage() {
                             )
                         }
 
-                    })} </h3>
+                    })} </h1>
                 </div>
 
 
                 <div className="seq-params-container">
-                    <div className="tempo-container nes-container with-title is-centered">
-                        <p className="title is-dark">Set a Tempo!</p>
+                    <div className="sequence-container nes-container with-title is-centered">
+                        <p className="title is-dark seq-title">Change the sequence!</p>
+                        <div className="title-spacer"></div>
+
+                        {/* step selects for sequencer */}
+                        <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+
+                        {/* TEMPO (BPM)*/}
                         <BPM handleBeep={handleBeep} beep={beep} />
                     </div>
                 </div>
@@ -186,7 +203,7 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
                 <div className="seq-params-container">
-                    <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                   
                     {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
 
@@ -196,10 +213,7 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
 
-                <div className="button-container">
-                    <PlayButton beep={beep} />
-                    <SaveButton beep={beep} />
-                </div>
+                
 
             </div>
 
