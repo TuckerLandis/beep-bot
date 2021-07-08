@@ -115,14 +115,14 @@ function NewBeepPage() {
     return (
         <section>
             <div className="button-container">
-                    <PlayButton beep={beep} />
-                
-                    <BeepTitle beep={beep} />
-                   
-                    
-                    <SaveButton beep={beep} />
-                </div>
-           
+                <PlayButton beep={beep} />
+
+                <BeepTitle beep={beep} />
+
+
+                <SaveButton beep={beep} />
+            </div>
+
 
             <div className="entire-ui">
                 <div className="synth-params-container">
@@ -144,7 +144,7 @@ function NewBeepPage() {
                     </div>
                 </div>
                 <br></br>
-                
+
 
                 <div className="seq-params-container">
                     <div className="scale-container nes-container with-title is-centered">
@@ -160,14 +160,6 @@ function NewBeepPage() {
                         <RootNote handleBeep={handleBeep} beep={beep} />
 
                     </div>
-                    
-                    
-
-                    
-
-
-                    
-
                 </div>
 
 
@@ -203,7 +195,7 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
                 <div className="seq-params-container">
-                   
+
                     {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
 
@@ -213,7 +205,7 @@ function NewBeepPage() {
                 <br></br>
                 <br></br>
 
-                
+
 
             </div>
 

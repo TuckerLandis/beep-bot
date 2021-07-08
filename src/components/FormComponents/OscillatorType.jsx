@@ -2,7 +2,7 @@ export default function OscillatorType (props) {
 
     return(
         <div className="osc-type-container nes-pointer">
-        <label htmlFor="osc-type">Osc Type: </label>
+        <label htmlFor="osc-type">Osc Type </label>
         <select name="osc-type" id="osc_type" onChange={props.handleBeep} className="wider-select" >
             <option value="triangle8">Triangle</option>
             <option value="square8">Square</option>

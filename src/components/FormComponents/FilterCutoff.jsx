@@ -4,7 +4,7 @@ export default function FilterCutoff(props) {
     return (
         <div>
             <div>
-            <label htmlFor="filter_cutoff">Filter Cutoff: {props.beep.filter_cutoff} </label>
+            <label htmlFor="filter_cutoff">Filter Cutoff {props.beep.filter_cutoff} </label>
             </div>
             
 
