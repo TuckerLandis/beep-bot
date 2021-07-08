@@ -81,6 +81,7 @@ function UserBeeps() {
             <h3>Root: {beep.root}</h3>
             <h3>Octave: {beep.octave}</h3>
             <h3>Likes: {beep.likes}</h3>
+            <h3>Date Created: {beep.date_created.slice(0, beep.date_created.length - 14)}</h3>
             <PlayButton beep={beep} key={i} />
             <button className="nes-btn is-error" onClick={() => deleteBeep(beep)}>delete</button>
             <button className=" nes-btn is-warning" onClick={() => editBeep(beep)}>load</button>

@@ -1,6 +1,6 @@
-.synth-params-container {
+/* .synth-params-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 .filter-container{
     display: flex;
@@ -9,6 +9,7 @@
 .seq-params-container{
     display: flex;
     justify-content: space-around;
+    margin-bottom : 2em;
 }
 .step-select-container{
     display: flex;
@@ -18,3 +19,23 @@
     display: flex;
     justify-content: space-around;
 }
+.scale-container{
+    display: flex;
+    justify-content: space-between;
+}
+.tempo-container{
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+}
+
+.title{
+    background-color: rgb(53, 51, 51) !important;
+    font-size: 24pt !important;
+    border: 2px solid black !important;
+    height: 50px;
+}
+label{
+    margin-left: 20px;
+} */
+

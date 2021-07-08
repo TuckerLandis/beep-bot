@@ -1,7 +1,7 @@
 export default function Octave (props) {
     return(
         <div>
-                        <label htmlFor="octave-select">Octave: </label>
+                        <label htmlFor="octave-select">Octave </label>
                         <select name="octave-select" id="octave" onChange={props.handleBeep} value={props.beep.octave} >
                             <option value="1"> 1 </option>
                             <option value="2"> 2 </option>

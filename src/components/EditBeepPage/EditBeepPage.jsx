@@ -13,7 +13,6 @@ import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
-import Swal from 'sweetalert2'
 
 // form components
 import BeepTitle from '../FormComponents/BeepTitle';
@@ -26,6 +25,7 @@ import RootNote from '../FormComponents/RootNote';
 import BPM from '../FormComponents/BPM'
 import StepSelect from '../FormComponents/StepSelect';
 import StepRadio from '../FormComponents/StepRadio';
+import OverwriteButton from "../FormComponents/OverwriteButton";
 
 
 function EditBeepPage() {
@@ -98,63 +98,7 @@ function EditBeepPage() {
 
     }
 
-    /**
-     * Upon pressing save, a sweet alert pops up that asks the for overwrite confirmation
-     * Upon confirming, beep.name is updated with the value. once that is done, the beep is stored in the database
-     * button -> dispatch -> beep saga -> beep router
-     */
-    const handleSave = () => {
-        console.log('saving a beep :)', beep);
 
-
-        Swal.fire({
-            title: 'Do you want to overwrite this beep?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes',
-            customClass: {
-                container: 'swal-class-container',
-                popup: 'swal-class-bg',
-                header: 'swal-class-text',
-                title: 'swal-class-text',
-                closeButton: '...',
-                icon: '...',
-                image: '...',
-                content: '...',
-                htmlContainer: '...',
-                input: 'swal-class-text',
-                inputPlaceholder: 'swal-class-text',
-                inputLabel: '...',
-                inputValidator: 'swal-class-container',
-                validationMessage: '...',
-                actions: '...',
-                confirmButton: 'nes-btn is-primary',
-                denyButton: '...',
-                cancelButton: 'nes-btn is-error',
-                loader: '...',
-                footer: '....'
-            },
-        }).then((result) => {
-
-            // if okay button is pressed, send a confirmation dialog, and send a put request to update beep
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Overwritten',
-                    '',
-                    'success'
-                )
-                dispatch({
-                    type: 'UPDATE_BEEP',
-                    payload: beep
-                })
-            }
-        })
-
-
-
-    }
 
     //logging beep to ensure values
     console.log(beep);
@@ -168,52 +112,88 @@ function EditBeepPage() {
         <section>
             <BeepTitle beep={beep} />
 
-            <div>
+            <div className="entire-ui">
                 <div className="synth-params-container">
+                    <div className="scale-container nes-container with-title is-centered">
+                        <p className="title is-dark">Tweak the synthesizer!</p>
 
-                    {/* OSCILLATOR TYPE */}
-                    <OscillatorType handleBeep={handleBeep} />
+                        {/* OSCILLATOR TYPE */}
+                        <OscillatorType handleBeep={handleBeep} />
+                        <div className="filter-spacer"></div>
 
-                    {/* FILTER TYPE*/}
-                    <div className="filter-container">
-                        <FilterType handleBeep={handleBeep} />
-
-                        {/* FILTER CUTOFF */}
-                        <FilterCutoff handleBeep={handleBeep} beep={beep} />
+                        {/* FILTER TYPE*/}
+                        <div className="filter-container">
+                            <FilterType handleBeep={handleBeep} />
+                            <div className="filter-spacer"></div>
+                            {/* FILTER CUTOFF */}
+                            <FilterCutoff handleBeep={handleBeep} beep={beep} />
+                        </div>
                     </div>
                 </div>
+                <br></br>
                 <br></br>
                 <br></br>
 
                 <div className="seq-params-container">
-                    {/* SCALE NAME */}
-                    <ScaleName handleBeep={handleBeep} beep={beep} />
+                    <div className="scale-container nes-container with-title is-centered">
 
-                    {/* OCTAVE */}
-                    <Octave handleBeep={handleBeep} beep={beep} />
+                        <p className="title is-dark">Select a Scale!</p>
+                        {/* SCALE NAME */}
+                        <ScaleName handleBeep={handleBeep} beep={beep} />
 
-                    {/* ROOT NOTE*/}
-                    <RootNote handleBeep={handleBeep} beep={beep} />
+                        {/* OCTAVE */}
+                        <Octave handleBeep={handleBeep} beep={beep} />
+
+                        {/* ROOT NOTE*/}
+                        <RootNote handleBeep={handleBeep} beep={beep} />
+
+                    </div>
+
 
                     {/* TEMPO (BPM)*/}
-                    <div>
+
+                </div>
+
+
+                <div className="seq-params-container">
+                    <h3>Notes in your scale: {selectedScale.map((note, i) => {
+                        if (note === "off") {
+
+                        } else {
+                            return (
+                                <p className="note-display">{note}</p>
+                            )
+                        }
+
+                    })} </h3>
+                </div>
+
+
+                <div className="seq-params-container">
+                    <div className="tempo-container nes-container with-title is-centered">
+                        <p className="title is-dark">Set a Tempo!</p>
+                        <BPM handleBeep={handleBeep} beep={beep} />
                     </div>
-                    <BPM handleBeep={handleBeep} beep={beep} />
+                </div>
+
+
+
+                <br></br>
+                <br></br>
+                <div className="seq-params-container">
+                    <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+                    {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
 
                 </div>
-                <br></br>
-                <br></br>
-                <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
 
-                {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
                 <br></br>
                 <br></br>
 
                 <div className="button-container">
                     <PlayButton beep={beep} />
-                    <button className="nes-btn is-primary" onClick={handleSave}>save</button>
+                    <OverwriteButton beep={beep} />
                 </div>
 
             </div>

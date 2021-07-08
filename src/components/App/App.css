@@ -26,6 +26,7 @@ h1{
 body {
   font-family: 'vt323regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
+
 }
 
 img {
@@ -73,7 +74,8 @@ Container
 -------------------------------------------------------------------------------- */
 
 .container {
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* --------------------------------------------------------------------------------
@@ -126,11 +128,14 @@ input {
 
 .range-text{
   font-size: 30px;
+  text-align: center;
 }
 
 select{
   width: 100px;
-  font-size: 36px
+  font-size: 36px;
+  text-align: center;
+  text-align-last: center;
 }
 
 .swal-class-bg{
@@ -152,6 +157,7 @@ select{
 .title-container{
   display: flex;
   justify-content: center;
+  width: 33%
 }
 
 .beep-title {
@@ -194,21 +200,79 @@ select{
 }
 
 
+.note-display{
+  display: inline;
+  font-size: 20pt;
+  margin: 0.5em;
+}
 
 
 
 
+/* taken out of new beep .css */
+.synth-params-container {
+  display: flex;
+  justify-content: center;
+}
+.filter-container{
+  display: flex;
+  justify-content: space-between;
+}
+.seq-params-container{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom : 1em;
+}
+.step-select-container{
+  display: flex;
+  justify-content: center;
+}
+.button-container{
+  display: flex;
+  justify-content: center;
+}
+.scale-container{
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 2px 2px 2px 2px inset #92cc41;
+}
+.sequence-container{
+  display: flex;
+  width: 1325px;
+  box-shadow: 2px 2px 2px 2px inset #92cc41;
+}
+
+.seq-title{
+  margin-right: 1em !important;
+}
+
+.tempo-container{
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  box-shadow: 2px 2px 2px 2px inset #92cc41;
+}
+
+.title{
+  background-color: rgb(53, 51, 51) !important;
+  font-size: 24pt !important;
+  border: 2px solid black !important;
+  height: 50px;
+  box-shadow: 1px 1px 1px 1px inset #92cc41;
+}
+label{
+  margin-left: 20px;
+}
 
 
+.save{
+  display: inline;
+}
 
 
-
-
-
-
-
-
-
+#0{
+  margin-left: 1em;
+}
 
 
 /* UNUSED */

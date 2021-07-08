@@ -2,7 +2,7 @@ export default function (props) {
     return(
         <div style={{ width: "30%" }}>
                         <div>
-                        <label htmlFor="BPM"><span className="range-text">BPM: {props.beep.bpm}</span></label>
+                        <label htmlFor="BPM"><span className="range-text">Tempo: {props.beep.bpm}</span></label>
                         </div>
                         
                         <input type="range" id="bpm" name="BPM" className="slider"

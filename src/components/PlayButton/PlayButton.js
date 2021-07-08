@@ -44,10 +44,24 @@ function PlayButton(props) {
         }).chain(volumeNode, Tone.Destination);
 
 
-
+        let count = 0
+        const timeSequence = new Tone.Sequence((time, note) => {  
+            if (count === 8) {
+                count = 0
+                count++
+            } else {
+                count++
+            }
+            console.log(count);
+        }, ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']) // array of 'notes to trigger time sequencer'
+        
+        
         // instantiates a new sequence, this is started immediately after tone.transport
         const seq = new Tone.Sequence((time, note) => { // instantiates sequence of triggers for synth
+        
             synth.triggerAttackRelease(note, 0.1, time); // (trigger 1 note, every quarter note, time from transport)
+       
+            
         }, props.beep.steps) // note comes from props.beep.steps 
 
         // seq.probability = 0.3 // works!! needs to take in an input 
@@ -63,6 +77,7 @@ function PlayButton(props) {
             // !START! 
             Tone.Transport.start(); 
             seq.start()
+            timeSequence.start()
 
             // leaving these logs commented, really useful but giant objects
             // console.log('tone sequence', seq);
