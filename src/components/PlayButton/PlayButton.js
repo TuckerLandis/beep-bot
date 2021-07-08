@@ -44,15 +44,15 @@ function PlayButton(props) {
         }).chain(volumeNode, Tone.Destination);
 
 
-        let count = 0
+        // props.animationCount = 0
         const timeSequence = new Tone.Sequence((time, note) => {  
-            if (count === 8) {
-                count = 0
-                count++
+            if (props.animationCount === 8) {
+                props.animationCount = 0
+                props.animationCount++
             } else {
-                count++
+                props.animationCount++
             }
-            console.log(count);
+            console.log(props.animationCount);
         }, ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']) // array of 'notes to trigger time sequencer'
         
         

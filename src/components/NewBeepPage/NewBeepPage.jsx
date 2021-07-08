@@ -105,6 +105,7 @@ function NewBeepPage() {
      */
     let selectedScale = handleScaleChoice(beep)
 
+    let animationCount = 0
 
 
     // ------------------------------- DOM Return -------------------------------------- //
@@ -115,7 +116,7 @@ function NewBeepPage() {
     return (
         <section>
             <div className="button-container">
-                <PlayButton beep={beep} />
+                <PlayButton beep={beep} animationCount={animationCount}/>
 
                 <BeepTitle beep={beep} />
 
@@ -169,7 +170,7 @@ function NewBeepPage() {
 
                         } else {
                             return (
-                                <p className="note-display">{note}</p>
+                                <p className="note-display" key={i}>{note}</p>
                             )
                         }
 
