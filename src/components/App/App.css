@@ -200,11 +200,7 @@ select{
 }
 
 
-.note-display{
-  display: inline;
-  font-size: 20pt;
-  margin: 0.5em;
-}
+
 
 
 
@@ -213,6 +209,8 @@ select{
 .synth-params-container {
   display: flex;
   justify-content: center;
+  width: 1250px;
+  margin: 0 auto;
 }
 .filter-container{
   display: flex;
@@ -223,6 +221,16 @@ select{
   justify-content: space-around;
   margin-bottom : 1em;
 }
+.note-display-container{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom : 1em;
+  outline: #92cc41 solid 1px;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 1em;
+}
+
 .step-select-container{
   display: flex;
   justify-content: center;
@@ -282,6 +290,23 @@ label{
 .inactive{
   color: #92cc41;
 }
+
+
+.note-display{
+  font-size: 30pt;
+  padding: 0.3em;
+  display: inline;
+  font-size: 20pt;
+  margin: 0.5em;
+}
+
+.notes-title-display{
+  font-size: 24pt;
+  padding: 0.3em;
+}
+
+
+
 /* UNUSED */
 
 /* 

@@ -5,10 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 
 import './NewBeepPage.css'
-import { useHistory } from 'react-router';
-import userReducer from '../../redux/reducers/user.reducer';
-import animationCount from '../../redux/reducers/animationcount.reducer';
-
 
 // form components
 import BeepTitle from '../FormComponents/BeepTitle';
@@ -63,7 +59,6 @@ function NewBeepPage() {
         })
     }
 
-
     /**
      * Takes in all events for beep paramaters except steps
      * @param {*} event 
@@ -75,50 +70,23 @@ function NewBeepPage() {
         handleScaleChoice(beep)
     }
 
-
     /**
      * overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
      * and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
      * @param {*} beep 
      */
     function handleScaleChoice(beep) {
-        console.log('test scale', scale("major", "C4"));
-        // sets temp variable to scale.get using the beep properties: root, scale, octave
-        let scaleFormatted = (Scale.get(`${beep.root} ${beep.scale}`).notes)
+        let rootAndOctave = `${beep.root}${beep.octave}`
 
-        // loops over scale array, and adds the relevant octave number character to the string, to each index of the notes array
-        for (let i = 0; i < scaleFormatted.length; i++) {
-            scaleFormatted[i] += beep.octave
-
-
-        }
-
+        let scaleFormatted = scale(beep.scale, rootAndOctave)
 
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors/sequence
-        scaleFormatted.unshift('off')
+        scaleFormatted.unshift('-')
         console.log('scale with octave', scaleFormatted);
 
-        // // attempt to change 2 last notes to the octave above
-        // if (beep.scale === 'major' | 
-        // beep.scale === 'minor' | 
-        // beep.scale === 'ionian' | 
-        // beep.scale === 'dorian' |
-        // beep.scale === 'phrygian' |
-        // beep.scale === 'lydian' |
-        // beep.scale === 'mixolydian' | 
-        // beep.scale === 'locrian')
-        // {
-        //     for (let i = scaleFormatted.length; i < (scaleFormatted.length-2); i--){
-        //         console.log(i);
-        //     }
-
-        // }
-
-        // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
+        // sets selected scale to be the scale with it's octaves, this is mapped over in note selects
         return scaleFormatted
     }
-
-
 
     /**
      * Sets an array of notes within the scale specified by the user. handleScaleChoice is a function declared above, it runs a call to the tonal library
@@ -279,8 +247,8 @@ function NewBeepPage() {
                 </div>
 
 
-                <div className="seq-params-container">
-                    <h1>Notes in your scale: {selectedScale.map((note, i) => {
+                <div className="note-display-container">
+                    <p className="notes-title-display"> Notes in your scale: {selectedScale.map((note, i) => {
                         if (note === "off") {
 
                         } else {
@@ -289,7 +257,7 @@ function NewBeepPage() {
                             )
                         }
 
-                    })} </h1>
+                    })} </p>
                 </div>
 
 

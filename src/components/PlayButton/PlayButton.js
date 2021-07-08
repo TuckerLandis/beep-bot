@@ -102,6 +102,10 @@ function PlayButton(props) {
             Tone.Transport.stop(); // STOP the transport , music
             Tone.Transport.cancel(0) //cancels and scrubs tone.transport for re-initializtion
 
+            dispatch({
+                type:"ANIMATION_COUNT",
+                payload: 0
+            })
         }
 
         // console.log(props.beep.steps); // logs step array when button is clicked
