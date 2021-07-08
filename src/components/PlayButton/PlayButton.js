@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import * as Tone from 'tone'
+import { useDispatch } from "react-redux";
 
 import './PlayButton.css'
 
 
 function PlayButton(props) { 
-
+    const dispatch = useDispatch();
     // boolean for playing state. flipped on button click
     const [isPlaying, setIsPlaying] = useState(false)
     // text for play button, set on button click
@@ -44,17 +45,26 @@ function PlayButton(props) {
         }).chain(volumeNode, Tone.Destination);
 
 
-        // props.animationCount = 0
-        
-        // const timeSequence = new Tone.Sequence((time, note) => {  
-        //     if (props.animationCount === 8) {
-        //         props.animationCount = 0
-        //         props.animationCount++
-        //     } else {
-        //         props.animationCount++
-        //     }
-        //     console.log(props.animationCount);
-        // }, ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']) // array of 'notes to trigger time sequencer'
+        let count = 0
+        const timeSequence = new Tone.Sequence((time, note) => {  
+            if (count === 8) {
+                count = 0
+                count++
+                dispatch({
+                    type:"ANIMATION_COUNT",
+                    payload: count
+                })
+                // props.animate(count)
+            } else {
+                count++
+                dispatch({
+                    type:"ANIMATION_COUNT",
+                    payload: count
+                })
+                // props.animate(count)
+            }
+            console.log(count);
+        }, ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']) // array of 'notes to trigger time sequencer'
         
         
         // instantiates a new sequence, this is started immediately after tone.transport
@@ -92,6 +102,10 @@ function PlayButton(props) {
             Tone.Transport.stop(); // STOP the transport , music
             Tone.Transport.cancel(0) //cancels and scrubs tone.transport for re-initializtion
 
+            dispatch({
+                type:"ANIMATION_COUNT",
+                payload: 0
+            })
         }
 
         // console.log(props.beep.steps); // logs step array when button is clicked

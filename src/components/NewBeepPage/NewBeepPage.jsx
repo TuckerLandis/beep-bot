@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Note, Scale } from "@tonaljs/tonal";
+import scale from 'music-scale'
 import { useDispatch, useSelector } from 'react-redux';
 import PlayButton from '../PlayButton/PlayButton';
 
 import './NewBeepPage.css'
-import { useHistory } from 'react-router';
-import userReducer from '../../redux/reducers/user.reducer';
-
 
 // form components
 import BeepTitle from '../FormComponents/BeepTitle';
@@ -23,6 +21,7 @@ import StepRadio from '../FormComponents/StepRadio';
 
 function NewBeepPage() {
 
+    const animationCount = useSelector(store => store.animationCount)
 
     // default beep. manipulated by the user on change of all inputs on the page
     const [beep, setBeep] = useState({
@@ -60,7 +59,6 @@ function NewBeepPage() {
         })
     }
 
-
     /**
      * Takes in all events for beep paramaters except steps
      * @param {*} event 
@@ -72,31 +70,23 @@ function NewBeepPage() {
         handleScaleChoice(beep)
     }
 
-
     /**
      * overarching "set the scale" function, takes the scale input choices for rootnote, octave and scalename "major, minor, etc"
      * and uses tonal to scale.get the notes in the scale. these are mapped over below in our selects
      * @param {*} beep 
      */
     function handleScaleChoice(beep) {
+        let rootAndOctave = `${beep.root}${beep.octave}`
 
-        // sets temp variable to scale.get using the beep properties: root, scale, octave
-        let scaleFormatted = (Scale.get(`${beep.root} ${beep.scale}`).notes)
-
-        // loops over scale array, and adds the relevant octave number character to the string, to each index of the notes array
-        for (let i = 0; i < scaleFormatted.length; i++) {
-            scaleFormatted[i] += beep.octave
-        }
+        let scaleFormatted = scale(beep.scale, rootAndOctave)
 
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors/sequence
-        scaleFormatted.unshift('off')
+        scaleFormatted.unshift('-')
         console.log('scale with octave', scaleFormatted);
 
-        // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
+        // sets selected scale to be the scale with it's octaves, this is mapped over in note selects
         return scaleFormatted
     }
-
-
 
     /**
      * Sets an array of notes within the scale specified by the user. handleScaleChoice is a function declared above, it runs a call to the tonal library
@@ -105,9 +95,103 @@ function NewBeepPage() {
      */
     let selectedScale = handleScaleChoice(beep)
 
-    let animationCount = 0
 
+    /**
+     * These declarations and the following switch statement enable the time sequence in the play button 
+     * to change the class of the select elements in time with the sequence
+     */
+    let step1 = document.getElementById('0')
+    let step2 = document.getElementById('1')
+    let step3 = document.getElementById('2')
+    let step4 = document.getElementById('3')
+    let step5 = document.getElementById('4')
+    let step6 = document.getElementById('5')
+    let step7 = document.getElementById('6')
+    let step8 = document.getElementById('7')
 
+    switch (animationCount) {
+        case 1:
+            step1.className = "active"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
+            break
+        case 2:
+            step1.className = "inactive"
+            step2.className = "active"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
+            break
+        case 3:
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "active"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
+            break
+        case 4:
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "active"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
+            break
+        case 5:
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "active"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
+            break
+        case 6:
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "active"
+            step7.className = "inactive"
+            step8.className = "inactive"
+            break
+        case 7:
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "active"
+            step8.className = "inactive"
+            break
+        case 8:
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "active"
+            break
+    }
+    
     // ------------------------------- DOM Return -------------------------------------- //
 
 
@@ -116,10 +200,9 @@ function NewBeepPage() {
     return (
         <section>
             <div className="button-container">
-                <PlayButton beep={beep} animationCount={animationCount}/>
+                <PlayButton beep={beep} />
 
                 <BeepTitle beep={beep} />
-
 
                 <SaveButton beep={beep} />
             </div>
@@ -164,8 +247,8 @@ function NewBeepPage() {
                 </div>
 
 
-                <div className="seq-params-container">
-                    <h1>Notes in your scale: {selectedScale.map((note, i) => {
+                <div className="note-display-container">
+                    <p className="notes-title-display"> Notes in your scale: {selectedScale.map((note, i) => {
                         if (note === "off") {
 
                         } else {
@@ -174,7 +257,7 @@ function NewBeepPage() {
                             )
                         }
 
-                    })} </h1>
+                    })} </p>
                 </div>
 
 
