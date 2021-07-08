@@ -127,75 +127,99 @@ function NewBeepPage() {
      */
     let selectedScale = handleScaleChoice(beep)
 
-    
+    let step1 = document.getElementById('0')
+    let step2 = document.getElementById('1')
+    let step3 = document.getElementById('2')
+    let step4 = document.getElementById('3')
+    let step5 = document.getElementById('4')
+    let step6 = document.getElementById('5')
+    let step7 = document.getElementById('6')
+    let step8 = document.getElementById('7')
 
+    let activeElements = document.getElementsByClassName("active")
 
 
     // function animate(animationCount) {
     switch (animationCount) {
         case 1:
-            console.log('its 1');
-            let el = document.getElementById('0')
-            let otherElements = document.getElementsByClassName("active")
-            otherElements.className = "inactive"
-            console.log(el);
-            el.className = "active"
+            step1.className = "active"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
             break
         case 2:
-            console.log('its 2');
-            let el1 = document.getElementById('1')
-            let otherElements1 = document.getElementsByClassName("active")
-            el.className = "inactive"
-            console.log(el1);
-            el1.className = "active"
+            step1.className = "inactive"
+            step2.className = "active"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
             break
         case 3:
-            console.log('its 3');
-            let el2 = document.getElementById('2')
-            let otherElements2 = document.getElementsByClassName("active")
-            otherElements2.className = "inactive"
-            console.log(el2);
-            el2.className = "active"
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "active"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
             break
         case 4:
-            console.log('its 4');
-            let el4 = document.getElementById('3')
-            let otherElements3 = document.getElementsByClassName("active")
-            otherElements3.className = "inactive"
-            console.log(el4);
-            el4.className = "active"
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "active"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
             break
         case 5:
-            console.log('its 5');
-            let el5 = document.getElementById('4')
-            let otherElements4 = document.getElementsByClassName("active")
-            otherElements4.className = "inactive"
-            console.log(el5);
-            el5.className = "active"
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "active"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "inactive"
             break
         case 6:
-            console.log('its 6');
-            let el6 = document.getElementById('5')
-            let otherElements5 = document.getElementsByClassName("active")
-            otherElements5.className = "inactive"
-            console.log(el6);
-            el6.className = "active"
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "active"
+            step7.className = "inactive"
+            step8.className = "inactive"
             break
         case 7:
-            console.log('its 7');
-            let el7 = document.getElementById('6')
-            let otherElements6 = document.getElementsByClassName("active")
-            otherElements6.className = "inactive"
-            console.log(el7);
-            el7.className = "active"
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "active"
+            step8.className = "inactive"
             break
         case 8:
-            console.log('its 8');
-            let el8 = document.getElementById('7')
-            let otherElements7 = document.getElementsByClassName("active")
-            otherElements7.className = "inactive"
-            console.log(el8);
-            el8.className = "active"
+            step1.className = "inactive"
+            step2.className = "inactive"
+            step3.className = "inactive"
+            step4.className = "inactive"
+            step5.className = "inactive"
+            step6.className = "inactive"
+            step7.className = "inactive"
+            step8.className = "active"
             break
     }
     // }
