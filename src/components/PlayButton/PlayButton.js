@@ -45,15 +45,16 @@ function PlayButton(props) {
 
 
         // props.animationCount = 0
-        const timeSequence = new Tone.Sequence((time, note) => {  
-            if (props.animationCount === 8) {
-                props.animationCount = 0
-                props.animationCount++
-            } else {
-                props.animationCount++
-            }
-            console.log(props.animationCount);
-        }, ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']) // array of 'notes to trigger time sequencer'
+        
+        // const timeSequence = new Tone.Sequence((time, note) => {  
+        //     if (props.animationCount === 8) {
+        //         props.animationCount = 0
+        //         props.animationCount++
+        //     } else {
+        //         props.animationCount++
+        //     }
+        //     console.log(props.animationCount);
+        // }, ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']) // array of 'notes to trigger time sequencer'
         
         
         // instantiates a new sequence, this is started immediately after tone.transport
