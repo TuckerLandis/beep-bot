@@ -127,6 +127,11 @@ function NewBeepPage() {
      */
     let selectedScale = handleScaleChoice(beep)
 
+
+    /**
+     * These declarations and the following switch statement enable the time sequence in the play button 
+     * to change the class of the select elements in time with the sequence
+     */
     let step1 = document.getElementById('0')
     let step2 = document.getElementById('1')
     let step3 = document.getElementById('2')
@@ -136,10 +141,6 @@ function NewBeepPage() {
     let step7 = document.getElementById('6')
     let step8 = document.getElementById('7')
 
-    let activeElements = document.getElementsByClassName("active")
-
-
-    // function animate(animationCount) {
     switch (animationCount) {
         case 1:
             step1.className = "active"
@@ -222,10 +223,7 @@ function NewBeepPage() {
             step8.className = "active"
             break
     }
-    // }
-
-    // let animated = animate(animationCount)
-    // console.log(animated);
+    
     // ------------------------------- DOM Return -------------------------------------- //
 
 

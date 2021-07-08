@@ -276,6 +276,7 @@ label{
 
 .active{
   color: orange;
+  font-size: 46px;
 }
 
 .inactive{

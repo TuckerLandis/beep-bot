@@ -32,6 +32,8 @@ function EditBeepPage() {
     const dispatch = useDispatch()
     let { id } = useParams()
 
+    const animationCount = useSelector(store => store.animationCount)
+
     // on page load, send a dispatch to perform a get request to load the presently selected beep into the editbeep reducer
     useEffect(() => {
         console.log(id);
@@ -106,16 +108,120 @@ function EditBeepPage() {
     // calling handlescale choice just before return in order to populate note drop downs
     let selectedScale = handleScaleChoice(beep)
 
+       /**
+     * These declarations and the following switch statement enable the time sequence in the play button 
+     * to change the class of the select elements in time with the sequence
+     */
+        let step1 = document.getElementById('0')
+        let step2 = document.getElementById('1')
+        let step3 = document.getElementById('2')
+        let step4 = document.getElementById('3')
+        let step5 = document.getElementById('4')
+        let step6 = document.getElementById('5')
+        let step7 = document.getElementById('6')
+        let step8 = document.getElementById('7')
+    
+        switch (animationCount) {
+            case 1:
+                step1.className = "active"
+                step2.className = "inactive"
+                step3.className = "inactive"
+                step4.className = "inactive"
+                step5.className = "inactive"
+                step6.className = "inactive"
+                step7.className = "inactive"
+                step8.className = "inactive"
+                break
+            case 2:
+                step1.className = "inactive"
+                step2.className = "active"
+                step3.className = "inactive"
+                step4.className = "inactive"
+                step5.className = "inactive"
+                step6.className = "inactive"
+                step7.className = "inactive"
+                step8.className = "inactive"
+                break
+            case 3:
+                step1.className = "inactive"
+                step2.className = "inactive"
+                step3.className = "active"
+                step4.className = "inactive"
+                step5.className = "inactive"
+                step6.className = "inactive"
+                step7.className = "inactive"
+                step8.className = "inactive"
+                break
+            case 4:
+                step1.className = "inactive"
+                step2.className = "inactive"
+                step3.className = "inactive"
+                step4.className = "active"
+                step5.className = "inactive"
+                step6.className = "inactive"
+                step7.className = "inactive"
+                step8.className = "inactive"
+                break
+            case 5:
+                step1.className = "inactive"
+                step2.className = "inactive"
+                step3.className = "inactive"
+                step4.className = "inactive"
+                step5.className = "active"
+                step6.className = "inactive"
+                step7.className = "inactive"
+                step8.className = "inactive"
+                break
+            case 6:
+                step1.className = "inactive"
+                step2.className = "inactive"
+                step3.className = "inactive"
+                step4.className = "inactive"
+                step5.className = "inactive"
+                step6.className = "active"
+                step7.className = "inactive"
+                step8.className = "inactive"
+                break
+            case 7:
+                step1.className = "inactive"
+                step2.className = "inactive"
+                step3.className = "inactive"
+                step4.className = "inactive"
+                step5.className = "inactive"
+                step6.className = "inactive"
+                step7.className = "active"
+                step8.className = "inactive"
+                break
+            case 8:
+                step1.className = "inactive"
+                step2.className = "inactive"
+                step3.className = "inactive"
+                step4.className = "inactive"
+                step5.className = "inactive"
+                step6.className = "inactive"
+                step7.className = "inactive"
+                step8.className = "active"
+                break
+        }
+
     // ------------------------------- DOM Return -------------------------------------- //
 
     return (
         <section>
-            <BeepTitle beep={beep} />
+            <div className="button-container">
+                <PlayButton beep={beep} />
+
+                <BeepTitle beep={beep} />
+
+                <OverwriteButton beep={beep} />
+            </div>
+
 
             <div className="entire-ui">
                 <div className="synth-params-container">
                     <div className="scale-container nes-container with-title is-centered">
                         <p className="title is-dark">Tweak the synthesizer!</p>
+
 
                         {/* OSCILLATOR TYPE */}
                         <OscillatorType handleBeep={handleBeep} />
@@ -131,8 +237,7 @@ function EditBeepPage() {
                     </div>
                 </div>
                 <br></br>
-                <br></br>
-                <br></br>
+
 
                 <div className="seq-params-container">
                     <div className="scale-container nes-container with-title is-centered">
@@ -148,30 +253,32 @@ function EditBeepPage() {
                         <RootNote handleBeep={handleBeep} beep={beep} />
 
                     </div>
-
-
-                    {/* TEMPO (BPM)*/}
-
                 </div>
 
 
                 <div className="seq-params-container">
-                    <h3>Notes in your scale: {selectedScale.map((note, i) => {
+                    <h1>Notes in your scale: {selectedScale.map((note, i) => {
                         if (note === "off") {
 
                         } else {
                             return (
-                                <p className="note-display">{note}</p>
+                                <p className="note-display" key={i}>{note}</p>
                             )
                         }
 
-                    })} </h3>
+                    })} </h1>
                 </div>
 
 
                 <div className="seq-params-container">
-                    <div className="tempo-container nes-container with-title is-centered">
-                        <p className="title is-dark">Set a Tempo!</p>
+                    <div className="sequence-container nes-container with-title is-centered">
+                        <p className="title is-dark seq-title">Change the sequence!</p>
+                        <div className="title-spacer"></div>
+
+                        {/* step selects for sequencer */}
+                        <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+
+                        {/* TEMPO (BPM)*/}
                         <BPM handleBeep={handleBeep} beep={beep} />
                     </div>
                 </div>
@@ -181,7 +288,7 @@ function EditBeepPage() {
                 <br></br>
                 <br></br>
                 <div className="seq-params-container">
-                    <StepSelect selectedScale={selectedScale} handleStep={handleStep} beep={beep} />
+
                     {/* <StepRadio selectedScale={selectedScale} handleStep={handleStep} beep={beep} /> */}
 
 
@@ -191,10 +298,7 @@ function EditBeepPage() {
                 <br></br>
                 <br></br>
 
-                <div className="button-container">
-                    <PlayButton beep={beep} />
-                    <OverwriteButton beep={beep} />
-                </div>
+
 
             </div>
 
