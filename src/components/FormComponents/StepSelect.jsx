@@ -7,7 +7,7 @@ export default function StepSelect (props) {
                     {/* maps over beep.steps and returns that many step-selectors */}
                     {props.beep.steps?.map((step, i) => {
                         return (
-                            <select id={i} onChange={props.handleStep} key={i} value={step} className="inactive">
+                            <select id={i} onChange={props.handleStep} key={i} value={step} className="inactive nes-pointer">
 
                                 {/* <option key={i} value={note}>{note}</option> */}
                                 {/* uses selectedScale state to return a list of notes based on handScaleChoice */}

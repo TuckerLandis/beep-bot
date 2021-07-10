@@ -52,7 +52,7 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <input className="nes-btn is-primary" type="submit" name="submit" value="Register" />
+        <button className="nes-btn is-primary wider-button" type="submit" name="submit" value="Register" >Register</button>
       </div>
     </form>
   );

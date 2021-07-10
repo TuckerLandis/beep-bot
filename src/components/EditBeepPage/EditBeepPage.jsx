@@ -123,87 +123,86 @@ function EditBeepPage() {
     
         switch (animationCount) {
             case 1:
-                step1.className = "active"
-                step2.className = "inactive"
-                step3.className = "inactive"
-                step4.className = "inactive"
-                step5.className = "inactive"
-                step6.className = "inactive"
-                step7.className = "inactive"
-                step8.className = "inactive"
+                step1.className = "active nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 2:
-                step1.className = "inactive"
-                step2.className = "active"
-                step3.className = "inactive"
-                step4.className = "inactive"
-                step5.className = "inactive"
-                step6.className = "inactive"
-                step7.className = "inactive"
-                step8.className = "inactive"
+                step1.className = "inactive nes-pointer"
+                step2.className = "active nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 3:
-                step1.className = "inactive"
-                step2.className = "inactive"
-                step3.className = "active"
-                step4.className = "inactive"
-                step5.className = "inactive"
-                step6.className = "inactive"
-                step7.className = "inactive"
-                step8.className = "inactive"
+                step1.className = "inactive nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "active nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 4:
-                step1.className = "inactive"
-                step2.className = "inactive"
-                step3.className = "inactive"
-                step4.className = "active"
-                step5.className = "inactive"
-                step6.className = "inactive"
-                step7.className = "inactive"
-                step8.className = "inactive"
+                step1.className = "inactive nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "active nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 5:
-                step1.className = "inactive"
-                step2.className = "inactive"
-                step3.className = "inactive"
-                step4.className = "inactive"
-                step5.className = "active"
-                step6.className = "inactive"
-                step7.className = "inactive"
-                step8.className = "inactive"
+                step1.className = "inactive nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "active nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 6:
-                step1.className = "inactive"
-                step2.className = "inactive"
-                step3.className = "inactive"
-                step4.className = "inactive"
-                step5.className = "inactive"
-                step6.className = "active"
-                step7.className = "inactive"
-                step8.className = "inactive"
+                step1.className = "inactive nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "active nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 7:
-                step1.className = "inactive"
-                step2.className = "inactive"
-                step3.className = "inactive"
-                step4.className = "inactive"
-                step5.className = "inactive"
-                step6.className = "inactive"
-                step7.className = "active"
-                step8.className = "inactive"
+                step1.className = "inactive nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "active nes-pointer"
+                step8.className = "inactive nes-pointer"
                 break
             case 8:
-                step1.className = "inactive"
-                step2.className = "inactive"
-                step3.className = "inactive"
-                step4.className = "inactive"
-                step5.className = "inactive"
-                step6.className = "inactive"
-                step7.className = "inactive"
-                step8.className = "active"
+                step1.className = "inactive nes-pointer"
+                step2.className = "inactive nes-pointer"
+                step3.className = "inactive nes-pointer"
+                step4.className = "inactive nes-pointer"
+                step5.className = "inactive nes-pointer"
+                step6.className = "inactive nes-pointer"
+                step7.className = "inactive nes-pointer"
+                step8.className = "active nes-pointer"
                 break
         }
-
     // ------------------------------- DOM Return -------------------------------------- //
 
     return (
@@ -256,8 +255,8 @@ function EditBeepPage() {
                 </div>
 
 
-                <div className="seq-params-container">
-                    <h1>Notes in your scale: {selectedScale.map((note, i) => {
+                <div className="note-display-container">
+                <p className="notes-title-display">Notes in your scale: {selectedScale.map((note, i) => {
                         if (note === "off") {
 
                         } else {
@@ -266,7 +265,7 @@ function EditBeepPage() {
                             )
                         }
 
-                    })} </h1>
+                    })} </p>
                 </div>
 
 

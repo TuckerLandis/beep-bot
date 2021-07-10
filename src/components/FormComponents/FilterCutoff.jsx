@@ -9,7 +9,7 @@ export default function FilterCutoff(props) {
             
 
             <div>
-            <input type="range" id="filter_cutoff" name="filter_cutoff" className="slider"
+            <input type="range" id="filter_cutoff" name="filter_cutoff" className="slider nes-pointer"
                 min="0" max="20000" value={props.beep.filter_cutoff} onChange={props.handleBeep} />
             </div>
            

@@ -75,7 +75,7 @@ function PlayButton(props) {
             
         }, props.beep.steps) // note comes from props.beep.steps 
 
-        // seq.probability = 0.3 // works!! needs to take in an input 
+        // seq.probability = 0.7 // works!! needs to take in an input 
 
         
         if (!isPlaying) {  // starts Tone if stopped                                              - if 

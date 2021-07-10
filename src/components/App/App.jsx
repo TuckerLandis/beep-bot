@@ -62,12 +62,12 @@ function App() {
           </ProtectedRoute>
 
 
-          <Route 
+          <ProtectedRoute 
           exact 
           path="/userbeeps"
           >
             <UserBeeps />
-          </Route>
+          </ProtectedRoute>
 
           <ProtectedRoute
             // with authRedirect:

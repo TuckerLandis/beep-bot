@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
-import drBeep from './professor3.png'
+import drBeep from './noback.png'
 
 
 // CUSTOM COMPONENTS
@@ -21,13 +21,13 @@ function LandingPage() {
 
       <div className="grid">
         <div className="grid-col grid-col_8">
-          <img src={drBeep} alt="the doctor" />
+          <img className="robot-img" src={drBeep} alt="the doctor" />
         </div>
         <div className="grid-col grid-col_4">
           <RegisterForm />
 
           <center>
-            <h4>Already a Member?</h4>
+            <h3>Already a Member?</h3>
             <button className="btn btn_sizeSm nes-btn is-primary" onClick={onLogin}>
               Login
             </button>

@@ -315,9 +315,41 @@ router.get('/userfaves', rejectUnauthenticated, (req,res) => {
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
   console.log('got to beep router (DELETE)');
 
-  let queryText = `DELETE FROM "beep" WHERE beep_id = $1;`;
 
-  pool.query(queryText, [req.params.id])
+  let queryText1 = 'DELETE FROM "favorite" WHERE "fav_beep_id" =$1;';
+  pool.query(queryText1, [req.params.id])
+  .then(result => {
+    console.log('deleted reference');
+
+
+
+  let queryText2 = `DELETE FROM "beep" WHERE beep_id = $1;`;
+
+  pool.query(queryText2, [req.params.id])
+    .then(result => {
+      console.log('deleted');
+
+      res.sendStatus(200)
+    })
+    .catch(error => {
+      console.log('error-delete', error);
+
+    })
+
+  })
+  .catch(error => {
+    console.log('error-delete', error);
+
+  })
+
+
+
+
+
+
+  let queryText2 = `DELETE FROM "beep" WHERE beep_id = $1;`;
+
+  pool.query(queryText2, [req.params.id])
     .then(result => {
       console.log('deleted');
 

@@ -6,7 +6,7 @@ export default function ScaleName (props) {
     return(
         <div>
                         <label htmlFor="scale-select">Scale </label>
-                        <select name="scale-select" id="scale" onChange={props.handleBeep} className="wider-select">
+                        <select name="scale-select" id="scale" onChange={props.handleBeep} className="wider-select nes-pointer">
                             {scaleList.map((scale, i) => {
                                 return (
                                     <option key={i} value={scale}>{scale}</option>

@@ -78,3 +78,9 @@ Grid
   flex-basis: 100%;
   max-width: 100%;
 }
+
+.robot-img{
+  width: 70%;
+  margin-left: 5em;
+  margin-top: 2em;
+}
