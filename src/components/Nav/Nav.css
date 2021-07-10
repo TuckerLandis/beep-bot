@@ -40,8 +40,13 @@
 .navLink:hover {
   background-color: black;
   color: lawngreen;
+  text-decoration: none !important;
 }
 
 .nav-img {
   display: inline-block;
+}
+
+button.navLink:hover{
+  color: lawngreen !important;
 }
