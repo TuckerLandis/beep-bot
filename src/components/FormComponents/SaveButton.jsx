@@ -62,6 +62,15 @@ export default function SaveButton (props) {
             console.log(result);
             if (result.isConfirmed) {
 
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass: SwalClassObject,
+                  })
+
                 // sends a beep to the beep saga for posting to the DB, adds the name from the sweet alert to this object as it's dispatched
                 dispatchBeep({
                     ...props.beep, name: result.value, user_name: userObj.username

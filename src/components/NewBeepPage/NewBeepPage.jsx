@@ -43,13 +43,13 @@ function NewBeepPage() {
 
     function secretButtonScale() {
         setBeep({
-            ...beep, scale: "mixolydian", octave: 3, root: 'G#'
+            ...beep, scale: "aeolian", octave: 3, root: 'C'
         })
     }
 
     function secretButtonSteps() {
         console.log('secret');
-        let secretSteps = ['G#3', 'A#3', null, 'E#4', null, 'B#3', 'B#3', 'B#3', ]
+        let secretSteps = ['Bb3', 'Eb3', 'Bb3', 'Eb3',  'Ab3', 'Bb3', 'Ab3', 'Eb3', ]
 
 
 
