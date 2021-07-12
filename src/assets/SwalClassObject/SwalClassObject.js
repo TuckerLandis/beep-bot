@@ -14,9 +14,9 @@ const SwalClassObject = {
     inputValidator: 'swal-class-container',
     validationMessage: '...',
     actions: '...',
-    confirmButton: 'nes-btn is-primary',
+    confirmButton: 'green-swal-button',
     denyButton: '...',
-    cancelButton: 'nes-btn is-error',
+    cancelButton: 'red-swal-button',
     loader: '...',
     footer: '....'
 }

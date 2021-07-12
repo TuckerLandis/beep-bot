@@ -304,10 +304,6 @@ function NewBeepPage() {
                 </div>
 
 
-                <br></br>
-                <br></br>
-
-
 
             </div>
 
