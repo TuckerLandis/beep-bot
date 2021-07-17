@@ -141,19 +141,19 @@ select{
 }
 
 .swal-class-bg{
-  border: 2px solid #92cc41;
-  background-color: black;
-  color: #92cc41
+  border: 2px solid #92cc41 !important;
+  background-color: black !important;
+  color: #92cc41 !important
 }
 
 .swal-class-text{
-  color: #92cc41;
-  font-size: 30px;
+  color: #92cc41 !important;
+  font-size: 30px !important;
 }
 
 .swal-class-button-confirm{
-  background-color: lawngreen;
-  color: #000;
+  background-color: lawngreen !important;
+  color: #000 !important;
 }
 
 .title-container{
