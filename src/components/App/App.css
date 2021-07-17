@@ -153,13 +153,13 @@ select.scale-sel{
 }
 
 .swal-class-text{
-  color: #92cc41;
-  font-size: 30px;
+  color: #92cc41 !important;
+  font-size: 30px !important;
 }
 
 .swal-class-button-confirm{
-  background-color: lawngreen;
-  color: #000;
+  background-color: lawngreen !important;
+  color: #000 !important;
 }
 
 .title-container{
