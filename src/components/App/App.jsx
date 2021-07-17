@@ -29,6 +29,7 @@ import FavoritesPage from '../FavoritesPage/FavoritesPage';
 import "nes.css/css/nes.min.css";
 import './App.css';
 
+
 function App() {
   const dispatch = useDispatch();
 
