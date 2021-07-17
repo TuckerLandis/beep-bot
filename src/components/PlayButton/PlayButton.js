@@ -15,12 +15,20 @@ function PlayButton(props) {
     const [buttonClass, setButtonClass] = useState('btn nes-btn is-success')
 
 
+    
+
+    
+
+
+
     /**
      * This function is what plays the music. It initializes an audio context, and new version of tone.synth + tone.sequence
      * for each press of "play" 
      */
     function startStop() {
-        
+
+        // const processedBeeps = processBeeps(props.beep.steps)
+
         // sets BPM to input from BPM range select, sets state of BPM 
         Tone.Transport.bpm.value = props.beep.bpm; 
 
