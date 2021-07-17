@@ -41,23 +41,23 @@ function NewBeepPage() {
 
     })
 
-    function secretButtonScale() {
-        setBeep({
-            ...beep, scale: "aeolian", octave: 3, root: 'C'
-        })
-    }
+    // function secretButtonScale() {
+    //     setBeep({
+    //         ...beep, scale: "aeolian", octave: 3, root: 'C'
+    //     })
+    // }
 
-    function secretButtonSteps() {
-        console.log('secret');
-        let secretSteps = ['Bb3', 'Eb3', 'Bb3', 'Eb3',  'Ab3', 'Bb3', 'Ab3', 'Eb3', ]
+    // function secretButtonSteps() {
+    //     console.log('secret');
+    //     let secretSteps = ['Bb3', 'Eb3', 'Bb3', 'Eb3',  'Ab3', 'Bb3', 'Ab3', 'Eb3', ]
 
 
 
-        setBeep({
-            ...beep, steps: secretSteps
-        })
+    //     setBeep({
+    //         ...beep, steps: secretSteps
+    //     })
 
-    }
+    // }
 
 
 
@@ -251,7 +251,7 @@ function NewBeepPage() {
                 <div className="seq-params-container">
                     <div className="scale-container nes-container with-title is-centered">
 
-                        <p className="title is-dark" onClick={()=>secretButtonScale()}>Select a Scale!</p>
+                        <p className="title is-dark">Select a Scale!</p>
                         {/* SCALE NAME */}
                         <ScaleName handleBeep={handleBeep} beep={beep} />
 
@@ -281,7 +281,7 @@ function NewBeepPage() {
 
                 <div className="seq-params-container">
                     <div className="sequence-container nes-container with-title is-centered">
-                        <p className="title is-dark seq-title" onClick={()=>secretButtonSteps()}>Change the sequence!</p>
+                        <p className="title is-dark seq-title">Change the sequence!</p>
                         <div className="title-spacer"></div>
 
                         {/* step selects for sequencer */}
