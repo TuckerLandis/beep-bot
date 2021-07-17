@@ -31,12 +31,13 @@ export default function OverwriteButton(props) {
             // if okay button is pressed, send a confirmation dialog, and send a put request to update beep
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: 'Beep Saved!',
-                    showCancelButton: true,
-                    customClass: SwalClassObject
-                   
-                }
-                )
+                    position: 'top-end',
+                    icon: 'success',
+                    title: `${props.beep.beep_name} has been updated`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass: SwalClassObject,
+                  })
                 dispatch({
                     type: 'UPDATE_BEEP',
                     payload: props.beep

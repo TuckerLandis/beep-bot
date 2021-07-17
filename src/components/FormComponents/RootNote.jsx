@@ -6,7 +6,7 @@ export default function (props) {
     return(
         <div>
         <label htmlFor="root-select"> Root Note </label>
-        <select name="root-select" id="root" onChange={props.handleBeep} value={props.beep.root} className="nes-pointer">
+        <select name="root-select" id="root" onChange={props.handleBeep} value={props.beep.root} className="nes-pointer scale-sel">
 
             {
                 rootNotes.map((rootNote, i) => {

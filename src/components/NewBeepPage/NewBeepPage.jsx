@@ -41,6 +41,24 @@ function NewBeepPage() {
 
     })
 
+    // function secretButtonScale() {
+    //     setBeep({
+    //         ...beep, scale: "aeolian", octave: 3, root: 'C'
+    //     })
+    // }
+
+    // function secretButtonSteps() {
+    //     console.log('secret');
+    //     let secretSteps = ['Bb3', 'Eb3', 'Bb3', 'Eb3',  'Ab3', 'Bb3', 'Ab3', 'Eb3', ]
+
+
+
+    //     setBeep({
+    //         ...beep, steps: secretSteps
+    //     })
+
+    // }
+
 
 
     /**
@@ -284,10 +302,6 @@ function NewBeepPage() {
 
 
                 </div>
-
-
-                <br></br>
-                <br></br>
 
 
 
