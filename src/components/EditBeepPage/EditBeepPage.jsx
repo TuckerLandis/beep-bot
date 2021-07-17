@@ -46,19 +46,28 @@ function EditBeepPage() {
     //beep to edit, gets passed down as props
     const beep = useSelector(store => store.editBeepReducer)
 
-    /**
+       /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
      * @param {*} event 
      */
-    function handleStep(event) {
-        console.log('changing: ', event.target.id);
-        let newSteps = beep.steps
-        newSteps.splice(event.target.id, 1, event.target.value)
-        dispatch({
-            type: "EDIT_SELECTED_STEPS",
-            payload: newSteps
-        })
-    }
+        function handleStep(event) {
+            console.log('changing: ', event.target.id);
+            // declares a new array of steps based on the values already in beep.steps
+            let newSteps = beep.steps
+            
+    
+            if (event.target.value === '-') {
+             
+            newSteps.splice(event.target.id, 1, null)
+            } else {
+                // splices a step value at the index of the target, with the value of the event from the specific step select
+            newSteps.splice(event.target.id, 1, event.target.value)
+            }
+            // spreads the beep state object and inserts the new steps array
+            setBeep({
+                ...beep, steps: newSteps
+            })
+        }
 
     /**
      * Takes in all events for beep paramaters except steps, changes beep object properties accordingly
@@ -91,7 +100,7 @@ function EditBeepPage() {
         }
 
         // adds an "off" option to the front of the array and the selection, this is the default for the note selectors/sequence
-        scaleO.unshift('off')
+        scaleO.unshift('-')
         console.log('scale with octave', scaleO);
 
         // sets local state of selected scale to be the scale with it's octaves, this is mapped over in note selects
@@ -257,7 +266,7 @@ function EditBeepPage() {
 
                 <div className="note-display-container">
                 <p className="notes-title-display">Notes in your scale: {selectedScale.map((note, i) => {
-                        if (note === "off") {
+                        if (note === "-") {
 
                         } else {
                             return (

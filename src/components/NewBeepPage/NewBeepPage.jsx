@@ -41,36 +41,25 @@ function NewBeepPage() {
 
     })
 
-    // function secretButtonScale() {
-    //     setBeep({
-    //         ...beep, scale: "aeolian", octave: 3, root: 'C'
-    //     })
-    // }
-
-    // function secretButtonSteps() {
-    //     console.log('secret');
-    //     let secretSteps = ['Bb3', 'Eb3', 'Bb3', 'Eb3',  'Ab3', 'Bb3', 'Ab3', 'Eb3', ]
 
 
-
-    //     setBeep({
-    //         ...beep, steps: secretSteps
-    //     })
-
-    // }
-
-
-
-    /**
+      /**
      * Takes in an event from the selects, changes a specifc index in the steps array to reflect the note value (evt.targ.val)
      * @param {*} event 
      */
-    function handleStep(event) {
+       function handleStep(event) {
         console.log('changing: ', event.target.id);
         // declares a new array of steps based on the values already in beep.steps
         let newSteps = beep.steps
-        // splices a step value at the index of the target, with the value of the event from the specific step select
+        
+
+        if (event.target.value === '-') {
+         
+        newSteps.splice(event.target.id, 1, null)
+        } else {
+            // splices a step value at the index of the target, with the value of the event from the specific step select
         newSteps.splice(event.target.id, 1, event.target.value)
+        }
         // spreads the beep state object and inserts the new steps array
         setBeep({
             ...beep, steps: newSteps
