@@ -138,22 +138,28 @@ select{
   font-size: 36px;
   text-align: center;
   text-align-last: center;
+  appearance: none;
+
+}
+
+select.scale-sel{
+  margin-left: 0.5em;
 }
 
 .swal-class-bg{
   border: 2px solid #92cc41 !important;
-  background-color: black !important;
-  color: #92cc41 !important
+  background-color: black;
+  color: #92cc41
 }
 
 .swal-class-text{
-  color: #92cc41 !important;
-  font-size: 30px !important;
+  color: #92cc41;
+  font-size: 30px;
 }
 
 .swal-class-button-confirm{
-  background-color: lawngreen !important;
-  color: #000 !important;
+  background-color: lawngreen;
+  color: #000;
 }
 
 .title-container{
@@ -238,7 +244,7 @@ select{
 }
 .button-container{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 .scale-container{
   display: flex;
@@ -313,6 +319,14 @@ footer{
   font-size: 20pt;
 }
 
+.green-swal-button{
+  background-color: lawngreen !important;
+  border-radius: 0% !important;
+}
+.red-swal-button{
+  background-color: red !important;
+  border-radius: 0% !important;
+}
 
 
 /* UNUSED */
